@@ -162,6 +162,62 @@
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ivy.container.layers.</span></span><span class="sig-name descname"><span class="pre">ContainerWithLayers</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dict_in</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">queues</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">queue_load_sizes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">container_combine_method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'list_join'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">queue_timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">print_limit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">key_length_limit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">print_indent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">print_line_spacing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ivyh</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default_key_color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'green'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">keyword_color_dict</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rebuild_child_containers</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">types_to_iteratively_nest</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alphabetical_keys</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/ivy/container/layers.html#ContainerWithLayers"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ivy.container.layers.ContainerWithLayers" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="base/ContainerBase.html#ivy.container.base.ContainerBase" title="ivy.container.base.ContainerBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">ContainerBase</span></code></a></p>
 <dl class="py method">
+<dt class="sig sig-object py" id="ivy.container.layers.ContainerWithLayers.conv1d">
+<span class="sig-name descname"><span class="pre">conv1d</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filters</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strides</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">padding</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'NWC'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dilations</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/ivy/container/layers.html#ContainerWithLayers.conv1d"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ivy.container.layers.ContainerWithLayers.conv1d" title="Permalink to this definition"></a></dt>
+<dd><blockquote>
+<div><p>ivy.Container static method variant of ivy.conv1d. This method simply
+wraps the function, and so the docstring for ivy.conv1d also applies
+to this method with minimal changes.</p>
+<dl class="simple">
+<dt>x</dt><dd><p>Input image <em>[batch_size,w, d_in]</em>.</p>
+</dd>
+<dt>filters</dt><dd><p>Convolution filters <em>[fw,d_in, d_out]</em>. (d_in must be the same as d from x)</p>
+</dd>
+<dt>strides</dt><dd><p>The stride of the sliding window for each dimension of input.</p>
+</dd>
+<dt>padding</dt><dd><p>“SAME” or “VALID” indicating the algorithm, or list indicating the
+per-dimension paddings.</p>
+</dd>
+<dt>data_format</dt><dd><p>“NWC” or “NCW”. Defaults to “NWC”.</p>
+</dd>
+<dt>dilations</dt><dd><p>The dilation factor for each dimension of input. (Default value = 1)</p>
+</dd>
+<dt>out</dt><dd><p>optional output container, for writing the result to. It must have a shape
+that the inputs broadcast to.</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>ret</dt><dd><p>The result of the convolution operation.</p>
+</dd>
+</dl>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="n">ivy</span><span class="o">.</span><span class="n">random_normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">b</span> <span class="o">=</span> <span class="n">ivy</span><span class="o">.</span><span class="n">random_normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">inp</span> <span class="o">=</span> <span class="n">ivy</span><span class="o">.</span><span class="n">Container</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="n">b</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">filters</span> <span class="o">=</span> <span class="n">ivy</span><span class="o">.</span><span class="n">random_normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="p">[</span><span class="mi">9</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">result</span> <span class="o">=</span> <span class="n">inp</span><span class="o">.</span><span class="n">conv1d</span><span class="p">(</span><span class="n">filters</span><span class="p">,</span><span class="n">strides</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span><span class="n">padding</span><span class="o">=</span><span class="s1">&#39;VALID&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+</pre></div>
+</div>
+</div></blockquote>
+<dl class="simple">
+<dt>{</dt><dd><dl class="simple">
+<dt>a: ivy.array([[[6.26, 5.63],</dt><dd><p>[-11.4, -0.231]]]),</p>
+</dd>
+<dt>b: ivy.array([[[-9.07, -9.17],</dt><dd><p>[20., 11.4],
+[-1.31, -4.49]]])</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p>}</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Container</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="ivy.container.layers.ContainerWithLayers.depthwise_conv2d">
 <span class="sig-name descname"><span class="pre">depthwise_conv2d</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filters</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strides</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">padding</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'NHWC'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dilations</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/ivy/container/layers.html#ContainerWithLayers.depthwise_conv2d"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ivy.container.layers.ContainerWithLayers.depthwise_conv2d" title="Permalink to this definition"></a></dt>
 <dd><p>ivy.Container instance method variant of ivy.depthwise_conv2d. This method
@@ -198,6 +254,62 @@ that the inputs broadcast to.</p></li>
 <span class="go">[1, 64, 64, 3]</span>
 </pre></div>
 </div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ivy.container.layers.ContainerWithLayers.static_conv1d">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">static_conv1d</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filters</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strides</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">padding</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'NWC'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dilations</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/ivy/container/layers.html#ContainerWithLayers.static_conv1d"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ivy.container.layers.ContainerWithLayers.static_conv1d" title="Permalink to this definition"></a></dt>
+<dd><blockquote>
+<div><p>ivy.Container static method variant of ivy.conv1d. This method simply
+wraps the function, and so the docstring for ivy.conv1d also applies
+to this method with minimal changes.</p>
+<dl class="simple">
+<dt>x</dt><dd><p>Input image <em>[batch_size,w, d_in]</em>.</p>
+</dd>
+<dt>filters</dt><dd><p>Convolution filters <em>[fw,d_in, d_out]</em>. (d_in must be the same as d from x)</p>
+</dd>
+<dt>strides</dt><dd><p>The stride of the sliding window for each dimension of input.</p>
+</dd>
+<dt>padding</dt><dd><p>“SAME” or “VALID” indicating the algorithm, or list indicating the
+per-dimension paddings.</p>
+</dd>
+<dt>data_format</dt><dd><p>“NWC” or “NCW”. Defaults to “NWC”.</p>
+</dd>
+<dt>dilations</dt><dd><p>The dilation factor for each dimension of input. (Default value = 1)</p>
+</dd>
+<dt>out</dt><dd><p>optional output container, for writing the result to. It must have a shape
+that the inputs broadcast to.</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>ret</dt><dd><p>The result of the convolution operation.</p>
+</dd>
+</dl>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="n">ivy</span><span class="o">.</span><span class="n">random_normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">b</span> <span class="o">=</span> <span class="n">ivy</span><span class="o">.</span><span class="n">random_normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">inp</span> <span class="o">=</span> <span class="n">ivy</span><span class="o">.</span><span class="n">Container</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="n">b</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">filters</span> <span class="o">=</span> <span class="n">ivy</span><span class="o">.</span><span class="n">random_normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="p">[</span><span class="mi">9</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">result</span> <span class="o">=</span> <span class="n">ivy</span><span class="o">.</span><span class="n">Container</span><span class="o">.</span><span class="n">static_conv1d</span><span class="p">(</span><span class="n">inp</span><span class="p">,</span><span class="n">filters</span><span class="p">,</span><span class="n">strides</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span><span class="n">padding</span><span class="o">=</span><span class="s1">&#39;VALID&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+</pre></div>
+</div>
+</div></blockquote>
+<dl class="simple">
+<dt>{</dt><dd><dl class="simple">
+<dt>a: ivy.array([[[6.26, 5.63],</dt><dd><p>[-11.4, -0.231]]]),</p>
+</dd>
+<dt>b: ivy.array([[[-9.07, -9.17],</dt><dd><p>[20., 11.4],
+[-1.31, -4.49]]])</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p>}</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Container</span></code></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
