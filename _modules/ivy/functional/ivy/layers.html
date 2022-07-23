@@ -628,7 +628,54 @@
 <span class="sd">    &gt;&gt;&gt; filters = ivy.array([[[0.]], [[1.]], [[0.]]]) #WIO</span>
 <span class="sd">    &gt;&gt;&gt; result = ivy.conv1d(x, filters, (1,), &#39;SAME&#39;, &#39;NWC&#39;, (1,))</span>
 <span class="sd">    &gt;&gt;&gt; print(result)</span>
+<span class="sd">    </span>
 <span class="sd">    ivy.array([[[0.], [3.], [0.]]])</span>
+<span class="sd">    </span>
+<span class="sd">    With :code:`ivy.Array` input:</span>
+<span class="sd">    </span>
+<span class="sd"> &gt;&gt;&gt; x = ivy.array(ivy.random_normal(0, 1, [2, 4, 8])) #NWC</span>
+<span class="sd"> &gt;&gt;&gt; result = ivy.zeros_like(x)</span>
+<span class="sd"> &gt;&gt;&gt; filters = ivy.array(ivy.random_normal(0, 1, [2, 8, 4])) #WIO (I == C)</span>
+<span class="sd"> &gt;&gt;&gt; result = ivy.conv1d(x, filters, strides=(2,), padding=&#39;VALID&#39;)</span>
+<span class="sd"> &gt;&gt;&gt; print(result)</span>
+<span class="sd"> </span>
+<span class="sd"> ivy.array([[[ 0.499, -4.91 ,  3.03 ,  1.73 ],</span>
+<span class="sd">        [ 1.65 ,  1.23 , -0.614, -2.45 ]],</span>
+
+<span class="sd">       [[ 1.05 ,  7.71 ,  2.03 ,  5.63 ],</span>
+<span class="sd">        [-8.18 , -0.611, -1.3  , -1.72 ]]])</span>
+
+<span class="sd">With :code:`ivy.NativeArray` input:</span>
+
+<span class="sd">&gt;&gt;&gt; ivy.set_backend(&#39;torch&#39;)</span>
+<span class="sd">&gt;&gt;&gt; x = ivy.native_array(ivy.random_normal(0, 1,[1, 5, 3])) #NWC</span>
+<span class="sd">&gt;&gt;&gt; result = ivy.to_native(ivy.zeros_like(x))</span>
+<span class="sd">&gt;&gt;&gt; filters = ivy.native_array(ivy.random_normal(0, 1,  [3, 3, 1])) #WIO</span>
+<span class="sd">&gt;&gt;&gt; ivy.conv1d(x, filters, strides = (1,), padding = &#39;SAME&#39;, out=result) #using inplace update</span>
+<span class="sd">&gt;&gt;&gt; print(result)</span>
+
+<span class="sd">tensor([[[ 2.5210],</span>
+<span class="sd">         [-1.5417],</span>
+<span class="sd">         [ 1.3615],</span>
+<span class="sd">         [-5.2475],</span>
+<span class="sd">         [-1.6664]]])</span>
+
+
+<span class="sd">With a mix of :code:`ivy.Array` ivy.NativeArray and :code:`ivy.Container` inputs:</span>
+
+<span class="sd"> &gt;&gt;&gt; x = ivy.Container(a = ivy.array(ivy.random_normal(0,1, [1, 10, 3])) , b = ivy.array(ivy.random_normal(0,1,[1,20, 3 ])))</span>
+<span class="sd"> &gt;&gt;&gt; filters = ivy.array(ivy.random_normal(0,1,[5, 3, 2]))</span>
+<span class="sd"> &gt;&gt;&gt; result = ivy.zeros_like(x)</span>
+<span class="sd"> &gt;&gt;&gt; ivy.conv1d(x, filters, strides= 4, padding=&#39;VALID&#39;, dilations=2, out= result)</span>
+<span class="sd"> &gt;&gt;&gt; print(result)</span>
+<span class="sd">   </span>
+<span class="sd"> {</span>
+<span class="sd">    a: ivy.array([[[-0.105, 3.17]]]),</span>
+<span class="sd">    b: ivy.array([[[2.79, 3.34], </span>
+<span class="sd">                   [-2.57, 1.51], </span>
+<span class="sd">                   [-0.152, 0.824]]])</span>
+<span class="sd">}</span>
+
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">current_backend</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">conv1d</span><span class="p">(</span>
