@@ -297,8 +297,7 @@
 <span class="sd">            The result of the convolution operation.</span>
 
 <span class="sd">        Examples</span>
-<span class="sd">        --------</span>
-<span class="sd">        </span>
+<span class="sd">        --------   </span>
 <span class="sd">        &gt;&gt;&gt; a = ivy.random_normal(0,1,[1, 12, 4])</span>
 <span class="sd">        &gt;&gt;&gt; b = ivy.random_normal(0,1, [1, 15, 4])</span>
 <span class="sd">        &gt;&gt;&gt; inp = ivy.Container(a=a, b=b)</span>
@@ -306,13 +305,13 @@
 <span class="sd">        &gt;&gt;&gt; result = ivy.Container.static_conv1d(inp,filters,strides=3,padding=&#39;VALID&#39;)</span>
 <span class="sd">        &gt;&gt;&gt; print(result)</span>
 <span class="sd">  </span>
-<span class="sd">  {</span>
-<span class="sd">    a: ivy.array([[[6.26, 5.63], </span>
-<span class="sd">                   [-11.4, -0.231]]]),</span>
-<span class="sd">    b: ivy.array([[[-9.07, -9.17], </span>
-<span class="sd">                   [20., 11.4], </span>
-<span class="sd">                   [-1.31, -4.49]]])</span>
-<span class="sd">  }</span>
+<span class="sd">        {</span>
+<span class="sd">            a: ivy.array([[[6.26, 5.63], </span>
+<span class="sd">                           [-11.4, -0.231]]]),</span>
+<span class="sd">            b: ivy.array([[[-9.07, -9.17], </span>
+<span class="sd">                           [20., 11.4], </span>
+<span class="sd">                           [-1.31, -4.49]]])</span>
+<span class="sd">        }</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">ContainerBase</span><span class="o">.</span><span class="n">multi_map_in_static_method</span><span class="p">(</span>
             <span class="s2">&quot;conv1d&quot;</span><span class="p">,</span>
@@ -365,8 +364,7 @@
 <span class="sd">            The result of the convolution operation.</span>
 
 <span class="sd">        Examples</span>
-<span class="sd">        --------</span>
-<span class="sd">        </span>
+<span class="sd">        -------- </span>
 <span class="sd">        &gt;&gt;&gt; a = ivy.random_normal(0,1,[1, 12, 4])</span>
 <span class="sd">        &gt;&gt;&gt; b = ivy.random_normal(0,1, [1, 15, 4])</span>
 <span class="sd">        &gt;&gt;&gt; inp = ivy.Container(a=a, b=b)</span>
@@ -374,13 +372,13 @@
 <span class="sd">        &gt;&gt;&gt; result = inp.conv1d(filters,strides=3,padding=&#39;VALID&#39;)</span>
 <span class="sd">        &gt;&gt;&gt; print(result)</span>
 <span class="sd">  </span>
-<span class="sd">  {</span>
-<span class="sd">    a: ivy.array([[[6.26, 5.63], </span>
-<span class="sd">                   [-11.4, -0.231]]]),</span>
-<span class="sd">    b: ivy.array([[[-9.07, -9.17], </span>
-<span class="sd">                   [20., 11.4], </span>
-<span class="sd">                   [-1.31, -4.49]]])</span>
-<span class="sd">  }</span>
+<span class="sd">        {</span>
+<span class="sd">            a: ivy.array([[[6.26, 5.63], </span>
+<span class="sd">                           [-11.4, -0.231]]]),</span>
+<span class="sd">            b: ivy.array([[[-9.07, -9.17], </span>
+<span class="sd">                           [20., 11.4], </span>
+<span class="sd">                           [-1.31, -4.49]]])</span>
+<span class="sd">        }</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">static_conv1d</span><span class="p">(</span>
             <span class="bp">self</span><span class="p">,</span> <span class="n">filters</span><span class="p">,</span> <span class="n">strides</span><span class="p">,</span> <span class="n">padding</span><span class="p">,</span> <span class="n">data_format</span><span class="p">,</span> <span class="n">dilations</span><span class="p">,</span> <span class="n">out</span><span class="o">=</span><span class="n">out</span>
