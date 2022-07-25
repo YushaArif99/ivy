@@ -197,22 +197,15 @@ inputs broadcast to.</p>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p><p><em>ret</em> – The result of the convolution operation.</p>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">ivy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">ivy</span><span class="o">.</span><span class="n">random_normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">2</span><span class="p">]))</span>  <span class="c1"># NWC</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">ivy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">ivy</span><span class="o">.</span><span class="n">random_normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">2</span><span class="p">]))</span>  <span class="c1"># NWC</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">filters</span> <span class="o">=</span> <span class="n">ivy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">ivy</span><span class="o">.</span><span class="n">random_normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="p">[</span><span class="mi">6</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">]))</span>  <span class="c1"># WIO (I == C)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">result</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">conv1d</span><span class="p">(</span><span class="n">filters</span><span class="p">,</span> <span class="n">strides</span><span class="o">=</span><span class="p">(</span><span class="mi">3</span><span class="p">,),</span> <span class="n">padding</span><span class="o">=</span><span class="s1">&#39;VALID&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
 </pre></div>
 </div>
-<dl>
-<dt>ivy.array([[[ 0.365,  1.82 ],</dt><dd><blockquote>
-<div><p>[-1.79 ,  1.7  ],
-[ 2.91 , -4.01 ]],</p>
-</div></blockquote>
 <dl class="simple">
-<dt>[[-5.08 , -2.4  ],</dt><dd><p>[ 0.387, -1.61 ],
-[-2.14 , -1.46 ]]])</p>
-</dd>
-</dl>
+<dt>ivy.array([[[-0.812,  3.46 ],</dt><dd><p>[-2.28 , -2.04 ],
+[-0.593, -2.8  ]]])</p>
 </dd>
 </dl>
 </p>
