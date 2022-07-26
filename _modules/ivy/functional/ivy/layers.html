@@ -648,12 +648,12 @@
 
 <span class="sd">    With a mix of :code:`ivy.Array` ivy.NativeArray and :code:`ivy.Container` inputs:</span>
 
-<span class="sd">    &gt;&gt;&gt; x = ivy.Container(a = ivy.array(ivy.random_normal(0,1, [1, 10, 2])) , \</span>
+<span class="sd">    &gt;&gt;&gt; x = ivy.Container(a = ivy.array(ivy.random_normal(0,1, [1, 15, 2])) , \</span>
 <span class="sd">                          b = ivy.array(ivy.random_normal(0,1,[1,20, 2])))</span>
-<span class="sd">    &gt;&gt;&gt; filters = ivy.array(ivy.random_normal(0,1,[5, 2, 2]))</span>
+<span class="sd">    &gt;&gt;&gt; filters = ivy.array(ivy.random_normal(0,1,[8, 2, 2]))</span>
 <span class="sd">    &gt;&gt;&gt; result  = ivy.conv1d(x, filters, strides= 4, padding=&#39;VALID&#39;, dilations=2)</span>
 <span class="sd">    &gt;&gt;&gt; print(result)</span>
-<span class="sd">    {a: ivy.array([[[0.98, -0.555]]]),b: ivy.array([[[-3.43, -1.42],[0.45, -1.94],[-1.89, -3.06]]])} </span>
+<span class="sd">    {a: ivy.array([[[-6.3, 0.933]]]),b: ivy.array([[[-2.46, -5.61],[-3.63, 8.13]]])}</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">current_backend</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">conv1d</span><span class="p">(</span>
         <span class="n">x</span><span class="p">,</span> <span class="n">filters</span><span class="p">,</span> <span class="n">strides</span><span class="p">,</span> <span class="n">padding</span><span class="p">,</span> <span class="n">data_format</span><span class="p">,</span> <span class="n">dilations</span><span class="p">,</span> <span class="n">out</span><span class="o">=</span><span class="n">out</span>
