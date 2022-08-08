@@ -116,8 +116,8 @@ def matrix_rank(
     out: Optional[np.ndarray] = None,
 ) -> np.ndarray:
     
-    x = numpy.reshape(x, [-1])
-    x = numpy.expand_dims(x, 0)
+    x = np.reshape(x, [-1])
+    x = np.expand_dims(x, 0)
     if rtol is None:
         ret = np.linalg.matrix_rank(x)
     else:
