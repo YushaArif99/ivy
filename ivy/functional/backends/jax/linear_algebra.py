@@ -124,13 +124,6 @@ def matrix_rank(
     *,
     out: Optional[JaxArray] = None
 ) -> JaxArray:
-#     if x.size == 0:
-#         ret = 0
-#     elif x.size == 1:
-#         ret = jnp.count_nonzero(x)
-#     else:
-#         if x.ndim > 2:
-#             x = x.reshape([-1])
     x = jnp.reshape(x, [-1])
     x = jnp.expand_dims(x, 0)
     ret = jnp.linalg.matrix_rank(x, rtol)
