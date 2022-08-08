@@ -241,15 +241,17 @@ def matrix_rank(
     *,
     out: Optional[Union[tf.Tensor, tf.Variable]] = None
 ) -> Union[tf.Tensor, tf.Variable]:
+    
+    x = tf.reshape(x, [-1])
+    x = tf.expand_dims(x, 0)
     if rtol is None:
         ret = tf.linalg.matrix_rank(x)
-    elif tf.size(x) == 0:
-        ret = 0
-    elif tf.size(x) == 1:
-        ret = tf.math.count_nonzero(x)
+#     elif tf.size(x) == 0:
+#         ret = 0
+#     elif tf.size(x) == 1:
+#         ret = tf.math.count_nonzero(x)
     else:
-        x = tf.reshape(x, [-1])
-        x = tf.expand_dims(x, 0)
+
         x, rtol = ivy.promote_types_of_inputs(x, rtol)
         ret = tf.linalg.matrix_rank(x, rtol)
     ret = tf.cast(ret, ivy.default_int_dtype(as_native=True))
