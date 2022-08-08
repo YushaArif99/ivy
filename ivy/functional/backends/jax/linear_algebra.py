@@ -131,8 +131,8 @@ def matrix_rank(
 #     else:
 #         if x.ndim > 2:
 #             x = x.reshape([-1])
-    x = x.reshape([-1])
-    x = x.expand_dims(x, 0)
+    x = jnp.reshape(x, [-1])
+    x = jnp.expand_dims(x, 0)
     ret = jnp.linalg.matrix_rank(x, rtol)
     ret = jnp.asarray(ret, dtype=ivy.default_int_dtype(as_native=True))
     return ret
