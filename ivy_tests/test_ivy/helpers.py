@@ -50,7 +50,8 @@ try:
     else:
         # noinspection PyPep8Naming
         # noinspection PyProtectedMember,PyUnresolvedReferences
-        from tensorflow.python.framework.tensor_like import _TensorLike as tensor_type
+        from tensorflow.python.framework.tensor_like \
+        import _TensorLike as tensor_type
     physical_devices = tf.config.list_physical_devices("GPU")
     for device in physical_devices:
         tf.config.experimental.set_memory_growth(device, True)
@@ -568,7 +569,8 @@ def ints(draw, *, min_value=None, max_value=None, safety_factor=0.95):
 def assert_all_close(
     ret_np, ret_from_np, rtol=1e-05, atol=1e-08, ground_truth_backend="TensorFlow"
 ):
-    """Matches the ret_np and ret_from_np inputs element-by-element to ensure that they are the same.
+    """Matches the ret_np and ret_from_np inputs element-by-element to ensure \
+    that they are the same.
     Parameters
     ----------
     ret_np
@@ -588,7 +590,8 @@ def assert_all_close(
 
     assert (
         ret_np.dtype is ret_from_np.dtype
-    ), "the return with a {} backend produced data type of {}, while the return with" " a {} backend returned a data type of {}.".format(
+    ), "the return with a {} backend produced data type of {}, \
+    while the return with" " a {} backend returned a data type of {}.".format(
         ground_truth_backend,
         ret_from_np.dtype,
         ivy.current_backend_str(),
@@ -603,7 +606,8 @@ def assert_all_close(
 
 
 def kwargs_to_args_n_kwargs(*, num_positional_args, kwargs):
-    """Splits the kwargs into args and kwargs, with the first num_positional_args ported to args."""
+    """Splits the kwargs into args and kwargs, with \
+    the first num_positional_args ported to args."""
     args = [v for v in list(kwargs.values())[:num_positional_args]]
     kwargs = {k: kwargs[k] for k in list(kwargs.keys())[num_positional_args:]}
     return args, kwargs
@@ -667,7 +671,8 @@ def flatten_and_to_np(*, ret):
 
 
 def get_ret_and_flattened_np_array(func, *args, **kwargs):
-    """Runs func with args and kwargs, and returns the result along with its flattened version."""
+    """Runs func with args and kwargs, and returns \
+    the result along with its flattened version."""
     ret = func(*args, **kwargs)
     return ret, flatten_and_to_np(ret=ret)
 
@@ -680,13 +685,16 @@ def value_test(
     atol=1e-6,
     ground_truth_backend="TensorFlow",
 ):
-    """Performs a value test for matching the arrays in ret_np_flat and ret_from_np_flat.
+    """Performs a value test for matching the arrays \
+    in ret_np_flat and ret_from_np_flat.
     Parameters
     ----------
     ret_np_flat
-        A list (flattened) containing Numpy arrays. Return from the framework to test.
+        A list (flattened) containing Numpy arrays. \
+        Return from the framework to test.
     ret_from_np_flat
-        A list (flattened) containing Numpy arrays. Return from the ground truth framework.
+        A list (flattened) containing Numpy arrays. \
+        Return from the ground truth framework.
     rtol
         Relative Tolerance Value.
     atol
@@ -808,7 +816,8 @@ def gradient_test(
 
 
 def check_unsupported_dtype(*, fn, input_dtypes, all_as_kwargs_np):
-    """Checks whether a function does not support the input data types or the output data type.
+    """Checks whether a function does not support the input data types \
+    or the output data type.
     Parameters
     ----------
     fn
@@ -819,7 +828,8 @@ def check_unsupported_dtype(*, fn, input_dtypes, all_as_kwargs_np):
         All arguments in Numpy Format, to check for the presence of dtype argument.
     Returns
     -------
-    True if the function does not support the given input or output data types, False otherwise.
+    True if the function does not support the given input or output data types, \
+    False otherwise.
     """
     test_unsupported = False
     unsupported_dtypes_fn = ivy.function_unsupported_dtypes(fn)
@@ -897,7 +907,8 @@ def check_unsupported_device_and_dtype(*, fn, device, input_dtypes, all_as_kwarg
         All arguments in Numpy Format, to check for the presence of dtype argument.
     Returns
     -------
-    True if the function does not support either the device or any data type, False otherwise.
+    True if the function does not support either the device or any data type, \
+    False otherwise.
     """
     test_unsupported = False
     unsupported_devices_dtypes_fn = ivy.function_unsupported_devices_and_dtypes(fn)
@@ -967,14 +978,16 @@ def create_args_kwargs(
     input_dtypes
         data-types of the input arguments and keyword-arguments.
     as_variable_flags
-        A list of booleans. if True for a corresponding input argument, it is called as an Ivy Variable.
+        A list of booleans. if True for a corresponding input argument, \
+        it is called as an Ivy Variable.
     native_array_flags
         if not None, the corresponding argument is called as a Native Array.
     container_flags
         if not None, the corresponding argument is called as an Ivy Container.
     Returns
     -------
-    Arguments, Keyword-arguments, number of arguments, and indexes on arguments and keyword-arguments.
+    Arguments, Keyword-arguments, number of arguments, and indexes on arguments \
+    and keyword-arguments.
     """
     # extract all arrays from the arguments and keyword arguments
     args_idxs = ivy.nested_indices_where(args_np, lambda x: isinstance(x, np.ndarray))
