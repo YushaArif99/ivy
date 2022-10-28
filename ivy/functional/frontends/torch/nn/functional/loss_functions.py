@@ -1,5 +1,6 @@
 # global
 import ivy
+from ivy.functional.frontends.torch.func_wrapper import to_ivy_arrays_and_back
 
 
 def _get_reduction_func(reduction):
@@ -73,6 +74,7 @@ def _apply_reduction(reduction, size_average, reduce, to_reduce):
         return _get_reduction_method(reduction, to_reduce)
 
 
+@to_ivy_arrays_and_back
 def cross_entropy(
     input,
     target,
@@ -91,6 +93,7 @@ def cross_entropy(
     return ret
 
 
+@to_ivy_arrays_and_back
 def binary_cross_entropy(
     input, target, weight=None, size_average=None, reduce=None, reduction="mean"
 ):
@@ -101,3 +104,37 @@ def binary_cross_entropy(
         result = ivy.multiply(weight, result)
     result = reduction(result)
     return result
+
+
+@to_ivy_arrays_and_back
+def smooth_l1_loss(
+    input,
+    target,
+    size_average=None,
+    reduce=None,
+    reduction="mean",
+    beta=1.0,
+):
+    beta = ivy.array(beta, device=input.device)
+    reduction = _get_reduction(reduction, size_average, reduce)
+
+    if beta < 1e-5:
+        # [Copied and modified from fvcore]
+        # if beta == 0, then torch.where will result in nan gradients when
+        # the chain rule is applied due to pytorch implementation details
+        # (the False branch "0.5 * _diff_abs ** 2 / 0" has an incoming
+        # gradient of zeros, rather than "no gradient"). To avoid this
+        # issue, we define small values of beta to be exactly l1 loss.
+        loss = ivy.abs(input - target)
+    else:
+        _diff_abs = ivy.abs(input - target)
+
+        loss = ivy.where(
+            _diff_abs < beta,
+            0.5 * _diff_abs**2 / beta,
+            _diff_abs - 0.5 * beta,
+        )
+
+    ret = reduction(loss)
+
+    return ret
