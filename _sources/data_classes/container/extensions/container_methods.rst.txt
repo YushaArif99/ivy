@@ -27,6 +27,8 @@ Container methods
    container_methods/float_power.rst
    container_methods/static_exp2.rst
    container_methods/exp2.rst
+   container_methods/static_nansum.rst
+   container_methods/nansum.rst
    container_methods/static_flatten.rst
    container_methods/flatten.rst
    container_methods/static_hann_window.rst
@@ -57,6 +59,8 @@ Container methods
    container_methods/static_hstack.rst
    container_methods/static_rot90.rst
    container_methods/rot90.rst
+   container_methods/static_top_k.rst
+   container_methods/top_k.rst
    container_methods/static_dirichlet.rst
    container_methods/dirichlet.rst
    container_methods/static_msort.rst
