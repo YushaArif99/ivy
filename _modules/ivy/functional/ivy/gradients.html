@@ -296,14 +296,12 @@
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Enter a nested code space where gradients are computed. This method</span>
 <span class="sd">    adds the with_grads component to the global list with_grads_stack</span>
-
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">    with_grads</span>
 <span class="sd">        Boolean value denoting whether the current code block has gradient</span>
 <span class="sd">        computation enabled or not.</span>
 <span class="sd">        &#39;True&#39; or &#39;False&#39; or &#39;None&#39; (Default value = None)</span>
-
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    ret</span>
@@ -313,23 +311,18 @@
 <span class="sd">        representing the parent of the current nested code block. If with_grads_stack</span>
 <span class="sd">        is empty, it returns True by default.</span>
 <span class="sd">        If with_grads is neither None nor boolean, it will raise an IvyException</span>
-
 <span class="sd">    Examples</span>
 <span class="sd">    --------</span>
 <span class="sd">    &gt;&gt;&gt; ivy.set_with_grads(True)</span>
 <span class="sd">    &gt;&gt;&gt; print(ivy.with_grads(with_grads=None))</span>
 <span class="sd">    True</span>
-
 <span class="sd">    &gt;&gt;&gt; ivy.set_with_grads(False)</span>
 <span class="sd">    &gt;&gt;&gt; print(ivy.with_grads(with_grads=None))</span>
 <span class="sd">    False</span>
-
 <span class="sd">    &gt;&gt;&gt; print(ivy.with_grads(with_grads=True))</span>
 <span class="sd">    True</span>
-
 <span class="sd">    &gt;&gt;&gt; print(ivy.with_grads(with_grads=False))</span>
 <span class="sd">    False</span>
-
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">ivy</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">with_grads</span><span class="p">):</span>
         <span class="n">ivy</span><span class="o">.</span><span class="n">assertions</span><span class="o">.</span><span class="n">check_elem_in_list</span><span class="p">(</span><span class="n">with_grads</span><span class="p">,</span> <span class="p">[</span><span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">])</span>
@@ -346,14 +339,12 @@
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Enter a nested code space where gradients are computed. This method</span>
 <span class="sd">    adds the with_grads component to the global list with_grads_stack</span>
-
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">    with_grads</span>
 <span class="sd">        Boolean value denoting whether the current code block has gradient</span>
 <span class="sd">        computation enabled or not.</span>
 <span class="sd">        &#39;True&#39; or &#39;False&#39; or &#39;None&#39; (Default value = None)</span>
-
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    ret</span>
@@ -363,23 +354,18 @@
 <span class="sd">        representing the parent of the current nested code block. If with_grads_stack</span>
 <span class="sd">        is empty, it returns True by default.</span>
 <span class="sd">        If with_grads is neither None nor boolean, it will raise an IvyException</span>
-
 <span class="sd">    Examples</span>
 <span class="sd">    --------</span>
 <span class="sd">    &gt;&gt;&gt; ivy.set_with_grads(True)</span>
 <span class="sd">    &gt;&gt;&gt; print(ivy.with_grads(with_grads=None))</span>
 <span class="sd">    True</span>
-
 <span class="sd">    &gt;&gt;&gt; ivy.set_with_grads(False)</span>
 <span class="sd">    &gt;&gt;&gt; print(ivy.with_grads(with_grads=None))</span>
 <span class="sd">    False</span>
-
 <span class="sd">    &gt;&gt;&gt; print(ivy.with_grads(with_grads=True))</span>
 <span class="sd">    True</span>
-
 <span class="sd">    &gt;&gt;&gt; print(ivy.with_grads(with_grads=False))</span>
 <span class="sd">    False</span>
-
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">ivy</span><span class="o">.</span><span class="n">assertions</span><span class="o">.</span><span class="n">check_elem_in_list</span><span class="p">(</span><span class="n">with_grads</span><span class="p">,</span> <span class="p">[</span><span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">])</span>
     <span class="k">global</span> <span class="n">with_grads_stack</span>
@@ -391,27 +377,22 @@
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Enter a nested code space where gradients are computed. This method</span>
 <span class="sd">    deletes the with_grads component from the global list with_grads_stack</span>
-
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    ret</span>
 <span class="sd">        Remove and return item at index (default last).</span>
-
 <span class="sd">    Examples</span>
 <span class="sd">    --------</span>
 <span class="sd">    &gt;&gt;&gt; ivy.set_with_grads(True)</span>
 <span class="sd">    &gt;&gt;&gt; ivy.unset_with_grads()</span>
 <span class="sd">    &gt;&gt;&gt; print(ivy.with_grads(with_grads=None))</span>
 <span class="sd">    False</span>
-
 <span class="sd">    &gt;&gt;&gt; ivy.set_with_grads(True)</span>
 <span class="sd">    &gt;&gt;&gt; ivy.unset_with_grads()</span>
 <span class="sd">    Returns last deleted value</span>
-
 <span class="sd">    &gt;&gt;&gt; ivy.set_with_grads(False)</span>
 <span class="sd">    &gt;&gt;&gt; ivy.unset_with_grads()</span>
 <span class="sd">    Raises IndexError if list is empty or index is out of range.</span>
-
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">global</span> <span class="n">with_grads_stack</span>
     <span class="k">if</span> <span class="n">with_grads_stack</span><span class="p">:</span>
@@ -426,32 +407,25 @@
 <span class="nd">@handle_exceptions</span>
 <span class="k">def</span> <span class="nf">variable</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">ivy</span><span class="o">.</span><span class="n">Array</span><span class="p">,</span> <span class="n">ivy</span><span class="o">.</span><span class="n">NativeArray</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">ivy</span><span class="o">.</span><span class="n">Array</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Creates a variable, which supports gradient computation.</span>
-
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">    x</span>
 <span class="sd">        An ivy array.</span>
-
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    ret</span>
 <span class="sd">        An ivy variable, supporting gradient computation.</span>
-
 <span class="sd">    Both the description and the type hints above assumes an array input for simplicity,</span>
 <span class="sd">    but this function is *nestable*, and therefore also accepts :class:`ivy.Container`</span>
 <span class="sd">    instances in place of any of the arguments.</span>
-
 <span class="sd">    Examples</span>
 <span class="sd">    --------</span>
 <span class="sd">    With :class:`ivy.Array` input:</span>
-
 <span class="sd">    &gt;&gt;&gt; x = ivy.array([1., 0.3, -4.5])</span>
 <span class="sd">    &gt;&gt;&gt; y = ivy.variable(x)</span>
 <span class="sd">    &gt;&gt;&gt; print(y)</span>
 <span class="sd">    ivy.array([ 1. ,  0.3, -4.5])</span>
-
 <span class="sd">    With :class:`ivy.Container` input:</span>
-
 <span class="sd">    &gt;&gt;&gt; x = ivy.Container(a=ivy.array([1., 2.]), b=ivy.array([-0.2, 4.]))</span>
 <span class="sd">    &gt;&gt;&gt; y = ivy.variable(x)</span>
 <span class="sd">    &gt;&gt;&gt; print(y)</span>
@@ -470,7 +444,6 @@
     <span class="n">x</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">ivy</span><span class="o">.</span><span class="n">Array</span><span class="p">,</span> <span class="n">ivy</span><span class="o">.</span><span class="n">NativeArray</span><span class="p">],</span> <span class="o">/</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">exclusive</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Determines whether the input is a variable or not.</span>
-
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">    x</span>
@@ -480,32 +453,25 @@
 <span class="sd">        array. For frameworks like JAX that do not have exclusive variable types, the</span>
 <span class="sd">        function will always return False if this flag is set, otherwise the check is</span>
 <span class="sd">        the same for general arrays. Default is ``False``.</span>
-
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    ret</span>
 <span class="sd">        Boolean, true if x is a trainable variable, false otherwise.</span>
-
 <span class="sd">    Both the description and the type hints above assumes an array input for simplicity,</span>
 <span class="sd">    but this function is *nestable*, and therefore also accepts :class:`ivy.Container`</span>
 <span class="sd">    instances in place of any of the arguments.</span>
-
 <span class="sd">    Examples</span>
 <span class="sd">    --------</span>
 <span class="sd">    With :class:`ivy.Array` input:</span>
-
 <span class="sd">    &gt;&gt;&gt; x = ivy.variable(ivy.array(2.3))</span>
 <span class="sd">    &gt;&gt;&gt; is_var = ivy.is_variable(x)</span>
 <span class="sd">    &gt;&gt;&gt; print(is_var)</span>
 <span class="sd">    True</span>
-
 <span class="sd">    &gt;&gt;&gt; x = ivy.array([[2], [3], [5]])</span>
 <span class="sd">    &gt;&gt;&gt; is_var = ivy.is_variable(x, exclusive=True)</span>
 <span class="sd">    &gt;&gt;&gt; print(is_var)</span>
 <span class="sd">    False</span>
-
 <span class="sd">    With :class:`ivy.Container` input:</span>
-
 <span class="sd">    &gt;&gt;&gt; x = ivy.Container(a = ivy.array(3.2), b=ivy.array(2))</span>
 <span class="sd">    &gt;&gt;&gt; is_var = ivy.is_variable(x, exclusive=True)</span>
 <span class="sd">    &gt;&gt;&gt; print(is_var)</span>
@@ -513,9 +479,7 @@
 <span class="sd">        a: false,</span>
 <span class="sd">        b: false</span>
 <span class="sd">    }</span>
-
 <span class="sd">    With multiple :class:`ivy.Container` inputs:</span>
-
 <span class="sd">    &gt;&gt;&gt; x = ivy.Container(a=ivy.variable(ivy.array([2.0, -1.0, 0.0])),</span>
 <span class="sd">    ...                   b=ivy.array([0., -0.4, 8]))</span>
 <span class="sd">    &gt;&gt;&gt; exclusive = ivy.Container(a=False, b=True)</span>
@@ -525,7 +489,6 @@
 <span class="sd">        a: true,</span>
 <span class="sd">        b: false</span>
 <span class="sd">    }</span>
-
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">current_backend</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">is_variable</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">exclusive</span><span class="o">=</span><span class="n">exclusive</span><span class="p">)</span></div>
 
@@ -540,21 +503,17 @@
     <span class="sd">&quot;&quot;&quot;Some backends wrap arrays in a dedicated variable class. For those frameworks,</span>
 <span class="sd">    this function returns that wrapped array. For frameworks which do not have a</span>
 <span class="sd">    dedicated variable class, the function returns the data passed in.</span>
-
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">    x</span>
 <span class="sd">        An ivy variable.</span>
-
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    ret</span>
 <span class="sd">        The internal data stored by the variable</span>
-
 <span class="sd">    Both the description and the type hints above assumes an array input for simplicity,</span>
 <span class="sd">    but this function is *nestable*, and therefore also accepts :class:`ivy.Container`</span>
 <span class="sd">    instances in place of any of the arguments.</span>
-
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">current_backend</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">variable_data</span><span class="p">(</span><span class="n">x</span><span class="p">)</span></div>
 
@@ -571,7 +530,6 @@
     <span class="n">out</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">ivy</span><span class="o">.</span><span class="n">Array</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ivy</span><span class="o">.</span><span class="n">Array</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Stops gradient computation.</span>
-
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">    x</span>
@@ -582,33 +540,26 @@
 <span class="sd">    out</span>
 <span class="sd">        optional output array, for writing the result to. It must have a shape that the</span>
 <span class="sd">        inputs broadcast to.</span>
-
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    ret</span>
 <span class="sd">        The same array x, but with no gradient information.</span>
-
 <span class="sd">    Both the description and the type hints above assumes an array input for simplicity,</span>
 <span class="sd">    but this function is *nestable*, and therefore also accepts :class:`ivy.Container`</span>
 <span class="sd">    instances in place of any of the arguments.</span>
-
 <span class="sd">    Examples</span>
 <span class="sd">    --------</span>
 <span class="sd">    With :class:`ivy.Array` inputs:</span>
-
 <span class="sd">    &gt;&gt;&gt; x = ivy.array([1., 2., 3.])</span>
 <span class="sd">    &gt;&gt;&gt; y = ivy.stop_gradient(x, preserve_type=True)</span>
 <span class="sd">    &gt;&gt;&gt; print(y)</span>
 <span class="sd">    ivy.array([1., 2., 3.])</span>
-
 <span class="sd">    &gt;&gt;&gt; x = ivy.zeros((2, 3))</span>
 <span class="sd">    &gt;&gt;&gt; ivy.stop_gradient(x, preserve_type=False, out=x)</span>
 <span class="sd">    &gt;&gt;&gt; print(x)</span>
 <span class="sd">    ivy.array([[0., 0., 0.],</span>
 <span class="sd">               [0., 0., 0.]])</span>
-
 <span class="sd">    With one :class:`ivy.Container` inputs:</span>
-
 <span class="sd">    &gt;&gt;&gt; x = ivy.Container(a=ivy.array([0., 1., 2.]),</span>
 <span class="sd">    ...                   b=ivy.array([3., 4., 5.]))</span>
 <span class="sd">    &gt;&gt;&gt; y = ivy.stop_gradient(x, preserve_type=False)</span>
@@ -617,9 +568,7 @@
 <span class="sd">        a: ivy.array([0., 1., 2.]),</span>
 <span class="sd">        b: ivy.array([3., 4., 5.])</span>
 <span class="sd">    }</span>
-
 <span class="sd">    With multiple :class:`ivy.Container` inputs:</span>
-
 <span class="sd">    &gt;&gt;&gt; x = ivy.Container(a=ivy.array([0., 1., 2.]),</span>
 <span class="sd">    ...                   b=ivy.array([3., 4., 5.]))</span>
 <span class="sd">    &gt;&gt;&gt; ivy.stop_gradient(x, preserve_type=True, out=x)</span>
@@ -628,7 +577,6 @@
 <span class="sd">        a: ivy.array([0., 1., 2.]),</span>
 <span class="sd">        b: ivy.array([3., 4., 5.])</span>
 <span class="sd">    }</span>
-
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">current_backend</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">stop_gradient</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">preserve_type</span><span class="o">=</span><span class="n">preserve_type</span><span class="p">,</span> <span class="n">out</span><span class="o">=</span><span class="n">out</span><span class="p">)</span></div>
 
@@ -643,7 +591,6 @@
 <span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Call function func with input of xs variables, and return the function result</span>
 <span class="sd">    func_ret and the gradients of each output variable w.r.t each input variable,</span>
-
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">    func</span>
@@ -659,13 +606,11 @@
 <span class="sd">    ret_grad_idxs</span>
 <span class="sd">        Indices of the returned arrays for which to return computed gradients. If None,</span>
 <span class="sd">        gradients are returned for all returned arrays. (Default value = None)</span>
-
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    ret</span>
 <span class="sd">        the function result func_ret and a dictionary of gradients of each output</span>
 <span class="sd">        variable w.r.t each input variable.</span>
-
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">current_backend</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span><span class="o">.</span><span class="n">execute_with_gradients</span><span class="p">(</span>
         <span class="n">func</span><span class="p">,</span>
@@ -684,29 +629,24 @@
 <span class="k">def</span> <span class="nf">value_and_grad</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Create a function that evaluates both func and the gradient of func.</span>
-
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">    func</span>
 <span class="sd">        Function for which we compute the gradients of the output with respect to xs</span>
 <span class="sd">        input.</span>
-
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    ret</span>
 <span class="sd">        A function that returns both func and the gradient of func.</span>
-
 <span class="sd">    Examples</span>
 <span class="sd">    --------</span>
 <span class="sd">    With :class:`ivy.Array` input:</span>
-
 <span class="sd">    &gt;&gt;&gt; x = ivy.variable(ivy.array([[4.6, 2.1, 5], [2.8, 1.3, 6.2]]))</span>
 <span class="sd">    &gt;&gt;&gt; func = lambda x: ivy.mean(ivy.square(x))</span>
 <span class="sd">    &gt;&gt;&gt; grad_fn = ivy.value_and_grad(func)</span>
 <span class="sd">    &gt;&gt;&gt; value_grad = grad_fn(x)</span>
 <span class="sd">    &gt;&gt;&gt; print(value_grad)</span>
 <span class="sd">    (ivy.array(16.423332), ivy.array([[1.53, 0.7, 1.67], [0.933, 0.433, 2.07]]))</span>
-
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">current_backend</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span><span class="o">.</span><span class="n">value_and_grad</span><span class="p">(</span><span class="n">func</span><span class="p">)</span></div>
 
@@ -718,22 +658,18 @@
 <span class="nd">@handle_exceptions</span>
 <span class="k">def</span> <span class="nf">jac</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Call function func, and return func&#39;s Jacobian partial derivatives.</span>
-
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">    func</span>
 <span class="sd">        Function for which we compute the gradients of the output with respect to xs</span>
 <span class="sd">        input.</span>
-
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    ret</span>
 <span class="sd">        the Jacobian function</span>
-
 <span class="sd">    Examples</span>
 <span class="sd">    --------</span>
 <span class="sd">    With :class:`ivy.Array` input:</span>
-
 <span class="sd">    &gt;&gt;&gt; x = ivy.array([[4.6, 2.1, 5], [2.8, 1.3, 6.2]])</span>
 <span class="sd">    &gt;&gt;&gt; func = lambda x: ivy.mean(ivy.square(x))</span>
 <span class="sd">    &gt;&gt;&gt; jac_fn = ivy.jac(func)</span>
@@ -741,7 +677,6 @@
 <span class="sd">    &gt;&gt;&gt; print(jacobian)</span>
 <span class="sd">    ivy.array([[1.53 , 0.7  , 1.67 ],</span>
 <span class="sd">    ...        [0.933, 0.433, 2.07 ]])</span>
-
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">current_backend</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span><span class="o">.</span><span class="n">jac</span><span class="p">(</span><span class="n">func</span><span class="p">)</span></div>
 
@@ -753,18 +688,15 @@
 <span class="nd">@handle_exceptions</span>
 <span class="k">def</span> <span class="nf">grad</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Call function func, and return func&#39;s gradients.</span>
-
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">    func</span>
 <span class="sd">        Function for which we compute the gradients of the output with respect to xs</span>
 <span class="sd">        input.</span>
-
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    ret</span>
 <span class="sd">        the grad function</span>
-
 <span class="sd">    Examples</span>
 <span class="sd">    --------</span>
 <span class="sd">    &gt;&gt;&gt; x = ivy.array([[4.6, 2.1, 5], [2.8, 1.3, 6.2]])</span>
@@ -774,7 +706,6 @@
 <span class="sd">    &gt;&gt;&gt; print(grad)</span>
 <span class="sd">    ivy.array([[1.53 , 0.7  , 1.67 ],</span>
 <span class="sd">    ...        [0.933, 0.433, 2.07 ]])</span>
-
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">current_backend</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span><span class="o">.</span><span class="n">grad</span><span class="p">(</span><span class="n">func</span><span class="p">)</span></div>
 
@@ -801,9 +732,7 @@
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">ivy</span><span class="o">.</span><span class="n">Array</span><span class="p">,</span> <span class="n">ivy</span><span class="o">.</span><span class="n">Array</span><span class="p">,</span> <span class="n">ivy</span><span class="o">.</span><span class="n">Array</span><span class="p">]:</span>
     <span class="sd">&quot;&quot;&quot;Compute adam step delta, given the derivatives of some cost c with respect</span>
 <span class="sd">    to weights ws, using ADAM update. `[reference]</span>
-
 <span class="sd">    &lt;https://en.wikipedia.org/wiki/Stochastic_gradient_descent#Adam&gt;`_</span>
-
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">    dcdw</span>
@@ -823,16 +752,13 @@
 <span class="sd">    out</span>
 <span class="sd">        optional output array, for writing the effective grad of adam_step to. It must</span>
 <span class="sd">        have a shape that the inputs broadcast to.</span>
-
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    ret</span>
 <span class="sd">        The adam step delta.</span>
-
 <span class="sd">    Examples</span>
 <span class="sd">    --------</span>
 <span class="sd">    With :class:`ivy.Array` inputs:</span>
-
 <span class="sd">    &gt;&gt;&gt; dcdw = ivy.array([1, 2, 3])</span>
 <span class="sd">    &gt;&gt;&gt; mw = ivy.ones(3)</span>
 <span class="sd">    &gt;&gt;&gt; vw = ivy.ones(1)</span>
@@ -842,7 +768,6 @@
 <span class="sd">    (ivy.array([0.182, 0.182, 0.182]),</span>
 <span class="sd">    ... ivy.array([0.9, 0.9, 0.9]),</span>
 <span class="sd">    ... ivy.array([0.999, 0.999, 0.999]))</span>
-
 <span class="sd">    &gt;&gt;&gt; dcdw = ivy.array([[1., 4., -3.], [2., 3., 0.5]])</span>
 <span class="sd">    &gt;&gt;&gt; mw = ivy.zeros((2,3))</span>
 <span class="sd">    &gt;&gt;&gt; vw = ivy.zeros(3)</span>
@@ -859,7 +784,6 @@
 <span class="sd">    ...            [ 0.28,  0.42,  0.07]]),</span>
 <span class="sd">     ivy.array([[0.05  , 0.8   , 0.45  ],</span>
 <span class="sd">                [0.2   , 0.45  , 0.0125]]))</span>
-
 <span class="sd">    &gt;&gt;&gt; dcdw = ivy.array([1, -2, 3])</span>
 <span class="sd">    &gt;&gt;&gt; mw = ivy.ones(1)</span>
 <span class="sd">    &gt;&gt;&gt; vw = ivy.ones(1)</span>
@@ -868,9 +792,7 @@
 <span class="sd">    &gt;&gt;&gt; adam_step_delta = ivy.adam_step(dcdw, mw, vw, step, out=out)</span>
 <span class="sd">    &gt;&gt;&gt; print(out)</span>
 <span class="sd">        ivy.array([0.171, 0.171, 0.171])</span>
-
 <span class="sd">    With one :class:`ivy.Container` input:</span>
-
 <span class="sd">    &gt;&gt;&gt; dcdw = ivy.Container(a=ivy.array([0., 1., 2.]),</span>
 <span class="sd">    ...                      b=ivy.array([3., 4., 5.]))</span>
 <span class="sd">    &gt;&gt;&gt; mw = ivy.array([1., 4., 9.])</span>
@@ -892,9 +814,7 @@
 <span class="sd">        a: ivy.array([0., 0.024, 0.096]),</span>
 <span class="sd">        b: ivy.array([0.216, 0.384, 0.6])</span>
 <span class="sd">    })</span>
-
 <span class="sd">    With multiple :class:`ivy.Container` inputs:</span>
-
 <span class="sd">    &gt;&gt;&gt; dcdw = ivy.Container(a=ivy.array([0., 1., 2.]),</span>
 <span class="sd">    ...                      b=ivy.array([3., 4., 5.]))</span>
 <span class="sd">    &gt;&gt;&gt; mw = ivy.Container(a=ivy.array([0., 0., 0.]),</span>
@@ -918,7 +838,6 @@
 <span class="sd">        a: ivy.array([0., 0.024, 0.096]),</span>
 <span class="sd">        b: ivy.array([0.216, 0.384, 0.6])</span>
 <span class="sd">    })</span>
-
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">step</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">step</span><span class="p">)</span>
     <span class="n">mw</span> <span class="o">=</span> <span class="n">ivy</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">beta1</span> <span class="o">*</span> <span class="n">mw</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">beta1</span><span class="p">)</span> <span class="o">*</span> <span class="n">dcdw</span><span class="p">)</span>
@@ -950,7 +869,6 @@
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ivy</span><span class="o">.</span><span class="n">Array</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Update weights ws of some function, given the true or effective derivatives of</span>
 <span class="sd">    some cost c with respect to ws, [dc/dw for w in ws].</span>
-
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">    w</span>
@@ -967,23 +885,19 @@
 <span class="sd">    out</span>
 <span class="sd">        optional output array, for writing the result to. It must have a shape that the</span>
 <span class="sd">        inputs broadcast to.</span>
-
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    ret</span>
 <span class="sd">        The new function weights ws_new, following the optimizer updates.</span>
-
 <span class="sd">    Examples</span>
 <span class="sd">    --------</span>
 <span class="sd">    With :class:`ivy.Array` inputs:</span>
-
 <span class="sd">    &gt;&gt;&gt; w = ivy.array([1., 2., 3.])</span>
 <span class="sd">    &gt;&gt;&gt; effective_grad = ivy.zeros(3)</span>
 <span class="sd">    &gt;&gt;&gt; lr = 3e-4</span>
 <span class="sd">    &gt;&gt;&gt; ws_new = ivy.optimizer_update(w, effective_grad, lr)</span>
 <span class="sd">    &gt;&gt;&gt; print(ws_new)</span>
 <span class="sd">    ivy.array([1., 2., 3.])</span>
-
 <span class="sd">    &gt;&gt;&gt; w = ivy.array([1., 2., 3.])</span>
 <span class="sd">    &gt;&gt;&gt; effective_grad = ivy.zeros(3)</span>
 <span class="sd">    &gt;&gt;&gt; lr = 3e-4</span>
@@ -991,7 +905,6 @@
 <span class="sd">    ...                               out=None, stop_gradients=True)</span>
 <span class="sd">    &gt;&gt;&gt; print(ws_new)</span>
 <span class="sd">    ivy.array([1., 2., 3.])</span>
-
 <span class="sd">    &gt;&gt;&gt; w = ivy.array([[1., 2.], [4., 5.]])</span>
 <span class="sd">    &gt;&gt;&gt; out = ivy.zeros_like(w)</span>
 <span class="sd">    &gt;&gt;&gt; effective_grad = ivy.array([[4., 5.], [7., 8.]])</span>
@@ -1000,7 +913,6 @@
 <span class="sd">    &gt;&gt;&gt; print(out)</span>
 <span class="sd">    ivy.array([[0.999, 1.95],</span>
 <span class="sd">               [4., 4.92]])</span>
-
 <span class="sd">    &gt;&gt;&gt; w = ivy.array([1., 2., 3.])</span>
 <span class="sd">    &gt;&gt;&gt; out = ivy.zeros_like(w)</span>
 <span class="sd">    &gt;&gt;&gt; effective_grad = ivy.array([4., 5., 6.])</span>
@@ -1009,9 +921,7 @@
 <span class="sd">    ...                               stop_gradients=False, out=out)</span>
 <span class="sd">    &gt;&gt;&gt; print(out)</span>
 <span class="sd">    ivy.array([0.999, 2.   , 3.   ])</span>
-
 <span class="sd">    With one :class:`ivy.Container` input:</span>
-
 <span class="sd">    &gt;&gt;&gt; w = ivy.Container(a=ivy.array([0., 1., 2.]),</span>
 <span class="sd">    ...                   b=ivy.array([3., 4., 5.]))</span>
 <span class="sd">    &gt;&gt;&gt; effective_grad = ivy.array([0., 0., 0.])</span>
@@ -1022,9 +932,7 @@
 <span class="sd">        a: ivy.array([0., 1., 2.]),</span>
 <span class="sd">        b: ivy.array([3., 4., 5.])</span>
 <span class="sd">    }</span>
-
 <span class="sd">    With multiple :class:`ivy.Container` inputs:</span>
-
 <span class="sd">    &gt;&gt;&gt; w = ivy.Container(a=ivy.array([0., 1., 2.]),</span>
 <span class="sd">    ...                   b=ivy.array([3., 4., 5.]))</span>
 <span class="sd">    &gt;&gt;&gt; effective_grad = ivy.Container(a=ivy.array([0., 0., 0.]),</span>
@@ -1036,7 +944,6 @@
 <span class="sd">        a: ivy.array([0., 1., 2.]),</span>
 <span class="sd">        b: ivy.array([3., 4., 5.])</span>
 <span class="sd">    }</span>
-
 <span class="sd">    &gt;&gt;&gt; w = ivy.Container(a=ivy.array([0., 1., 2.]),</span>
 <span class="sd">    ...                   b=ivy.array([3., 4., 5.]))</span>
 <span class="sd">    &gt;&gt;&gt; effective_grad = ivy.Container(a=ivy.array([0., 0., 0.]),</span>
@@ -1049,7 +956,6 @@
 <span class="sd">        a: ivy.array([0., 1., 2.]),</span>
 <span class="sd">        b: ivy.array([3., 4., 5.])</span>
 <span class="sd">    }</span>
-
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">deltas</span> <span class="o">=</span> <span class="n">effective_grad</span> <span class="o">*</span> <span class="n">lr</span>
     <span class="n">w</span> <span class="o">=</span> <span class="n">ivy</span><span class="o">.</span><span class="n">subtract</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">deltas</span><span class="p">,</span> <span class="n">out</span><span class="o">=</span><span class="n">out</span><span class="p">)</span>
@@ -1071,7 +977,6 @@
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ivy</span><span class="o">.</span><span class="n">Array</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Update weights ws of some function, given the derivatives of some cost c with</span>
 <span class="sd">    respect to ws, [dc/dw for w in ws].</span>
-
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">    w</span>
@@ -1087,16 +992,13 @@
 <span class="sd">    out</span>
 <span class="sd">        optional output array, for writing the result to. It must have a shape that the</span>
 <span class="sd">        inputs broadcast to.</span>
-
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    ret</span>
 <span class="sd">        The new weights, following the gradient descent updates.</span>
-
 <span class="sd">    Examples</span>
 <span class="sd">    --------</span>
 <span class="sd">    With :class:`ivy.Array` inputs:</span>
-
 <span class="sd">    &gt;&gt;&gt; w = ivy.array([[1., 2, 3],</span>
 <span class="sd">    ...                [4, 6, 1],</span>
 <span class="sd">    ...                [1, 0, 7]])</span>
@@ -1109,7 +1011,6 @@
 <span class="sd">    ivy.array([[ 0.95,  1.98,  2.99],</span>
 <span class="sd">    ...        [ 3.97,  5.94,  0.96],</span>
 <span class="sd">    ...        [ 0.96, -0.07,  6.98]])</span>
-
 <span class="sd">    &gt;&gt;&gt; w = ivy.array([1., 2., 3.])</span>
 <span class="sd">    &gt;&gt;&gt; dcdw = ivy.array([0.5, 0.2, 0.1])</span>
 <span class="sd">    &gt;&gt;&gt; lr = ivy.array(0.3)</span>
@@ -1117,9 +1018,7 @@
 <span class="sd">    &gt;&gt;&gt; ivy.gradient_descent_update(w, dcdw, lr, out=out)</span>
 <span class="sd">    &gt;&gt;&gt; print(out)</span>
 <span class="sd">    ivy.array([0.85, 1.94, 2.97])</span>
-
 <span class="sd">    With one :class:`ivy.Container` inputs:</span>
-
 <span class="sd">    &gt;&gt;&gt; w = ivy.Container(a=ivy.array([1., 2., 3.]),</span>
 <span class="sd">    ...                   b=ivy.array([3.48, 5.72, 1.98]))</span>
 <span class="sd">    &gt;&gt;&gt; dcdw = ivy.array([0.5, 0.2, 0.1])</span>
@@ -1130,9 +1029,7 @@
 <span class="sd">        a: ivy.array([0.85, 1.94, 2.97]),</span>
 <span class="sd">        b: ivy.array([3.33, 5.66, 1.95])</span>
 <span class="sd">    }</span>
-
 <span class="sd">    With multiple :class:`ivy.Container` inputs:</span>
-
 <span class="sd">    &gt;&gt;&gt; w = ivy.Container(a=ivy.array([1., 2., 3.]),</span>
 <span class="sd">    ...                   b=ivy.array([3.48, 5.72, 1.98]))</span>
 <span class="sd">    &gt;&gt;&gt; dcdw = ivy.Container(a=ivy.array([0.5, 0.2, 0.1]),</span>
@@ -1144,7 +1041,6 @@
 <span class="sd">        a: ivy.array([0.85, 1.94, 2.97]),</span>
 <span class="sd">        b: ivy.array([2.88, 4.69, 1.47])</span>
 <span class="sd">    }</span>
-
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">ivy</span><span class="o">.</span><span class="n">optimizer_update</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">dcdw</span><span class="p">,</span> <span class="n">lr</span><span class="p">,</span> <span class="n">stop_gradients</span><span class="o">=</span><span class="n">stop_gradients</span><span class="p">,</span> <span class="n">out</span><span class="o">=</span><span class="n">out</span><span class="p">)</span></div>
 
@@ -1164,7 +1060,6 @@
     <span class="sd">&quot;&quot;&quot;Update weights ws of some function, given the derivatives of some cost c with</span>
 <span class="sd">    respect to ws, [dc/dw for w in ws], by applying Layerwise Adaptive Rate Scaling</span>
 <span class="sd">    (LARS) method.</span>
-
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">    w</span>
@@ -1182,12 +1077,10 @@
 <span class="sd">    out</span>
 <span class="sd">        optional output array, for writing the result to. It must have a shape that the</span>
 <span class="sd">        inputs broadcast to.</span>
-
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    ret</span>
 <span class="sd">        The new function weights ws_new, following the LARS updates.</span>
-
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">w_norm</span> <span class="o">=</span> <span class="n">ivy</span><span class="o">.</span><span class="n">vector_norm</span><span class="p">(</span><span class="n">w</span><span class="p">)</span>
     <span class="n">lr</span> <span class="o">=</span> <span class="n">ivy</span><span class="o">.</span><span class="n">stable_divide</span><span class="p">(</span><span class="n">w_norm</span> <span class="o">*</span> <span class="n">lr</span><span class="p">,</span> <span class="n">ivy</span><span class="o">.</span><span class="n">vector_norm</span><span class="p">(</span><span class="n">dcdw</span><span class="p">))</span>
@@ -1217,9 +1110,7 @@
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ivy</span><span class="o">.</span><span class="n">Array</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Update weights ws of some function, given the derivatives of some cost c with</span>
 <span class="sd">    respect to ws, using ADAM update. `[reference]</span>
-
 <span class="sd">    &lt;https://en.wikipedia.org/wiki/Stochastic_gradient_descent#Adam&gt;`_</span>
-
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">    w</span>
@@ -1247,13 +1138,11 @@
 <span class="sd">    out</span>
 <span class="sd">        optional output array, for writing the new function weights ws_new to. It must</span>
 <span class="sd">        have a shape that the inputs broadcast to.</span>
-
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    ret</span>
 <span class="sd">        The new function weights ws_new, and also new mw and vw, following the adam</span>
 <span class="sd">        updates.</span>
-
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">effective_grads</span><span class="p">,</span> <span class="n">mw</span><span class="p">,</span> <span class="n">vw</span> <span class="o">=</span> <span class="n">ivy</span><span class="o">.</span><span class="n">adam_step</span><span class="p">(</span>
         <span class="n">dcdw</span><span class="p">,</span> <span class="n">mw_tm1</span><span class="p">,</span> <span class="n">vw_tm1</span><span class="p">,</span> <span class="n">step</span><span class="p">,</span> <span class="n">beta1</span><span class="o">=</span><span class="n">beta1</span><span class="p">,</span> <span class="n">beta2</span><span class="o">=</span><span class="n">beta2</span><span class="p">,</span> <span class="n">epsilon</span><span class="o">=</span><span class="n">epsilon</span>
@@ -1291,7 +1180,6 @@
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">ivy</span><span class="o">.</span><span class="n">Array</span><span class="p">,</span> <span class="n">ivy</span><span class="o">.</span><span class="n">Array</span><span class="p">,</span> <span class="n">ivy</span><span class="o">.</span><span class="n">Array</span><span class="p">]:</span>
     <span class="sd">&quot;&quot;&quot;Update weights ws of some function, given the derivatives of some cost c with</span>
 <span class="sd">    respect to ws, [dc/dw for w in ws], by applying LAMB method.</span>
-
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">    w</span>
@@ -1323,16 +1211,13 @@
 <span class="sd">    out</span>
 <span class="sd">        optional output array, for writing the new function weights ws_new to. It must</span>
 <span class="sd">        have a shape that the inputs broadcast to.</span>
-
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    ret</span>
 <span class="sd">        The new function weights ws_new, following the LAMB updates.</span>
-
 <span class="sd">    Examples</span>
 <span class="sd">    --------</span>
 <span class="sd">    With :class:`ivy.Array` inputs:</span>
-
 <span class="sd">    &gt;&gt;&gt; w = ivy.array([1., 2, 3])</span>
 <span class="sd">    &gt;&gt;&gt; dcdw = ivy.array([0.5,0.2,0.1])</span>
 <span class="sd">    &gt;&gt;&gt; lr = ivy.array(0.1)</span>
@@ -1344,7 +1229,6 @@
 <span class="sd">    (ivy.array([0.784, 1.78 , 2.78 ]),</span>
 <span class="sd">    ... ivy.array([0.05, 0.02, 0.01]),</span>
 <span class="sd">    ... ivy.array([2.5e-04, 4.0e-05, 1.0e-05]))</span>
-
 <span class="sd">    &gt;&gt;&gt; w = ivy.array([[1., 2, 3],[4, 6, 1],[1, 0, 7]])</span>
 <span class="sd">    &gt;&gt;&gt; dcdw = ivy.array([[0.5, 0.2, 0.1],[0.3, 0.6, 0.4],[0.4, 0.7, 0.2]])</span>
 <span class="sd">    &gt;&gt;&gt; lr = ivy.array(0.1)</span>
@@ -1367,9 +1251,7 @@
 <span class="sd">    ivy.array([[ 0.639,  1.64 ,  2.64 ],</span>
 <span class="sd">    ...        [ 3.64 ,  5.64 ,  0.639],</span>
 <span class="sd">    ...        [ 0.639, -0.361,  6.64 ]])</span>
-
 <span class="sd">    With one :class:`ivy.Container` inputs:</span>
-
 <span class="sd">    &gt;&gt;&gt; w = ivy.Container(a=ivy.array([1., 2., 3.]), b=ivy.array([4., 5., 6.]))</span>
 <span class="sd">    &gt;&gt;&gt; dcdw = ivy.array([3., 4., 5.])</span>
 <span class="sd">    &gt;&gt;&gt; mw_tm1 = ivy.array([0., 0., 0.])</span>
@@ -1382,16 +1264,13 @@
 <span class="sd">        a: ivy.array([1., 2., 3.]),</span>
 <span class="sd">        b: ivy.array([4., 5., 6.])</span>
 <span class="sd">    }, ivy.array([0.3, 0.4, 0.5]), ivy.array([1.01, 1.01, 1.02]))</span>
-
 <span class="sd">    With multiple :class:`ivy.Container` inputs:</span>
-
 <span class="sd">    &gt;&gt;&gt; w = ivy.Container(a=ivy.array([1.,3.,5.]),</span>
 <span class="sd">    ...                   b=ivy.array([3.,4.,2.]))</span>
 <span class="sd">    &gt;&gt;&gt; dcdw = ivy.Container(a=ivy.array([0.2,0.3,0.6]),</span>
 <span class="sd">    ...                      b=ivy.array([0.6,0.4,0.7]))</span>
 <span class="sd">    &gt;&gt;&gt; mw_tm1 = ivy.Container(a=ivy.array([0.,0.,0.]),</span>
 <span class="sd">    ...                        b=ivy.array([0.,0.,0.]))</span>
-
 <span class="sd">    &gt;&gt;&gt; vw_tm1 = ivy.Container(a=ivy.array([0.,]),</span>
 <span class="sd">    ...                        b=ivy.array([0.,]))</span>
 <span class="sd">    &gt;&gt;&gt; step = ivy.array([3.4])</span>
@@ -1418,7 +1297,6 @@
 <span class="sd">        a: ivy.array([4.0e-05, 9.0e-05, 3.6e-04]),</span>
 <span class="sd">        b: ivy.array([0.00036, 0.00016, 0.00049])</span>
 <span class="sd">    })</span>
-
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">r1</span> <span class="o">=</span> <span class="n">ivy</span><span class="o">.</span><span class="n">vector_norm</span><span class="p">(</span><span class="n">w</span><span class="p">)</span>
     <span class="n">eff_grads</span><span class="p">,</span> <span class="n">mw</span><span class="p">,</span> <span class="n">vw</span> <span class="o">=</span> <span class="n">ivy</span><span class="o">.</span><span class="n">adam_step</span><span class="p">(</span>
