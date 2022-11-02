@@ -55,8 +55,8 @@ def execute_with_gradients(
     func, xs, /, *, retain_grads=False, xs_grad_idxs=None, ret_grad_idxs=None
 ):
     xs = _arrays_to_float_variables(xs)
-    func_ret = func(xs)
     xs = _get_required_native_variables(xs, xs_grad_idxs)
+    func_ret = func(xs)
     ret_idxs, ret_values = _get_native_variables_and_indices(func_ret)
     if ret_values is None or (isinstance(ret_values, list) and len(ret_values) == 0):
         return func_ret, {}
@@ -83,11 +83,10 @@ def execute_with_gradients(
                     )
                 )
                 if isinstance(grads, ivy.Container):
-                    grads = grads.from_flat_list(
-                        ivy.nested_multi_map(
-                            lambda x, y: x[0] if x[1] is None else x[1], [grads_, grads]
-                        )
+                    grads = ivy.nested_map(
+                        grads, lambda x: 0 if x is None else x, include_derived=True
                     )
+                    grads += grads_
                 else:
                     grads = grads_ if grads is None else grads
             else:
