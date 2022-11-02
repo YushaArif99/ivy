@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Backend handler &mdash; Ivy 1.0 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="icon" type="image/png" href="https://github.com/unifyai/unifyai.github.io/blob/master/img/externally_linked/ivy_logo_only.png?raw=true">
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/custom.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -92,15 +93,15 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Docs</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="docs/ivy.html">Ivy</a></li>
-<li class="toctree-l1"><a class="reference internal" href="docs/ivy_mech.html">Ivy mech</a></li>
-<li class="toctree-l1"><a class="reference internal" href="docs/ivy_vision.html">Ivy vision</a></li>
-<li class="toctree-l1"><a class="reference internal" href="docs/ivy_robot.html">Ivy robot</a></li>
-<li class="toctree-l1"><a class="reference internal" href="docs/ivy_gym.html">Ivy gym</a></li>
-<li class="toctree-l1"><a class="reference internal" href="docs/ivy_memory.html">Ivy memory</a></li>
-<li class="toctree-l1"><a class="reference internal" href="docs/ivy_builder.html">Ivy builder</a></li>
-<li class="toctree-l1"><a class="reference internal" href="docs/ivy_models.html">Ivy models</a></li>
-<li class="toctree-l1"><a class="reference internal" href="docs/ivy_ecosystem.html">Ivy ecosystem</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ivy"">Ivy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mech"">Ivy mech</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../vision"">Ivy vision</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../robot"">Ivy robot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../gym"">Ivy gym</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../memory"">Ivy memory</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../builder"">Ivy builder</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../models"">Ivy models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ecosystem"">Ivy ecosystem</a></li>
 </ul>
 
         </div>
@@ -170,7 +171,7 @@ no globally set backend.</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">2.0</span><span class="p">])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">ivy</span><span class="o">.</span><span class="n">current_backend</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
-<span class="go">&lt;module &#39;ivy.functional.backends.numpy&#39; from &#39;/ivy/ivy/functional/backends/numpy/__init__.py&#39;&gt;   # noqa</span>
+<span class="go">&lt;module &#39;ivy.functional.backends.numpy&#39; from &#39;/ivy/ivy/functional/backends/numpy/__init__.py&#39;&gt;   </span>
 </pre></div>
 </div>
 <p>The global backend set in set_backend has priority over any arguments
@@ -179,7 +180,7 @@ passed to current_backend:</p>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">ivy</span><span class="o">.</span><span class="n">set_backend</span><span class="p">(</span><span class="s2">&quot;jax&quot;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">2.0</span><span class="p">])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">ivy</span><span class="o">.</span><span class="n">current_backend</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
-<span class="go">&lt;module &#39;ivy.functional.backends.jax&#39; from &#39;/ivy/ivy/functional/backends/jax/__init__.py&#39;&gt;   # noqa</span>
+<span class="go">&lt;module &#39;ivy.functional.backends.jax&#39; from &#39;/ivy/ivy/functional/backends/jax/__init__.py&#39;&gt;   </span>
 </pre></div>
 </div>
 </dd></dl>
@@ -225,14 +226,14 @@ returns the Ivy backend associated with the current globally set backend.</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ivy</span><span class="o">.</span><span class="n">set_backend</span><span class="p">(</span><span class="s2">&quot;jax&quot;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">ivy_np</span> <span class="o">=</span> <span class="n">ivy</span><span class="o">.</span><span class="n">get_backend</span><span class="p">(</span><span class="s2">&quot;numpy&quot;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">ivy_np</span><span class="p">)</span>
-<span class="go">&lt;module &#39;ivy.functional.backends.numpy&#39; from &#39;/ivy/ivy/functional/backends/numpy/__init__.py&#39;&gt;   # noqa</span>
+<span class="go">&lt;module &#39;ivy.functional.backends.numpy&#39; from &#39;/ivy/ivy/functional/backends/numpy/__init__.py&#39;&gt;   </span>
 </pre></div>
 </div>
 <p>If backend isn’t specified, the global backend is used:</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ivy</span><span class="o">.</span><span class="n">set_backend</span><span class="p">(</span><span class="s2">&quot;jax&quot;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">ivy_jax</span> <span class="o">=</span> <span class="n">ivy</span><span class="o">.</span><span class="n">get_backend</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">ivy_jax</span><span class="p">)</span>
-<span class="go">&lt;module &#39;ivy.functional.backends.jax&#39; from &#39;/ivy/ivy/functional/backends/jax/__init__.py&#39;&gt;   # noqa</span>
+<span class="go">&lt;module &#39;ivy.functional.backends.jax&#39; from &#39;/ivy/ivy/functional/backends/jax/__init__.py&#39;&gt;   </span>
 </pre></div>
 </div>
 </dd></dl>
@@ -264,12 +265,14 @@ will be called from Ivy’s numpy backend:</p>
 <span class="sig-prename descclassname"><span class="pre">ivy.backend_handler.</span></span><span class="sig-name descname"><span class="pre">set_backend_to_specific_version</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">backend</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ivy/backend_handler.html#set_backend_to_specific_version"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ivy.backend_handler.set_backend_to_specific_version" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>backend</strong> – the backend module for which we provide the version support</p></li>
-<li><p><strong>Returns</strong> – The function doesn’t return anything and updates the backend __dict__
-to make the original function name to point to the version specific one</p></li>
-<li><p><strong>-------</strong> – </p></li>
+<dd class="field-odd"><p><strong>backend</strong> – the backend module for which we provide the version support</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><em>The function doesn’t return anything and updates the backend __dict__</em></p></li>
+<li><p><em>to make the original function name to point to the version specific one.</em></p></li>
 </ul>
+</p>
 </dd>
 </dl>
 </dd></dl>
@@ -277,26 +280,26 @@ to make the original function name to point to the version specific one</p></li>
 <dl class="py function">
 <dt class="sig sig-object py" id="ivy.backend_handler.set_jax_backend">
 <span class="sig-prename descclassname"><span class="pre">ivy.backend_handler.</span></span><span class="sig-name descname"><span class="pre">set_jax_backend</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ivy/backend_handler.html#set_jax_backend"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ivy.backend_handler.set_jax_backend" title="Permalink to this definition"></a></dt>
-<dd><p>Sets JAX to be the global backend. equivalent to <cite>ivy.set_backend(“jax”)</cite></p>
+<dd><p>Sets JAX to be the global backend. equivalent to <cite>ivy.set_backend(“jax”)</cite>.</p>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="ivy.backend_handler.set_numpy_backend">
 <span class="sig-prename descclassname"><span class="pre">ivy.backend_handler.</span></span><span class="sig-name descname"><span class="pre">set_numpy_backend</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ivy/backend_handler.html#set_numpy_backend"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ivy.backend_handler.set_numpy_backend" title="Permalink to this definition"></a></dt>
-<dd><p>Sets NumPy to be the global backend. equivalent to <cite>ivy.set_backend(“numpy”)</cite></p>
+<dd><p>Sets NumPy to be the global backend. equivalent to <cite>ivy.set_backend(“numpy”)</cite>.</p>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="ivy.backend_handler.set_tensorflow_backend">
 <span class="sig-prename descclassname"><span class="pre">ivy.backend_handler.</span></span><span class="sig-name descname"><span class="pre">set_tensorflow_backend</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ivy/backend_handler.html#set_tensorflow_backend"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ivy.backend_handler.set_tensorflow_backend" title="Permalink to this definition"></a></dt>
 <dd><p>Sets TensorFlow to be the global backend. equivalent to
-<cite>ivy.set_backend(“tensorflow”)</cite></p>
+<cite>ivy.set_backend(“tensorflow”)</cite>.</p>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="ivy.backend_handler.set_torch_backend">
 <span class="sig-prename descclassname"><span class="pre">ivy.backend_handler.</span></span><span class="sig-name descname"><span class="pre">set_torch_backend</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ivy/backend_handler.html#set_torch_backend"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ivy.backend_handler.set_torch_backend" title="Permalink to this definition"></a></dt>
-<dd><p>Sets torch to be the global backend. equivalent to <cite>ivy.set_backend(“torch”)</cite></p>
+<dd><p>Sets torch to be the global backend. equivalent to <cite>ivy.set_backend(“torch”)</cite>.</p>
 </dd></dl>
 
 <dl class="py function">
