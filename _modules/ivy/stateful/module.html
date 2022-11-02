@@ -1129,7 +1129,8 @@
             <span class="n">track_submod_call_order</span><span class="p">,</span>
             <span class="n">expected_submod_rets</span><span class="p">,</span>
         <span class="p">)</span>
-        <span class="c1"># using the convention that constructor parameters must be keyword-only whereas forward pass is position only</span>
+        <span class="c1"># using the convention that constructor parameters \</span>
+        <span class="c1"># must be keyword-only whereas forward pass is position only</span>
         <span class="n">kwargs</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_kwargs</span><span class="p">)</span>
         <span class="n">ret</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_call</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">v</span><span class="o">=</span><span class="n">v</span><span class="p">,</span> <span class="n">with_grads</span><span class="o">=</span><span class="n">with_grads</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_unset_submod_flags</span><span class="p">()</span>
@@ -1180,8 +1181,9 @@
             <span class="n">dtype</span> <span class="o">=</span> <span class="n">ivy</span><span class="o">.</span><span class="n">default_dtype</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">,</span> <span class="n">as_native</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">dtype</span> <span class="o">=</span> <span class="n">ivy</span><span class="o">.</span><span class="n">default_dtype</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_dtype_</span><span class="p">,</span> <span class="n">as_native</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-
-        <span class="c1"># kwargs[&quot;dtype&quot;] = dtype    TODO: this line causes error when calling consturctor</span>
+        
+        <span class="c1"># TODO: this line causes error when calling consturctor</span>
+        <span class="c1"># kwargs[&quot;dtype&quot;] = dtype    </span>
         <span class="c1"># build local Module, and any child modules flagged with &quot;explicit&quot; build mode</span>
         <span class="n">built</span> <span class="o">=</span> <span class="n">ivy</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_build</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span> <span class="kc">True</span><span class="p">)</span>
 
