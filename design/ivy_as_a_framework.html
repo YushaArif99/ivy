@@ -6,7 +6,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Ivy as a Framework &mdash; Ivy 1.0 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-      <link rel="icon" type="image/png" href="https://github.com/unifyai/unifyai.github.io/blob/master/img/externally_linked/ivy_logo_only.png?raw=true">
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -105,15 +104,15 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Docs</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../ivy"">Ivy</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../mech"">Ivy mech</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../vision"">Ivy vision</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../robot"">Ivy robot</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../gym"">Ivy gym</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../memory"">Ivy memory</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../builder"">Ivy builder</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../models"">Ivy models</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../ecosystem"">Ivy ecosystem</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../docs/ivy.html">Ivy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../docs/ivy_mech.html">Ivy mech</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../docs/ivy_vision.html">Ivy vision</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../docs/ivy_robot.html">Ivy robot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../docs/ivy_gym.html">Ivy gym</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../docs/ivy_memory.html">Ivy memory</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../docs/ivy_builder.html">Ivy builder</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../docs/ivy_models.html">Ivy models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../docs/ivy_ecosystem.html">Ivy ecosystem</a></li>
 </ul>
 
         </div>
@@ -143,14 +142,10 @@
              
   <section id="ivy-as-a-framework">
 <h1>Ivy as a Framework<a class="headerlink" href="#ivy-as-a-framework" title="Permalink to this heading"></a></h1>
-<p>On the <a class="reference internal" href="building_blocks.html#building-blocks"><span class="std std-ref">Building Blocks</span></a> page, we explored the role of the backend functional APIs, the Ivy functional API, the framework handler and the graph compiler.
-These are parts are labelled as (a) in the image below.</p>
-<p>On the <a class="reference internal" href="ivy_as_a_transpiler.html#ivy-as-a-transpiler"><span class="std std-ref">Ivy as a Transpiler</span></a> page, we explained the role of the backend-specific frontends in Ivy, and how these enable automatic code conversions between different ML frameworks.
-This part is labelled as (b) in the image below.</p>
-<p>So far, by considering parts (a) and (b), we have mainly treated Ivy as a fully functional framework with code conversion abilities.
-Ivy builds on these primitives to create a fully-fledged ML framework with stateful classes, optimizers and convenience tools to get ML experiments running in very few lines of code.</p>
-<p>Specifically, here we consider the <code class="xref py py-class docutils literal notranslate"><span class="pre">ivy.Container</span></code> class, the <code class="xref py py-class docutils literal notranslate"><span class="pre">ivy.Array</span></code> class and the stateful API.
-These parts are labelled as (c) in the image below.</p>
+<p>On the <a class="reference internal" href="building_blocks.html#building-blocks"><span class="std std-ref">Building Blocks</span></a> page, we explored the role of the backend functional APIs, the Ivy functional API, the framework handler and the graph compiler. These are parts are labelled as (a) in the image below.</p>
+<p>On the <a class="reference internal" href="ivy_as_a_transpiler.html#ivy-as-a-transpiler"><span class="std std-ref">Ivy as a Transpiler</span></a> page, we explained the role of the backend-specific frontends in Ivy, and how these enable automatic code conversions between different ML frameworks. This part is labelled as (b) in the image below.</p>
+<p>So far, by considering parts (a) and (b), we have mainly treated Ivy as a fully functional framework with code conversion abilities. Ivy builds on these primitives to create a fully-fledged ML framework with stateful classes, optimizers and convenience tools to get ML experiments running in very few lines of code.</p>
+<p>Specifically, here we consider the <code class="xref py py-class docutils literal notranslate"><span class="pre">ivy.Container</span></code> class, the <code class="xref py py-class docutils literal notranslate"><span class="pre">ivy.Array</span></code> class and the stateful API. These parts are labelled as (c) in the image below.</p>
 <a class="reference internal image-reference" href="https://github.com/unifyai/unifyai.github.io/blob/master/img/externally_linked/design/submodule_dependency_graph.png?raw=true"><img alt="https://github.com/unifyai/unifyai.github.io/blob/master/img/externally_linked/design/submodule_dependency_graph.png?raw=true" class="align-center" src="https://github.com/unifyai/unifyai.github.io/blob/master/img/externally_linked/design/submodule_dependency_graph.png?raw=true" style="width: 100%;" /></a>
 <p>You may choose from the following upcoming discussions or click next.</p>
 <div class="line-block">
