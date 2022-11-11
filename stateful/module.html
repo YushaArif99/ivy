@@ -93,7 +93,6 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Module</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="module/Module.html">Module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="module/MyTorchModule.html">MyTorchModule</a></li>
-<li class="toctree-l2"><a class="reference internal" href="module/MyHaikuModel.html">MyHaikuModel</a></li>
 <li class="toctree-l2"><a class="reference internal" href="module/MyTFModule.html">MyTFModule</a></li>
 </ul>
 </li>
@@ -250,7 +249,8 @@ returns passed during call</p>
 <em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_haiku_module</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">native_module</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">args</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kwargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">devices</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ivy/stateful/module.html#Module.from_haiku_module"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ivy.stateful.module.Module.from_haiku_module" title="Permalink to this definition"></a></dt>
 <dd><p>Converts a Haiku module instance to an Ivy module instance.
 If Passing a module class rather than an instance, pass all <cite>constructor
-arguments</cite> as <strong>keyword-only</strong> and model’s <cite>forward-pass arguments</cite> as <strong>position-only</strong>.</p>
+arguments</cite> as <strong>keyword-only</strong> and model’s <cite>forward-pass arguments</cite>
+as <strong>position-only</strong>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -277,7 +277,8 @@ Default is <code class="docutils literal notranslate"><span class="pre">None</sp
 <em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_keras_module</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">native_module</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">args</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kwargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">devices</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ivy/stateful/module.html#Module.from_keras_module"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ivy.stateful.module.Module.from_keras_module" title="Permalink to this definition"></a></dt>
 <dd><p>Converts a Keras module instance to an Ivy module instance.
 If Passing a module class rather than an instance, pass all <cite>constructor
-arguments</cite> as <strong>keyword-only</strong> and model’s <cite>forward-pass arguments</cite> as <strong>position-only</strong>.</p>
+arguments</cite> as <strong>keyword-only</strong> and model’s <cite>forward-pass arguments</cite>
+as <strong>position-only</strong>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -304,7 +305,8 @@ Default is <code class="docutils literal notranslate"><span class="pre">None</sp
 <em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_torch_module</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">native_module</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">args</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kwargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">devices</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inplace_update</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ivy/stateful/module.html#Module.from_torch_module"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ivy.stateful.module.Module.from_torch_module" title="Permalink to this definition"></a></dt>
 <dd><p>Converts a Torch module instance to an Ivy module instance.
 If Passing a module class rather than an instance, pass all <cite>constructor
-arguments</cite> as <strong>keyword-only</strong> and model’s <cite>forward-pass arguments</cite> as <strong>position-only</strong>.</p>
+arguments</cite> as <strong>keyword-only</strong> and model’s <cite>forward-pass arguments</cite>
+as <strong>position-only</strong>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -439,11 +441,6 @@ current module. Default is <code class="docutils literal notranslate"><span clas
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="ivy.stateful.module.Module.static_to_haiku_module">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">static_to_haiku_module</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ivy_module</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ivy/stateful/module.html#Module.static_to_haiku_module"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ivy.stateful.module.Module.static_to_haiku_module" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
 <dt class="sig sig-object py" id="ivy.stateful.module.Module.sub_mods">
 <span class="sig-name descname"><span class="pre">sub_mods</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_v</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">depth</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">flatten_key_chains</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ivy/stateful/module.html#Module.sub_mods"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ivy.stateful.module.Module.sub_mods" title="Permalink to this definition"></a></dt>
 <dd><p>Return a container composing of all submodules.</p>
@@ -537,28 +534,6 @@ current module. Default is <code class="docutils literal notranslate"><span clas
 <li><p><strong>flatten_key_chains</strong> – If set True, will return a flat (depth-1) container,
 which all nested key-chains flattened. Default is <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p></li>
 </ul>
-</dd>
-</dl>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="py class">
-<dt class="sig sig-object py" id="ivy.stateful.module.MyHaikuModel">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ivy.stateful.module.</span></span><span class="sig-name descname"><span class="pre">MyHaikuModel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ivy/stateful/module.html#MyHaikuModel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ivy.stateful.module.MyHaikuModel" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
-<dl class="py method">
-<dt class="sig sig-object py" id="ivy.stateful.module.MyHaikuModel.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ivy_module</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ivy/stateful/module.html#MyHaikuModel.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ivy.stateful.module.MyHaikuModel.__init__" title="Permalink to this definition"></a></dt>
-<dd><p>Initializes the current module with the given name.</p>
-<p>Subclasses should call this constructor before creating other modules or
-variables such that those modules are named correctly.</p>
-<dl class="simple">
-<dt>Args:</dt><dd><dl class="simple">
-<dt>name: An optional string name for the class. Must be a valid Python</dt><dd><p>identifier. If <code class="docutils literal notranslate"><span class="pre">name</span></code> is not provided then the class name for the
-current instance is converted to <code class="docutils literal notranslate"><span class="pre">lower_snake_case</span></code> and used instead.</p>
-</dd>
-</dl>
 </dd>
 </dl>
 </dd></dl>

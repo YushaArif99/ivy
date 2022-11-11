@@ -15,7 +15,6 @@ Module
 
    module/Module.rst
    module/MyTorchModule.rst
-   module/MyHaikuModel.rst
    module/MyTFModule.rst
 
 .. _`discord`: https://discord.gg/ZVQdvbzNQJ 
