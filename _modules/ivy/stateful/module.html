@@ -149,7 +149,7 @@
 <span class="kn">import</span> <span class="nn">ivy</span>
 <span class="kn">from</span> <span class="nn">ivy.container</span> <span class="kn">import</span> <span class="n">Container</span>
 <span class="kn">from</span> <span class="nn">ivy.func_wrapper</span> <span class="kn">import</span> <span class="n">_get_first_array</span>
-
+<span class="kn">from</span> <span class="nn">ivy.functional.ivy.gradients</span> <span class="kn">import</span> <span class="n">_is_variable</span>
 <span class="c1"># Base #</span>
 <span class="c1"># -----#</span>
 
@@ -1284,7 +1284,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_build_mode</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">built</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">built_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_built</span>
 
     <span class="c1"># Module Converters #</span>
@@ -1669,7 +1669,7 @@
                         <span class="n">native</span><span class="o">.</span><span class="n">_modules</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_replace_update_v</span><span class="p">(</span>
                             <span class="n">v</span><span class="p">,</span> <span class="n">native</span><span class="o">.</span><span class="n">_modules</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
                         <span class="p">)</span>
-                    <span class="k">elif</span> <span class="n">ivy</span><span class="o">.</span><span class="n">is_variable</span><span class="p">(</span><span class="n">v</span><span class="p">):</span>
+                    <span class="k">elif</span> <span class="n">_is_variable</span><span class="p">(</span><span class="n">v</span><span class="p">):</span>
                         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Parameter</span><span class="p">):</span>
                             <span class="c1"># noinspection PyProtectedMember</span>
                             <span class="n">native</span><span class="o">.</span><span class="fm">__setattr__</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
@@ -1754,7 +1754,9 @@
         <span class="n">ret</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ivy_module</span><span class="o">.</span><span class="n">_forward</span><span class="p">(</span><span class="o">*</span><span class="n">a</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">)</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ret</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
             <span class="k">return</span> <span class="n">ivy</span><span class="o">.</span><span class="n">args_to_native</span><span class="p">(</span><span class="o">*</span><span class="n">ret</span><span class="p">)</span>
+
         <span class="k">return</span> <span class="n">ivy</span><span class="o">.</span><span class="n">to_native</span><span class="p">(</span><span class="n">ret</span><span class="p">)</span></div></div>
+
 </pre></div>
 
            </div>
