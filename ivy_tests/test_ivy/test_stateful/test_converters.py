@@ -11,9 +11,6 @@ import jax.numpy as jnp
 import tensorflow as tf
 # local
 import ivy
-import ivy.functional.backends.torch as torch_
-import ivy.functional.backends.tensorflow as tf_
-import ivy.functional.backends.jax as jax_
 
 
 class IvyModel(ivy.Module):
@@ -42,7 +39,7 @@ class TensorflowLinear(tf.keras.Model):
 
 
 class TensorflowModule(tf.keras.Model):
-    def __init__(self,  in_size, out_size, device=None, hidden_size=64):
+    def __init__(self, in_size, out_size, device=None, hidden_size=64):
         super(TensorflowModule, self).__init__()
         self._linear0 = TensorflowLinear(hidden_size)
         self._linear1 = TensorflowLinear(hidden_size)
@@ -102,16 +99,17 @@ class HaikuModule(hk.Module):
 
 
 NATIVE_MODULES = {
-"torch": TorchModule,
-"jax": HaikuModule,
-"tensorflow": TensorflowModule
+    "torch": TorchModule,
+    "jax": HaikuModule,
+    "tensorflow": TensorflowModule
 }
 
 FROM_CONVERTERS = {
-"torch": ivy.Module.from_torch_module,
-"jax": ivy.Module.from_haiku_module,
-"tensorflow": ivy.Module.from_keras_module
+    "torch": ivy.Module.from_torch_module,
+    "jax": ivy.Module.from_haiku_module,
+    "tensorflow": ivy.Module.from_keras_module
 }
+
 
 @pytest.mark.parametrize("bs_ic_oc", [([1, 2], 4, 5)])
 @pytest.mark.parametrize("from_class_and_args", [True, False])
@@ -150,7 +148,10 @@ def test_from_backend_module(bs_ic_oc, from_class_and_args, device):
             )
             native_module.build((input_channels,))
         else:
-            native_module = native_module_class(in_size=input_channels, out_size=output_channels)
+            native_module = native_module_class(
+                in_size=input_channels,
+                out_size=output_channels
+            )
 
         ivy_module = module_converter(native_module)
 
