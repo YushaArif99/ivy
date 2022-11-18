@@ -64,7 +64,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../functional/ivy/general.html">General</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../functional/ivy/gradients.html">Gradients</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../functional/ivy/layers.html">Layers</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../functional/ivy/linear_algebra.html">Linear algebra</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../functional/ivy/linalg.html">Linalg</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../functional/ivy/losses.html">Losses</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../functional/ivy/manipulation.html">Manipulation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../functional/ivy/meta.html">Meta</a></li>
@@ -203,8 +203,8 @@ is raised during the compiled forward pass. Default is <code class="docutils lit
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="ivy.stateful.module.Module.build">
-<span class="sig-name descname"><span class="pre">build</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">from_call</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dtype</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ivy/stateful/module.html#Module.build"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ivy.stateful.module.Module.build" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="ivy.stateful.module.Module.build_">
+<span class="sig-name descname"><span class="pre">build_</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">from_call</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dtype</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ivy/stateful/module.html#Module.build_"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ivy.stateful.module.Module.build_" title="Permalink to this definition"></a></dt>
 <dd><p>Build the internal layers and variables for this module.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -228,8 +228,8 @@ Default is <code class="docutils literal notranslate"><span class="pre">None</sp
 <dd></dd></dl>
 
 <dl class="py property">
-<dt class="sig sig-object py" id="ivy.stateful.module.Module.built">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">built</span></span><a class="headerlink" href="#ivy.stateful.module.Module.built" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="ivy.stateful.module.Module.built_">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">built_</span></span><a class="headerlink" href="#ivy.stateful.module.Module.built_" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -246,27 +246,21 @@ returns passed during call</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ivy.stateful.module.Module.from_haiku_module">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_haiku_module</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">native_module</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">constructor_args</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">constructor_kwargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instance_args</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instance_kwargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">devices</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ivy/stateful/module.html#Module.from_haiku_module"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ivy.stateful.module.Module.from_haiku_module" title="Permalink to this definition"></a></dt>
-<dd><p>Converts a Haiku module instance to an Ivy module instance.</p>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_haiku_module</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">native_module</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">args</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kwargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">devices</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ivy/stateful/module.html#Module.from_haiku_module"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ivy.stateful.module.Module.from_haiku_module" title="Permalink to this definition"></a></dt>
+<dd><p>Converts a Haiku module instance to an Ivy module instance.
+If Passing a module class rather than an instance, pass all <cite>constructor
+arguments</cite> as <strong>keyword-only</strong> and model’s <cite>forward-pass arguments</cite>
+as <strong>position-only</strong>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>native_module</strong> – The module in the native framework to convert(class or instance).</p></li>
-<li><p><strong>constructor_args</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>]) – Positional arguments to pass to the constructor of the native module. (default: <code class="docutils literal notranslate"><span class="pre">None</span></code>)
+<li><p><strong>native_module</strong> – The module in the native framework to convert(class or instance)</p></li>
+<li><p><strong>args</strong> – Positional arguments to pass to the forward pass of the native module class.
 Default is <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p></li>
-<li><p><strong>constructor_kwargs</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>]) – <p>(default: <code class="docutils literal notranslate"><span class="pre">None</span></code>)
-Key-word arguments to pass to the constructor of the native module.</p>
-<blockquote>
-<div><p>Default is <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
-</div></blockquote>
-</p></li>
-<li><p><strong>instance_args</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>]) – Positional arguments to pass to the forward pass of the native module. (default: <code class="docutils literal notranslate"><span class="pre">None</span></code>)
-Default is <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p></li>
-<li><p><strong>instance_kwargs</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>]) – <p>(default: <code class="docutils literal notranslate"><span class="pre">None</span></code>)
-Key-word arguments to pass to the forward pass of the native module.</p>
-<blockquote>
-<div><p>Default is <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
-</div></blockquote>
+<li><p><strong>kwargs</strong> – <dl class="simple">
+<dt>Key-word arguments to pass to the constructor of the native module class.</dt><dd><p>Default is <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
+</dd>
+</dl>
 </p></li>
 <li><p><strong>device</strong> – The device on which to create module variables. Default is <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p></li>
 <li><p><strong>devices</strong> – The devices on which to create module variables. Default is <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p></li>
@@ -280,27 +274,21 @@ Key-word arguments to pass to the forward pass of the native module.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ivy.stateful.module.Module.from_keras_module">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_keras_module</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">native_module</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">constructor_args</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">constructor_kwargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instance_args</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instance_kwargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">devices</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ivy/stateful/module.html#Module.from_keras_module"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ivy.stateful.module.Module.from_keras_module" title="Permalink to this definition"></a></dt>
-<dd><p>Converts a Keras module instance to an Ivy module instance.</p>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_keras_module</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">native_module</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">args</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kwargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">devices</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ivy/stateful/module.html#Module.from_keras_module"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ivy.stateful.module.Module.from_keras_module" title="Permalink to this definition"></a></dt>
+<dd><p>Converts a Keras module instance to an Ivy module instance.
+If Passing a module class rather than an instance, pass all <cite>constructor
+arguments</cite> as <strong>keyword-only</strong> and model’s <cite>forward-pass arguments</cite>
+as <strong>position-only</strong>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>native_module</strong> – The module in the native framework to convert(class or instance).</p></li>
-<li><p><strong>constructor_args</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>]) – Positional arguments to pass to the constructor of the native module. (default: <code class="docutils literal notranslate"><span class="pre">None</span></code>)
+<li><p><strong>native_module</strong> – The module in the native framework to convert(class or instance)</p></li>
+<li><p><strong>args</strong> – Positional arguments to pass to the forward pass of the native module class.
 Default is <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p></li>
-<li><p><strong>constructor_kwargs</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>]) – <p>(default: <code class="docutils literal notranslate"><span class="pre">None</span></code>)
-Key-word arguments to pass to the constructor of the native module.</p>
-<blockquote>
-<div><p>Default is <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
-</div></blockquote>
-</p></li>
-<li><p><strong>instance_args</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>]) – Positional arguments to pass to the forward pass of the native module. (default: <code class="docutils literal notranslate"><span class="pre">None</span></code>)
-Default is <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p></li>
-<li><p><strong>instance_kwargs</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>]) – <p>(default: <code class="docutils literal notranslate"><span class="pre">None</span></code>)
-Key-word arguments to pass to the forward pass of the native module.</p>
-<blockquote>
-<div><p>Default is <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
-</div></blockquote>
+<li><p><strong>kwargs</strong> – <dl class="simple">
+<dt>Key-word arguments to pass to the constructor of the native module class.</dt><dd><p>Default is <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
+</dd>
+</dl>
 </p></li>
 <li><p><strong>device</strong> – The device on which to create module variables. Default is <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p></li>
 <li><p><strong>devices</strong> – The devices on which to create module variables. Default is <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p></li>
@@ -314,27 +302,21 @@ Key-word arguments to pass to the forward pass of the native module.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ivy.stateful.module.Module.from_torch_module">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_torch_module</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">native_module</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">constructor_args</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">constructor_kwargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instance_args</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instance_kwargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">devices</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inplace_update</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ivy/stateful/module.html#Module.from_torch_module"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ivy.stateful.module.Module.from_torch_module" title="Permalink to this definition"></a></dt>
-<dd><p>Converts a Torch module instance to an Ivy module instance.</p>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_torch_module</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">native_module</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">args</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kwargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">devices</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inplace_update</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ivy/stateful/module.html#Module.from_torch_module"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ivy.stateful.module.Module.from_torch_module" title="Permalink to this definition"></a></dt>
+<dd><p>Converts a Torch module instance to an Ivy module instance.
+If Passing a module class rather than an instance, pass all <cite>constructor
+arguments</cite> as <strong>keyword-only</strong> and model’s <cite>forward-pass arguments</cite>
+as <strong>position-only</strong>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>native_module</strong> – The module in the native framework to convert(class or instance)</p></li>
-<li><p><strong>constructor_args</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>]) – Positional arguments to pass to the constructor of the native module. (default: <code class="docutils literal notranslate"><span class="pre">None</span></code>)
+<li><p><strong>args</strong> – Positional arguments to pass to the forward pass of the native module class.
 Default is <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p></li>
-<li><p><strong>constructor_kwargs</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>]) – <p>(default: <code class="docutils literal notranslate"><span class="pre">None</span></code>)
-Key-word arguments to pass to the constructor of the native module.</p>
-<blockquote>
-<div><p>Default is <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
-</div></blockquote>
-</p></li>
-<li><p><strong>instance_args</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>]) – Positional arguments to pass to the forward pass of the native module. (default: <code class="docutils literal notranslate"><span class="pre">None</span></code>)
-Default is <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p></li>
-<li><p><strong>instance_kwargs</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>]) – <p>(default: <code class="docutils literal notranslate"><span class="pre">None</span></code>)
-Key-word arguments to pass to the forward pass of the native module.</p>
-<blockquote>
-<div><p>Default is <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
-</div></blockquote>
+<li><p><strong>kwargs</strong> – <dl class="simple">
+<dt>Key-word arguments to pass to the constructor of the native module class.</dt><dd><p>Default is <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
+</dd>
+</dl>
 </p></li>
 <li><p><strong>device</strong> – The device on which to create module variables. Default is <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p></li>
 <li><p><strong>devices</strong> – The devices on which to create module variables. Default is <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p></li>
