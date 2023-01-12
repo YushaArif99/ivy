@@ -293,6 +293,13 @@ Citation
 .. toctree::
    :hidden:
    :maxdepth: -1
+   :caption: Compiler
+
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: -1
    :caption: Functions
 
    functional/backends.rst

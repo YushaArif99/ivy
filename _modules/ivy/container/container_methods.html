@@ -6350,11 +6350,11 @@
     <span class="k">return</span> <span class="n">ContainerBase</span><span class="o">.</span><span class="n">cont_multi_map_in_function</span><span class="p">(</span>
         <span class="s2">&quot;zeros&quot;</span><span class="p">,</span>
         <span class="n">shape</span><span class="p">,</span>
-        <span class="n">key_chains</span><span class="p">,</span>
-        <span class="n">to_apply</span><span class="p">,</span>
-        <span class="n">prune_unapplied</span><span class="p">,</span>
-        <span class="n">map_sequences</span><span class="p">,</span>
-        <span class="n">out</span><span class="p">,</span>
+        <span class="n">key_chains</span><span class="o">=</span><span class="n">key_chains</span><span class="p">,</span>
+        <span class="n">to_apply</span><span class="o">=</span><span class="n">to_apply</span><span class="p">,</span>
+        <span class="n">prune_unapplied</span><span class="o">=</span><span class="n">prune_unapplied</span><span class="p">,</span>
+        <span class="n">map_sequences</span><span class="o">=</span><span class="n">map_sequences</span><span class="p">,</span>
+        <span class="n">out</span><span class="o">=</span><span class="n">out</span><span class="p">,</span>
         <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">,</span>
         <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">,</span>
     <span class="p">)</span></div>
@@ -7408,6 +7408,37 @@
 <span class="sd">    ret</span>
 <span class="sd">        container with tensors of zeros with the same shape and type as the inputs,</span>
 <span class="sd">        unless dtype provided which overrides.</span>
+<span class="sd">    </span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    With :class:`ivy.Container` inputs:</span>
+
+<span class="sd">    &gt;&gt;&gt; x = ivy.Container(a=ivy.array([1, 2]), \</span>
+<span class="sd">        b=ivy.array([3, 1]), c=ivy.array([2, 3]))</span>
+<span class="sd">    &gt;&gt;&gt; y = 5</span>
+<span class="sd">    &gt;&gt;&gt; z = ivy.Container.static_one_hot(x, y)</span>
+<span class="sd">    &gt;&gt;&gt; print(z)</span>
+<span class="sd">    {</span>
+<span class="sd">        a: ivy.array([[0., 1., 0., 0., 0.], </span>
+<span class="sd">                    [0., 0., 1., 0., 0.]]),</span>
+<span class="sd">        b: ivy.array([[0., 0., 0., 1., 0.], </span>
+<span class="sd">                    [0., 1., 0., 0., 0.]]),</span>
+<span class="sd">        c: ivy.array([[0., 0., 1., 0., 0.], </span>
+<span class="sd">                    [0., 0., 0., 1., 0.]])</span>
+<span class="sd">    }</span>
+
+<span class="sd">    &gt;&gt;&gt; x = ivy.Container(a=ivy.array([1, 2]), \</span>
+<span class="sd">        b=ivy.array([]), c=ivy.native_array([4]))</span>
+<span class="sd">    &gt;&gt;&gt; y = 5</span>
+<span class="sd">    &gt;&gt;&gt; z = ivy.Container.static_one_hot(x, y)</span>
+<span class="sd">    &gt;&gt;&gt; print(z)</span>
+<span class="sd">    {</span>
+<span class="sd">        a: ivy.array([[0., 1., 0., 0., 0.], </span>
+<span class="sd">                    [0., 0., 1., 0., 0.]]),</span>
+<span class="sd">        b: ivy.array([], shape=(0, 5)),</span>
+<span class="sd">        c: ivy.array([[0., 0., 0., 0., 1.]])</span>
+<span class="sd">    }</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">ContainerBase</span><span class="o">.</span><span class="n">cont_multi_map_in_function</span><span class="p">(</span>
         <span class="s2">&quot;one_hot&quot;</span><span class="p">,</span>
@@ -7439,7 +7470,7 @@
     <span class="n">prune_unapplied</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="n">map_sequences</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="n">out</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">ivy</span><span class="o">.</span><span class="n">Container</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-<span class="p">):</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ivy</span><span class="o">.</span><span class="n">Container</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    ivy.Container instance method variant of ivy.one_hot. This method</span>
 <span class="sd">    simply wraps the function, and so the docstring for ivy.one_hot</span>
@@ -7480,6 +7511,36 @@
 <span class="sd">    ret</span>
 <span class="sd">        container with tensors of zeros with the same shape and type as the inputs,</span>
 <span class="sd">        unless dtype provided which overrides.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    With :class:`ivy.Container` input:</span>
+
+<span class="sd">    &gt;&gt;&gt; x = ivy.Container(a=ivy.array([1, 2]), \</span>
+<span class="sd">         b=ivy.array([3, 1]), c=ivy.array([2, 3]))</span>
+<span class="sd">    &gt;&gt;&gt; y = 5</span>
+<span class="sd">    &gt;&gt;&gt; z = x.one_hot(y)</span>
+<span class="sd">    &gt;&gt;&gt; print(z)</span>
+<span class="sd">    {</span>
+<span class="sd">        a: ivy.array([[0., 1., 0., 0., 0.], </span>
+<span class="sd">                    [0., 0., 1., 0., 0.]]),</span>
+<span class="sd">        b: ivy.array([[0., 0., 0., 1., 0.], </span>
+<span class="sd">                    [0., 1., 0., 0., 0.]]),</span>
+<span class="sd">        c: ivy.array([[0., 0., 1., 0., 0.], </span>
+<span class="sd">                    [0., 0., 0., 1., 0.]])</span>
+<span class="sd">    }</span>
+
+<span class="sd">    &gt;&gt;&gt; x = ivy.Container(a=ivy.array([1, 2]), \</span>
+<span class="sd">         b=ivy.array([]), c=ivy.native_array([4]))</span>
+<span class="sd">    &gt;&gt;&gt; y = 5</span>
+<span class="sd">    &gt;&gt;&gt; z = x.one_hot(y)</span>
+<span class="sd">    &gt;&gt;&gt; print(z)</span>
+<span class="sd">    {</span>
+<span class="sd">        a: ivy.array([[0., 1., 0., 0., 0.], </span>
+<span class="sd">                    [0., 0., 1., 0., 0.]]),</span>
+<span class="sd">        b: ivy.array([], shape=(0, 5)),</span>
+<span class="sd">        c: ivy.array([[0., 0., 0., 0., 1.]])</span>
+<span class="sd">    }</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">static_one_hot</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
@@ -17775,6 +17836,8 @@
 <span class="kn">import</span> <span class="nn">ivy</span>
 <span class="kn">from</span> <span class="nn">ivy.container.base</span> <span class="kn">import</span> <span class="n">ContainerBase</span>
 <span class="kn">from</span> <span class="nn">ivy.container.base</span> <span class="kn">import</span> <span class="n">ContainerBase</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Union</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Optional</span>
+<span class="kn">import</span> <span class="nn">ivy</span>
 <span class="c1"># global</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Dict</span>
 <span class="c1"># local</span>
@@ -18727,6 +18790,274 @@
         <span class="n">n</span><span class="o">=</span><span class="n">n</span><span class="p">,</span>
         <span class="n">axis</span><span class="o">=</span><span class="n">axis</span><span class="p">,</span>
         <span class="n">norm</span><span class="o">=</span><span class="n">norm</span><span class="p">,</span>
+        <span class="n">out</span><span class="o">=</span><span class="n">out</span><span class="p">,</span>
+    <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="static_fft"><a class="viewcode-back" href="../../../functional/ivy/experimental/fft/static_fft_container.html#ivy.container.container_methods.static_fft">[docs]</a><span class="k">def</span> <span class="nf">static_fft</span><span class="p">(</span>
+    <span class="n">x</span><span class="p">:</span> <span class="n">ivy</span><span class="o">.</span><span class="n">Container</span><span class="p">,</span>
+    <span class="n">dim</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="o">/</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">norm</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;backward&quot;</span><span class="p">,</span>
+    <span class="n">n</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">]]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">key_chains</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">to_apply</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="n">prune_unapplied</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">map_sequences</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">out</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">ivy</span><span class="o">.</span><span class="n">Container</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;ivy.Container static method variant of ivy.fft. This method simply wraps</span>
+<span class="sd">    the function, and so the docstring for ivy.fft also applies to this method</span>
+<span class="sd">    with minimal changes.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    x</span>
+<span class="sd">        Container containing input volumes *[...,d_in,...]*,</span>
+<span class="sd">        where d_in indicates the dimension that needs FFT.</span>
+<span class="sd">    dim</span>
+<span class="sd">        The dimension along which to take the one dimensional FFT.</span>
+<span class="sd">    norm</span>
+<span class="sd">        Optional argument, &quot;backward&quot;, &quot;ortho&quot; or &quot;forward&quot;. Defaults to be</span>
+<span class="sd">        &quot;backward&quot;.</span>
+<span class="sd">        &quot;backward&quot; indicates no normalization.</span>
+<span class="sd">        &quot;ortho&quot; indicates normalization by 1/sqrt(n).</span>
+<span class="sd">        &quot;forward&quot; indicates normalization by 1/n.</span>
+<span class="sd">    n</span>
+<span class="sd">        Optional argument indicating the sequence length, if given, the input</span>
+<span class="sd">        would be padded with zero or truncated to length n before performing FFT.</span>
+<span class="sd">        Should be a integer greater than 1.</span>
+<span class="sd">    out</span>
+<span class="sd">        Optional output array, for writing the result to. It must have a shape that</span>
+<span class="sd">        the inputs broadcast to.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    ret</span>
+<span class="sd">        The transformed input.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; a = ivy.array(np.array([ 6.+0.j, -2.+2.j, -2.+0.j, -2.-2.j]))</span>
+<span class="sd">    &gt;&gt;&gt; b = ivy.array(np.exp(2j * np.pi * np.arange(8) / 8))</span>
+<span class="sd">    &gt;&gt;&gt; c = ivy.Container(a=a, b=b)</span>
+<span class="sd">    &gt;&gt;&gt; dims = ivy.Container(a=0, b=0)</span>
+<span class="sd">    &gt;&gt;&gt; ivy.Container.static_fft(c, dims)</span>
+<span class="sd">    {</span>
+<span class="sd">    a: ivy.array([0.+0.j, 12.+0.j, 8.+0.j, 4.+0.j]),</span>
+<span class="sd">    b: ivy.array([-3.44509285e-16+1.14423775e-17j, 8.00000000e+00-8.11483250e-16j,</span>
+<span class="sd">                   2.33486982e-16+1.22464680e-16j, 0.00000000e+00+1.22464680e-16j,</span>
+<span class="sd">                   9.95799250e-17+2.33486982e-16j, 0.00000000e+00+7.66951701e-17j,</span>
+<span class="sd">                   1.14423775e-17+1.22464680e-16j, 0.00000000e+00+1.22464680e-16j])</span>
+<span class="sd">    }</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">ContainerBase</span><span class="o">.</span><span class="n">cont_multi_map_in_function</span><span class="p">(</span>
+        <span class="s2">&quot;fft&quot;</span><span class="p">,</span>
+        <span class="n">x</span><span class="p">,</span>
+        <span class="n">dim</span><span class="p">,</span>
+        <span class="n">norm</span><span class="o">=</span><span class="n">norm</span><span class="p">,</span>
+        <span class="n">n</span><span class="o">=</span><span class="n">n</span><span class="p">,</span>
+        <span class="n">key_chains</span><span class="o">=</span><span class="n">key_chains</span><span class="p">,</span>
+        <span class="n">to_apply</span><span class="o">=</span><span class="n">to_apply</span><span class="p">,</span>
+        <span class="n">prune_unapplied</span><span class="o">=</span><span class="n">prune_unapplied</span><span class="p">,</span>
+        <span class="n">map_sequences</span><span class="o">=</span><span class="n">map_sequences</span><span class="p">,</span>
+        <span class="n">out</span><span class="o">=</span><span class="n">out</span><span class="p">,</span>
+    <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="fft"><a class="viewcode-back" href="../../../functional/ivy/experimental/fft/fft_container.html#ivy.container.container_methods.fft">[docs]</a><span class="k">def</span> <span class="nf">fft</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">:</span> <span class="n">ivy</span><span class="o">.</span><span class="n">Container</span><span class="p">,</span>
+    <span class="n">dim</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="o">/</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">norm</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;backward&quot;</span><span class="p">,</span>
+    <span class="n">n</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">]]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">out</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">ivy</span><span class="o">.</span><span class="n">Array</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;ivy.Container instance method variant of ivy.fft. This method simply wraps</span>
+<span class="sd">    the function, and so the docstring for ivy.fft also applies to this method</span>
+<span class="sd">    with minimal changes.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    self</span>
+<span class="sd">        Container containing input volumes *[...,d_in,...]*,</span>
+<span class="sd">        where d_in indicates the dimension that needs FFT.</span>
+<span class="sd">    dim</span>
+<span class="sd">        The dimension along which to take the one dimensional FFT.</span>
+<span class="sd">    norm</span>
+<span class="sd">        Optional argument, &quot;backward&quot;, &quot;ortho&quot; or &quot;forward&quot;. Defaults to be</span>
+<span class="sd">        &quot;backward&quot;.</span>
+<span class="sd">        &quot;backward&quot; indicates no normalization.</span>
+<span class="sd">        &quot;ortho&quot; indicates normalization by 1/sqrt(n).</span>
+<span class="sd">        &quot;forward&quot; indicates normalization by 1/n.</span>
+<span class="sd">    n</span>
+<span class="sd">        Optional argument indicating the sequence length, if given, the input would</span>
+<span class="sd">        be padded with zero or truncated to length n before performing FFT.</span>
+<span class="sd">        Should be a integer greater than 1.</span>
+<span class="sd">    out</span>
+<span class="sd">        Optional output array, for writing the result to. It must have a shape that</span>
+<span class="sd">        the inputs broadcast to.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    ret</span>
+<span class="sd">        Container containing the transformed inputs.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; a = ivy.array(np.array([ 6.+0.j, -2.+2.j, -2.+0.j, -2.-2.j]))</span>
+<span class="sd">    &gt;&gt;&gt; b = ivy.array(np.exp(2j * np.pi * np.arange(8) / 8))</span>
+<span class="sd">    &gt;&gt;&gt; c = ivy.Container(a=a, b=b)</span>
+<span class="sd">    &gt;&gt;&gt; dims = ivy.Container(a=0, b=0)</span>
+<span class="sd">    &gt;&gt;&gt; c.fft(dims)</span>
+<span class="sd">    {</span>
+<span class="sd">    a: ivy.array([0.+0.j, 12.+0.j, 8.+0.j, 4.+0.j]),</span>
+<span class="sd">    b: ivy.array([-3.44509285e-16+1.14423775e-17j, 8.00000000e+00-8.11483250e-16j,</span>
+<span class="sd">                   2.33486982e-16+1.22464680e-16j, 0.00000000e+00+1.22464680e-16j,</span>
+<span class="sd">                   9.95799250e-17+2.33486982e-16j, 0.00000000e+00+7.66951701e-17j,</span>
+<span class="sd">                   1.14423775e-17+1.22464680e-16j, 0.00000000e+00+1.22464680e-16j])</span>
+<span class="sd">    }</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">static_fft</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">dim</span><span class="p">,</span>
+        <span class="n">norm</span><span class="o">=</span><span class="n">norm</span><span class="p">,</span>
+        <span class="n">n</span><span class="o">=</span><span class="n">n</span><span class="p">,</span>
+        <span class="n">out</span><span class="o">=</span><span class="n">out</span><span class="p">,</span>
+    <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="static_ifft"><a class="viewcode-back" href="../../../functional/ivy/experimental/ifft/static_ifft_container.html#ivy.container.container_methods.static_ifft">[docs]</a><span class="k">def</span> <span class="nf">static_ifft</span><span class="p">(</span>
+    <span class="n">x</span><span class="p">:</span> <span class="n">ivy</span><span class="o">.</span><span class="n">Container</span><span class="p">,</span>
+    <span class="n">dim</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">norm</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;backward&quot;</span><span class="p">,</span>
+    <span class="n">n</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">]]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">key_chains</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">to_apply</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="n">prune_unapplied</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">map_sequences</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">out</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">ivy</span><span class="o">.</span><span class="n">Container</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;ivy.Container static method variant of ivy.ifft. This method simply wraps</span>
+<span class="sd">    the function, and so the docstring for ivy.ifft also applies to this method</span>
+<span class="sd">    with minimal changes.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    x</span>
+<span class="sd">        Container containing input volumes *[...,d_in,...]*,</span>
+<span class="sd">        where d_in indicates the dimension that needs IFFT.</span>
+<span class="sd">    dim</span>
+<span class="sd">        The dimension along which to take the one dimensional IFFT.</span>
+<span class="sd">    norm</span>
+<span class="sd">        Optional argument, &quot;backward&quot;, &quot;ortho&quot; or &quot;forward&quot;. Defaults to be</span>
+<span class="sd">        &quot;backward&quot;.</span>
+<span class="sd">        &quot;backward&quot; indicates no normalization.</span>
+<span class="sd">        &quot;ortho&quot; indicates normalization by 1/sqrt(n).</span>
+<span class="sd">        &quot;forward&quot; indicates normalization by 1/n.</span>
+<span class="sd">    n</span>
+<span class="sd">        Optional argument indicating the sequence length, if given, the input would</span>
+<span class="sd">        be padded with zero or truncated to length n before performing IFFT.</span>
+<span class="sd">        Should be a integer greater than 1.</span>
+<span class="sd">    out</span>
+<span class="sd">        Optional output array, for writing the result to. It must have a shape that</span>
+<span class="sd">        the inputs broadcast to.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    ret</span>
+<span class="sd">        The transformed input.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; a = ivy.array(np.array([ 6.+0.j, -2.+2.j, -2.+0.j, -2.-2.j]))</span>
+<span class="sd">    &gt;&gt;&gt; b = ivy.array(np.exp(2j * np.pi * np.arange(8) / 8))</span>
+<span class="sd">    &gt;&gt;&gt; c = ivy.Container(a=a, b=b)</span>
+<span class="sd">    &gt;&gt;&gt; dims = ivy.Container(a=0, b=0)</span>
+<span class="sd">    &gt;&gt;&gt; ivy.Container.static_ifft(c, dims)</span>
+<span class="sd">    {</span>
+<span class="sd">    a: ivy.array([0.+0.j, 1.+0.j, 2.+0.j, 3.+0.j]),</span>
+<span class="sd">    b: ivy.array([-4.30636606e-17+1.43029718e-18j, 0.00000000e+00+1.53080850e-17j,</span>
+<span class="sd">                   1.43029718e-18+1.53080850e-17j, 0.00000000e+00+9.58689626e-18j,</span>
+<span class="sd">                   1.24474906e-17+2.91858728e-17j, 0.00000000e+00+1.53080850e-17j,</span>
+<span class="sd">                   2.91858728e-17+1.53080850e-17j, 1.00000000e+00-1.01435406e-16j])</span>
+<span class="sd">    }</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">ContainerBase</span><span class="o">.</span><span class="n">cont_multi_map_in_function</span><span class="p">(</span>
+        <span class="s2">&quot;ifft&quot;</span><span class="p">,</span>
+        <span class="n">x</span><span class="p">,</span>
+        <span class="n">dim</span><span class="p">,</span>
+        <span class="n">norm</span><span class="o">=</span><span class="n">norm</span><span class="p">,</span>
+        <span class="n">n</span><span class="o">=</span><span class="n">n</span><span class="p">,</span>
+        <span class="n">key_chains</span><span class="o">=</span><span class="n">key_chains</span><span class="p">,</span>
+        <span class="n">to_apply</span><span class="o">=</span><span class="n">to_apply</span><span class="p">,</span>
+        <span class="n">prune_unapplied</span><span class="o">=</span><span class="n">prune_unapplied</span><span class="p">,</span>
+        <span class="n">map_sequences</span><span class="o">=</span><span class="n">map_sequences</span><span class="p">,</span>
+        <span class="n">out</span><span class="o">=</span><span class="n">out</span><span class="p">,</span>
+    <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ifft"><a class="viewcode-back" href="../../../functional/ivy/experimental/ifft/ifft_container.html#ivy.container.container_methods.ifft">[docs]</a><span class="k">def</span> <span class="nf">ifft</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">:</span> <span class="n">ivy</span><span class="o">.</span><span class="n">Container</span><span class="p">,</span>
+    <span class="n">dim</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">norm</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;backward&quot;</span><span class="p">,</span>
+    <span class="n">n</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">]]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">out</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">ivy</span><span class="o">.</span><span class="n">Array</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;ivy.Container instance method variant of ivy.ifft. This method simply wraps</span>
+<span class="sd">    the function, and so the docstring for ivy.ifft also applies to this method</span>
+<span class="sd">    with minimal changes.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    self</span>
+<span class="sd">        Container containing input volumes *[...,d_in,...]*,</span>
+<span class="sd">        where d_in indicates the dimension that needs IFFT.</span>
+<span class="sd">    dim</span>
+<span class="sd">        The dimension along which to take the one dimensional IFFT.</span>
+<span class="sd">    norm</span>
+<span class="sd">        Optional argument, &quot;backward&quot;, &quot;ortho&quot; or &quot;forward&quot;. Defaults to be</span>
+<span class="sd">        &quot;backward&quot;.</span>
+<span class="sd">        &quot;backward&quot; indicates no normalization.</span>
+<span class="sd">        &quot;ortho&quot; indicates normalization by 1/sqrt(n).</span>
+<span class="sd">        &quot;forward&quot; indicates normalization by 1/n.</span>
+<span class="sd">    n</span>
+<span class="sd">        Optional argument indicating the sequence length, if given, the input</span>
+<span class="sd">        would be padded with zero or truncated to length n before performing IFFT.</span>
+<span class="sd">        Should be a integer greater than 1.</span>
+<span class="sd">    out</span>
+<span class="sd">        Optional output array, for writing the result to. It must have a shape that</span>
+<span class="sd">        the inputs broadcast to.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    ret</span>
+<span class="sd">        Container containing the transformed inputs.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; a = ivy.array(np.array([ 6.+0.j, -2.+2.j, -2.+0.j, -2.-2.j]))</span>
+<span class="sd">    &gt;&gt;&gt; b = ivy.array(np.exp(2j * np.pi * np.arange(8) / 8))</span>
+<span class="sd">    &gt;&gt;&gt; c = ivy.Container(a=a, b=b)</span>
+<span class="sd">    &gt;&gt;&gt; dims = ivy.Container(a=0, b=0)</span>
+<span class="sd">    &gt;&gt;&gt; c.ifft(dims)</span>
+<span class="sd">    {</span>
+<span class="sd">    a: ivy.array([0.+0.j, 1.+0.j, 2.+0.j, 3.+0.j]),</span>
+<span class="sd">    b: ivy.array([-4.30636606e-17+1.43029718e-18j, 0.00000000e+00+1.53080850e-17j,</span>
+<span class="sd">                   1.43029718e-18+1.53080850e-17j, 0.00000000e+00+9.58689626e-18j,</span>
+<span class="sd">                   1.24474906e-17+2.91858728e-17j, 0.00000000e+00+1.53080850e-17j,</span>
+<span class="sd">                   2.91858728e-17+1.53080850e-17j, 1.00000000e+00-1.01435406e-16j])</span>
+<span class="sd">    }</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">static_ifft</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">dim</span><span class="p">,</span>
+        <span class="n">norm</span><span class="o">=</span><span class="n">norm</span><span class="p">,</span>
+        <span class="n">n</span><span class="o">=</span><span class="n">n</span><span class="p">,</span>
         <span class="n">out</span><span class="o">=</span><span class="n">out</span><span class="p">,</span>
     <span class="p">)</span></div>
 
@@ -23595,6 +23926,136 @@
     <span class="p">)</span></div>
 
 
+<div class="viewcode-block" id="static_l2_normalize"><a class="viewcode-back" href="../../../functional/ivy/experimental/l2_normalize/static_l2_normalize_container.html#ivy.container.container_methods.static_l2_normalize">[docs]</a><span class="k">def</span> <span class="nf">static_l2_normalize</span><span class="p">(</span>
+    <span class="n">x</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">ivy</span><span class="o">.</span><span class="n">Container</span><span class="p">,</span> <span class="n">ivy</span><span class="o">.</span><span class="n">Array</span><span class="p">,</span> <span class="n">ivy</span><span class="o">.</span><span class="n">NativeArray</span><span class="p">],</span>
+    <span class="n">axis</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">key_chains</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">to_apply</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="n">prune_unapplied</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">map_sequences</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">out</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ivy</span><span class="o">.</span><span class="n">Container</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    ivy.Container static method variant of ivy.l2_normalize.</span>
+<span class="sd">    This method simply wraps the function, and so the</span>
+<span class="sd">    docstring for ivy.l2_normalize also applies to this method</span>
+<span class="sd">    with minimal changes.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    x</span>
+<span class="sd">        The input container with leaves to be normalized.</span>
+<span class="sd">    axis</span>
+<span class="sd">        The axis along which to normalize.</span>
+<span class="sd">    key_chains</span>
+<span class="sd">        The key-chains to apply or not apply the method to. Default is ``None``.</span>
+<span class="sd">    to_apply</span>
+<span class="sd">        If True, the method will be applied to key_chains, otherwise key_chains</span>
+<span class="sd">        will be skipped. Default is ``True``.</span>
+<span class="sd">    prune_unapplied</span>
+<span class="sd">        Whether to prune key_chains for which the function was not applied.</span>
+<span class="sd">        Default is ``False``.</span>
+<span class="sd">    map_sequences</span>
+<span class="sd">        Whether to also map method to sequences (lists, tuples).</span>
+<span class="sd">        Default is ``False``.</span>
+<span class="sd">    out</span>
+<span class="sd">        optional output container, for writing the result to. It must have a shape</span>
+<span class="sd">        that the inputs broadcast to.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    ret</span>
+<span class="sd">        a container containing the normalized leaves.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; x = ivy.Container(a=ivy.array([[0.5, 1.5, 2.5], [3.5, 4.5, 5.5]])))</span>
+<span class="sd">    ...                    b=ivy.array([[-1., -1.], [-1., -0.5]]]))</span>
+<span class="sd">    &gt;&gt;&gt; y = ivy.Container.static_l2_normalize(x, axis=1)</span>
+<span class="sd">    &gt;&gt;&gt; print(y)</span>
+<span class="sd">    {</span>
+<span class="sd">        a: ivy.array([[0.16903085, 0.50709254, 0.84515423],</span>
+<span class="sd">                      [0.44183609, 0.56807494, 0.69431382]]),</span>
+<span class="sd">        b: ivy.array([[-0.70710677, -0.70710677],</span>
+<span class="sd">                      [-0.89442718, -0.44721359]])</span>
+<span class="sd">    }</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">ContainerBase</span><span class="o">.</span><span class="n">cont_multi_map_in_function</span><span class="p">(</span>
+        <span class="s2">&quot;l2_normalize&quot;</span><span class="p">,</span>
+        <span class="n">x</span><span class="p">,</span>
+        <span class="n">axis</span><span class="o">=</span><span class="n">axis</span><span class="p">,</span>
+        <span class="n">key_chains</span><span class="o">=</span><span class="n">key_chains</span><span class="p">,</span>
+        <span class="n">to_apply</span><span class="o">=</span><span class="n">to_apply</span><span class="p">,</span>
+        <span class="n">prune_unapplied</span><span class="o">=</span><span class="n">prune_unapplied</span><span class="p">,</span>
+        <span class="n">map_sequences</span><span class="o">=</span><span class="n">map_sequences</span><span class="p">,</span>
+        <span class="n">out</span><span class="o">=</span><span class="n">out</span><span class="p">,</span>
+    <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="l2_normalize"><a class="viewcode-back" href="../../../functional/ivy/experimental/l2_normalize/l2_normalize_container.html#ivy.container.container_methods.l2_normalize">[docs]</a><span class="k">def</span> <span class="nf">l2_normalize</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="n">axis</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">key_chains</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">to_apply</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="n">prune_unapplied</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">map_sequences</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">out</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ivy</span><span class="o">.</span><span class="n">Container</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;ivy.Container instance method variant of ivy.l2_normalize.</span>
+<span class="sd">    This method simply wraps the function, and so the</span>
+<span class="sd">    docstring for ivy.l2_normalize also applies to this method</span>
+<span class="sd">    with minimal changes.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    self</span>
+<span class="sd">        The input container with leaves to be normalized.</span>
+<span class="sd">    axis</span>
+<span class="sd">        The axis along which to normalize.</span>
+<span class="sd">    key_chains</span>
+<span class="sd">        The key-chains to apply or not apply the method to. Default is ``None``.</span>
+<span class="sd">    to_apply</span>
+<span class="sd">        If True, the method will be applied to key_chains, otherwise key_chains</span>
+<span class="sd">        will be skipped. Default is ``True``.</span>
+<span class="sd">    prune_unapplied</span>
+<span class="sd">        Whether to prune key_chains for which the function was not applied.</span>
+<span class="sd">        Default is ``False``.</span>
+<span class="sd">    map_sequences</span>
+<span class="sd">        Whether to also map method to sequences (lists, tuples).</span>
+<span class="sd">        Default is ``False``.</span>
+<span class="sd">    out</span>
+<span class="sd">        optional output container, for writing the result to. It must have a shape</span>
+<span class="sd">        that the inputs broadcast to.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    ret</span>
+<span class="sd">        a container containing the normalized leaves.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; x = ivy.Container(a=ivy.array([[0.5, 1.5, 2.5], [3.5, 4.5, 5.5]])))</span>
+<span class="sd">    ...                    b=ivy.array([[-1., -1.], [-1., -0.5]]]))</span>
+<span class="sd">    &gt;&gt;&gt; y = x.static_l2_normalize(axis=1)</span>
+<span class="sd">    &gt;&gt;&gt; print(y)</span>
+<span class="sd">    {</span>
+<span class="sd">        a: ivy.array([[0.16903085, 0.50709254, 0.84515423],</span>
+<span class="sd">                      [0.44183609, 0.56807494, 0.69431382]]),</span>
+<span class="sd">        b: ivy.array([[-0.70710677, -0.70710677],</span>
+<span class="sd">                      [-0.89442718, -0.44721359]])</span>
+<span class="sd">    }</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">static_l2_normalize</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">axis</span><span class="o">=</span><span class="n">axis</span><span class="p">,</span>
+        <span class="n">key_chains</span><span class="o">=</span><span class="n">key_chains</span><span class="p">,</span>
+        <span class="n">to_apply</span><span class="o">=</span><span class="n">to_apply</span><span class="p">,</span>
+        <span class="n">prune_unapplied</span><span class="o">=</span><span class="n">prune_unapplied</span><span class="p">,</span>
+        <span class="n">map_sequences</span><span class="o">=</span><span class="n">map_sequences</span><span class="p">,</span>
+        <span class="n">out</span><span class="o">=</span><span class="n">out</span><span class="p">,</span>
+    <span class="p">)</span></div>
+
+
 <div class="viewcode-block" id="static_msort"><a class="viewcode-back" href="../../../functional/ivy/experimental/msort/static_msort_container.html#ivy.container.container_methods.static_msort">[docs]</a><span class="k">def</span> <span class="nf">static_msort</span><span class="p">(</span>
     <span class="n">a</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">ivy</span><span class="o">.</span><span class="n">Array</span><span class="p">,</span> <span class="n">ivy</span><span class="o">.</span><span class="n">NativeArray</span><span class="p">,</span> <span class="n">ivy</span><span class="o">.</span><span class="n">Container</span><span class="p">,</span> <span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">],</span>
     <span class="o">/</span><span class="p">,</span>
@@ -25429,6 +25890,102 @@
 <span class="sd">    }</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">static_angle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">deg</span><span class="o">=</span><span class="n">deg</span><span class="p">,</span> <span class="n">out</span><span class="o">=</span><span class="n">out</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="static_imag"><a class="viewcode-back" href="../../../functional/ivy/experimental/imag/static_imag_container.html#ivy.container.container_methods.static_imag">[docs]</a><span class="k">def</span> <span class="nf">static_imag</span><span class="p">(</span>
+    <span class="n">val</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">ivy</span><span class="o">.</span><span class="n">Array</span><span class="p">,</span> <span class="n">ivy</span><span class="o">.</span><span class="n">NativeArray</span><span class="p">,</span> <span class="n">ivy</span><span class="o">.</span><span class="n">Container</span><span class="p">],</span>
+    <span class="o">/</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">key_chains</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">to_apply</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="n">prune_unapplied</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">map_sequences</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">out</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">ivy</span><span class="o">.</span><span class="n">Container</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ivy</span><span class="o">.</span><span class="n">Container</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    ivy.Container static method variant of ivy.imag. This method simply</span>
+<span class="sd">    wraps the function, and so the docstring for ivy.imag also applies to</span>
+<span class="sd">    this method with minimal changes.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    val</span>
+<span class="sd">        Array-like input.</span>
+<span class="sd">    out</span>
+<span class="sd">        optional output array, for writing the result to.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    ret</span>
+<span class="sd">        Returns an Container including arrays with the imaginary part of complex numbers.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; x = ivy.Container(a=ivy.array(np.array([1+2j, 3+4j, 5+6j])),</span>
+<span class="sd">                            b=ivy.array(np.array([-2.25 + 4.75j, 3.25 + 5.75j])))</span>
+<span class="sd">    &gt;&gt;&gt; x</span>
+<span class="sd">    {</span>
+<span class="sd">        a: ivy.array([1.+2.j, 3.+4.j, 5.+6.j]),</span>
+<span class="sd">        b: ivy.array([-2.25+4.75j, 3.25+5.75j])</span>
+<span class="sd">    }</span>
+
+<span class="sd">    &gt;&gt;&gt; ivy.Container.static_imag(x)</span>
+<span class="sd">    {</span>
+<span class="sd">        a: ivy.array([2., 4., 6.]),</span>
+<span class="sd">        b: ivy.array([4.75, 5.75])</span>
+<span class="sd">    }</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">ContainerBase</span><span class="o">.</span><span class="n">cont_multi_map_in_function</span><span class="p">(</span>
+        <span class="s2">&quot;imag&quot;</span><span class="p">,</span>
+        <span class="n">val</span><span class="p">,</span>
+        <span class="n">key_chains</span><span class="o">=</span><span class="n">key_chains</span><span class="p">,</span>
+        <span class="n">to_apply</span><span class="o">=</span><span class="n">to_apply</span><span class="p">,</span>
+        <span class="n">prune_unapplied</span><span class="o">=</span><span class="n">prune_unapplied</span><span class="p">,</span>
+        <span class="n">map_sequences</span><span class="o">=</span><span class="n">map_sequences</span><span class="p">,</span>
+        <span class="n">out</span><span class="o">=</span><span class="n">out</span><span class="p">,</span>
+    <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="imag"><a class="viewcode-back" href="../../../functional/ivy/experimental/imag/imag_container.html#ivy.container.container_methods.imag">[docs]</a><span class="k">def</span> <span class="nf">imag</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">:</span> <span class="n">ivy</span><span class="o">.</span><span class="n">Container</span><span class="p">,</span>
+    <span class="o">/</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">out</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">ivy</span><span class="o">.</span><span class="n">Container</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ivy</span><span class="o">.</span><span class="n">Container</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    ivy.Container instance method variant of ivy.imag. This method simply</span>
+<span class="sd">    wraps the function, and so the docstring for ivy.imag also applies to</span>
+<span class="sd">    this method with minimal changes.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    val</span>
+<span class="sd">        Array-like input.</span>
+<span class="sd">    out</span>
+<span class="sd">        optional output array, for writing the result to.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    ret</span>
+<span class="sd">        Returns an Container including arrays with the imaginary part of complex numbers.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; x = ivy.Container(a=ivy.array(np.array([1+2j, 3+4j, 5+6j])),</span>
+<span class="sd">                            b=ivy.array(np.array([-2.25 + 4.75j, 3.25 + 5.75j])))</span>
+<span class="sd">    &gt;&gt;&gt; x</span>
+<span class="sd">    {</span>
+<span class="sd">        a: ivy.array([1.+2.j, 3.+4.j, 5.+6.j]),</span>
+<span class="sd">        b: ivy.array([-2.25+4.75j, 3.25+5.75j])</span>
+<span class="sd">    }</span>
+
+<span class="sd">    &gt;&gt;&gt; x.imag()</span>
+<span class="sd">    {</span>
+<span class="sd">        a: ivy.array([2., 4., 6.]),</span>
+<span class="sd">        b: ivy.array([4.75, 5.75])</span>
+<span class="sd">    }</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">static_imag</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">out</span><span class="o">=</span><span class="n">out</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="static_nan_to_num"><a class="viewcode-back" href="../../../functional/ivy/experimental/nan_to_num/static_nan_to_num_container.html#ivy.container.container_methods.static_nan_to_num">[docs]</a><span class="k">def</span> <span class="nf">static_nan_to_num</span><span class="p">(</span>
@@ -30838,7 +31395,7 @@
     <span class="n">epsilon</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1e-7</span><span class="p">,</span>
     <span class="n">stop_gradients</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
     <span class="n">out</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">ivy</span><span class="o">.</span><span class="n">Container</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-<span class="p">):</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ivy</span><span class="o">.</span><span class="n">Container</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Update weights ws of some function, given the derivatives of some cost c with</span>
 <span class="sd">    respect to ws, using ADAM update. `[reference]</span>
 <span class="sd">    &lt;https://en.wikipedia.org/wiki/Stochastic_gradient_descent#Adam&gt;`_</span>
@@ -30878,6 +31435,52 @@
 <span class="sd">    ret</span>
 <span class="sd">        The new function weights ws_new, and also new mw and vw, following the adam</span>
 <span class="sd">        updates.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    With one :class:`ivy.Container` inputs:</span>
+<span class="sd">    &gt;&gt;&gt; w = ivy.Container(a=ivy.array([1., 2., 3.]), b=ivy.array([4., 5., 6.]))</span>
+<span class="sd">    &gt;&gt;&gt; dcdw = ivy.array([1., 0.2, 0.4])</span>
+<span class="sd">    &gt;&gt;&gt; mw_tm1 = ivy.array([0., 0., 0.])</span>
+<span class="sd">    &gt;&gt;&gt; vw_tm1 = ivy.array([0.])</span>
+<span class="sd">    &gt;&gt;&gt; lr = ivy.array(0.01)</span>
+<span class="sd">    &gt;&gt;&gt; step = 2</span>
+<span class="sd">    &gt;&gt;&gt; updated_weights = w.adam_update(dcdw, mw_tm1, vw_tm1, lr, step)</span>
+<span class="sd">    &gt;&gt;&gt; print(updated_weights)</span>
+<span class="sd">    ({</span>
+<span class="sd">        a: ivy.array([1., 2., 3.]),</span>
+<span class="sd">        b: ivy.array([4., 5., 6.])</span>
+<span class="sd">    }, ivy.array([0.1 , 0.02, 0.04]), ivy.array([0.01099, 0.01003, 0.01015]))</span>
+<span class="sd">    With multiple :class:`ivy.Container` inputs:</span>
+
+<span class="sd">    &gt;&gt;&gt; x = ivy.Container(a=ivy.array([0., 1., 2.]),</span>
+<span class="sd">    ...                   b=ivy.array([3., 4., 5.]))</span>
+<span class="sd">    &gt;&gt;&gt; dcdw = ivy.Container(a=ivy.array([0.1,0.3,0.3]),</span>
+<span class="sd">    ...                      b=ivy.array([0.3,0.2,0.2]))</span>
+<span class="sd">    &gt;&gt;&gt; lr = ivy.array(0.001)</span>
+<span class="sd">    &gt;&gt;&gt; mw_tm1 = ivy.Container(a=ivy.array([0.,0.,0.]),</span>
+<span class="sd">    ...                        b=ivy.array([0.,0.,0.]))</span>
+<span class="sd">    &gt;&gt;&gt; vw_tm1 = ivy.Container(a=ivy.array([0.,]),</span>
+<span class="sd">    ...                        b=ivy.array([0.,]))</span>
+<span class="sd">    &gt;&gt;&gt; step = 3</span>
+<span class="sd">    &gt;&gt;&gt; beta1 = 0.9</span>
+<span class="sd">    &gt;&gt;&gt; beta2 = 0.999</span>
+<span class="sd">    &gt;&gt;&gt; epsilon = 1e-7</span>
+<span class="sd">    &gt;&gt;&gt; stop_gradients = False</span>
+<span class="sd">    &gt;&gt;&gt; updated_weights = w.adam_update(dcdw, lr, mw_tm1, vw_tm1, step, beta1=beta1,</span>
+<span class="sd">    ...                                beta2=beta2, epsilon=epsilon,</span>
+<span class="sd">    ...                                stop_gradients=stop_gradients)</span>
+<span class="sd">    &gt;&gt;&gt; print(updated_weights)</span>
+<span class="sd">    ({</span>
+<span class="sd">        a: ivy.array([0.99936122, 1.99936116, 2.99936128]),</span>
+<span class="sd">        b: ivy.array([3.99936128, 4.99936104, 5.99936104])</span>
+<span class="sd">    }, {</span>
+<span class="sd">        a: ivy.array([0.01, 0.03, 0.03]),</span>
+<span class="sd">        b: ivy.array([0.03, 0.02, 0.02])</span>
+<span class="sd">    }, {</span>
+<span class="sd">        a: ivy.array([1.00000016e-05, 9.00000086e-05, 9.00000086e-05]),</span>
+<span class="sd">        b: ivy.array([9.00000086e-05, 4.00000063e-05, 4.00000063e-05])</span>
+<span class="sd">    })</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">ivy</span><span class="o">.</span><span class="n">adam_update</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
@@ -37610,6 +38213,46 @@
 <span class="sd">    ivy.Container static method variant of ivy.zero_pad. This method simply</span>
 <span class="sd">    wraps the function, and so the docstring for ivy.zero_pad also applies to</span>
 <span class="sd">    this method with minimal changes.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    x</span>
+<span class="sd">        Input array to pad.</span>
+<span class="sd">    pad_width</span>
+<span class="sd">        Number of values padded to the edges of each axis. Specified as</span>
+<span class="sd">        ((before_1, after_1), … (before_N, after_N)),</span>
+<span class="sd">        where N is number of axes of x.</span>
+<span class="sd">    key_chains</span>
+<span class="sd">        The key-chains to apply or not apply the method to. Default is ``None``.</span>
+<span class="sd">    to_apply</span>
+<span class="sd">        If True, the method will be applied to key_chains, otherwise key_chains</span>
+<span class="sd">        will be skipped. Default is ``True``.</span>
+<span class="sd">    prune_unapplied</span>
+<span class="sd">        Whether to prune key_chains for which the function was not applied.</span>
+<span class="sd">        Default is ``False``.</span>
+<span class="sd">    map_sequences</span>
+<span class="sd">        Whether to also map method to sequences (lists, tuples).</span>
+<span class="sd">        Default is ``False``.</span>
+<span class="sd">    out</span>
+<span class="sd">        optional output array, for writing the result to.</span>
+<span class="sd">        It must have a shape that the inputs broadcast to.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    ret</span>
+<span class="sd">        Padded array of rank equal to x with shape increased according to pad_width.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    With :class:`ivy.Container` input:</span>
+
+<span class="sd">    &gt;&gt;&gt; x = ivy.Container(a = ivy.array([1., 2., 3.]), b = ivy.array([3., 4., 5.]))</span>
+<span class="sd">    &gt;&gt;&gt; y = ivy.zero_pad(x, pad_width = [[2, 3]])</span>
+<span class="sd">    &gt;&gt;&gt; print(y)</span>
+<span class="sd">    {</span>
+<span class="sd">        a: ivy.array([0., 0., 1., 2., 3., 0., 0., 0.]),</span>
+<span class="sd">        b: ivy.array([0., 0., 3., 4., 5., 0., 0., 0.])</span>
+<span class="sd">    }</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">ContainerBase</span><span class="o">.</span><span class="n">cont_multi_map_in_function</span><span class="p">(</span>
         <span class="s2">&quot;zero_pad&quot;</span><span class="p">,</span>
@@ -37638,6 +38281,46 @@
 <span class="sd">    ivy.Container instance method variant of ivy.zero_pad. This method simply wraps</span>
 <span class="sd">    the function, and so the docstring for ivy.zero_pad also applies to this method</span>
 <span class="sd">    with minimal changes.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    self</span>
+<span class="sd">        Input array to pad.</span>
+<span class="sd">    pad_width</span>
+<span class="sd">        Number of values padded to the edges of each axis. Specified as</span>
+<span class="sd">        ((before_1, after_1), … (before_N, after_N)),</span>
+<span class="sd">        where N is number of axes of x.</span>
+<span class="sd">    key_chains</span>
+<span class="sd">        The key-chains to apply or not apply the method to. Default is ``None``.</span>
+<span class="sd">    to_apply</span>
+<span class="sd">        If True, the method will be applied to key_chains, otherwise key_chains</span>
+<span class="sd">        will be skipped. Default is ``True``.</span>
+<span class="sd">    prune_unapplied</span>
+<span class="sd">        Whether to prune key_chains for which the function was not applied.</span>
+<span class="sd">        Default is ``False``.</span>
+<span class="sd">    map_sequences</span>
+<span class="sd">        Whether to also map method to sequences (lists, tuples).</span>
+<span class="sd">        Default is ``False``.</span>
+<span class="sd">    out</span>
+<span class="sd">        optional output array, for writing the result to.</span>
+<span class="sd">        It must have a shape that the inputs broadcast to.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    ret</span>
+<span class="sd">        Padded array of rank equal to x with shape increased according to pad_width.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    With :class:`ivy.Container` input:</span>
+
+<span class="sd">    &gt;&gt;&gt; x = ivy.Container(a = ivy.array([1., 2., 3.]), b = ivy.array([3., 4., 5.]))</span>
+<span class="sd">    &gt;&gt;&gt; y = x.zero_pad(pad_width = [[2, 3]])</span>
+<span class="sd">    &gt;&gt;&gt; print(y)</span>
+<span class="sd">    {</span>
+<span class="sd">        a: ivy.array([0., 0., 1., 2., 3., 0., 0., 0.]),</span>
+<span class="sd">        b: ivy.array([0., 0., 3., 4., 5., 0., 0., 0.])</span>
+<span class="sd">    }</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">static_zero_pad</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
@@ -38099,8 +38782,8 @@
     <span class="n">normalized_idxs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span>
     <span class="o">/</span><span class="p">,</span>
     <span class="o">*</span><span class="p">,</span>
-    <span class="n">weight</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">ivy</span><span class="o">.</span><span class="n">Array</span><span class="p">,</span> <span class="nb">float</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">bias</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">ivy</span><span class="o">.</span><span class="n">Array</span><span class="p">,</span> <span class="nb">float</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">scale</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">ivy</span><span class="o">.</span><span class="n">Array</span><span class="p">,</span> <span class="nb">float</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">b</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">ivy</span><span class="o">.</span><span class="n">Array</span><span class="p">,</span> <span class="nb">float</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">epsilon</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">ivy</span><span class="o">.</span><span class="n">_MIN_BASE</span><span class="p">,</span>
     <span class="n">new_std</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span>
     <span class="n">out</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">ivy</span><span class="o">.</span><span class="n">Container</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -38116,10 +38799,10 @@
 <span class="sd">        Input container</span>
 <span class="sd">    normalized_idxs</span>
 <span class="sd">        Indices to apply the normalization to.</span>
-<span class="sd">    weight</span>
+<span class="sd">    scale</span>
 <span class="sd">        Learnable gamma variables for elementwise post-multiplication,</span>
 <span class="sd">        default is ``None``.</span>
-<span class="sd">    bias</span>
+<span class="sd">    b</span>
 <span class="sd">        Learnable beta variables for elementwise post-addition, default is ``None``.</span>
 <span class="sd">    epsilon</span>
 <span class="sd">        small constant to add to the denominator, use global ivy._MIN_BASE by</span>
@@ -38141,7 +38824,7 @@
 <span class="sd">    &gt;&gt;&gt; x = ivy.Container({&#39;a&#39;: ivy.array([7., 10., 12.]),</span>
 <span class="sd">    ...                    &#39;b&#39;: ivy.array([[1., 2., 3.], [4., 5., 6.]])})</span>
 <span class="sd">    &gt;&gt;&gt; normalized_idxs = [0]</span>
-<span class="sd">    &gt;&gt;&gt; norm = x.layer_norm(normalized_idxs, epsilon=1.25, weight=0.3)</span>
+<span class="sd">    &gt;&gt;&gt; norm = x.layer_norm(normalized_idxs, epsilon=1.25, scale=0.3)</span>
 <span class="sd">    &gt;&gt;&gt; print(norm)</span>
 <span class="sd">    {</span>
 <span class="sd">        a: ivy.array([-0.342, 0.0427, 0.299]),</span>
@@ -38155,7 +38838,7 @@
 <span class="sd">    &gt;&gt;&gt; normalized_idxs = ivy.Container({&#39;a&#39;: [0], &#39;b&#39;: [1]})</span>
 <span class="sd">    &gt;&gt;&gt; new_std = ivy.Container({&#39;a&#39;: 1.25, &#39;b&#39;: 1.5})</span>
 <span class="sd">    &gt;&gt;&gt; bias = ivy.Container({&#39;a&#39;: [0.2, 0.5, 0.7], &#39;b&#39;: 0.3})</span>
-<span class="sd">    &gt;&gt;&gt; norm = x.layer_norm(normalized_idxs, new_std=new_std, bias=bias)</span>
+<span class="sd">    &gt;&gt;&gt; norm = x.layer_norm(normalized_idxs, new_std=new_std, b=b)</span>
 <span class="sd">    &gt;&gt;&gt; print(norm)</span>
 <span class="sd">    {</span>
 <span class="sd">        a: ivy.array([-1.62, 0.203, 1.42]),</span>
@@ -38166,8 +38849,8 @@
     <span class="k">return</span> <span class="n">ivy</span><span class="o">.</span><span class="n">layer_norm</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">normalized_idxs</span><span class="p">,</span>
-        <span class="n">weight</span><span class="o">=</span><span class="n">weight</span><span class="p">,</span>
-        <span class="n">bias</span><span class="o">=</span><span class="n">bias</span><span class="p">,</span>
+        <span class="n">scale</span><span class="o">=</span><span class="n">scale</span><span class="p">,</span>
+        <span class="n">b</span><span class="o">=</span><span class="n">b</span><span class="p">,</span>
         <span class="n">epsilon</span><span class="o">=</span><span class="n">epsilon</span><span class="p">,</span>
         <span class="n">new_std</span><span class="o">=</span><span class="n">new_std</span><span class="p">,</span>
         <span class="n">out</span><span class="o">=</span><span class="n">out</span><span class="p">,</span>
