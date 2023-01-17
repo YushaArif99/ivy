@@ -82,15 +82,15 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Framework Classes</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="stateful/activations.html">Activations</a></li>
-<li class="toctree-l1"><a class="reference internal" href="stateful/layers.html">Layers</a></li>
-<li class="toctree-l1"><a class="reference internal" href="stateful/converters.html">Converters</a></li>
 <li class="toctree-l1"><a class="reference internal" href="stateful/module.html">Module</a></li>
 <li class="toctree-l1"><a class="reference internal" href="stateful/initializers.html">Initializers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="stateful/helpers.html">Helpers</a></li>
-<li class="toctree-l1"><a class="reference internal" href="stateful/sequential.html">Sequential</a></li>
-<li class="toctree-l1"><a class="reference internal" href="stateful/norms.html">Norms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="stateful/activations.html">Activations</a></li>
 <li class="toctree-l1"><a class="reference internal" href="stateful/optimizers.html">Optimizers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="stateful/sequential.html">Sequential</a></li>
+<li class="toctree-l1"><a class="reference internal" href="stateful/layers.html">Layers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="stateful/norms.html">Norms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="stateful/converters.html">Converters</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Nested array</span></p>
 <ul>
@@ -966,6 +966,8 @@
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="glossary.html#term-Backend-Handler"><strong>Backend Handler</strong></a>
+</li>
+      <li><a href="backend_handler.html#ivy.backend_handler.backend_conversion">backend_conversion() (in module ivy.backend_handler)</a>, <a href="backend_handler/backend_conversion.html#ivy.backend_handler.backend_conversion">[1]</a>
 </li>
       <li><a href="functional/ivy/experimental/beta.html#ivy.array.array_methods.beta">beta() (in module ivy.array.array_methods)</a>, <a href="functional/ivy/experimental/beta/beta_array.html#ivy.array.array_methods.beta">[1]</a>
 
@@ -2077,14 +2079,14 @@
         <li><a href="data_classes/container.html#ivy.container.container.Container.dev_util">(ivy.container.container.Container method)</a>, <a href="data_classes/container/container.html#ivy.container.container.Container.dev_util">[1]</a>, <a href="data_classes/container/container/Container.html#ivy.container.container.Container.dev_util">[2]</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="data_classes/array.html#ivy.array.array.Array.device">device (ivy.array.array.Array property)</a>, <a href="data_classes/array/array.html#ivy.array.array.Array.device">[1]</a>, <a href="data_classes/array/array/Array.html#ivy.array.array.Array.device">[2]</a>
 
       <ul>
         <li><a href="nested_array/nested_array.html#ivy.nested_array.nested_array.NestedArray.device">(ivy.nested_array.nested_array.NestedArray property)</a>, <a href="nested_array/nested_array/NestedArray.html#ivy.nested_array.nested_array.NestedArray.device">[1]</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="functional/ivy/linear_algebra/diag.html#ivy.array.array_methods.diag">diag() (in module ivy.array.array_methods)</a>, <a href="functional/ivy/linear_algebra/diag/diag_array.html#ivy.array.array_methods.diag">[1]</a>
 
       <ul>
@@ -2241,6 +2243,12 @@
       </ul></li>
       <li><a href="functional/ivy/nest.html#ivy.functional.ivy.nest.duplicate_array_index_chains">duplicate_array_index_chains() (in module ivy.functional.ivy.nest)</a>, <a href="functional/ivy/nest/duplicate_array_index_chains.html#ivy.functional.ivy.nest.duplicate_array_index_chains">[1]</a>
 </li>
+      <li><a href="data_classes/array.html#ivy.array.array.Array.dynamic_backend">dynamic_backend (ivy.array.array.Array property)</a>, <a href="data_classes/array/array.html#ivy.array.array.Array.dynamic_backend">[1]</a>, <a href="data_classes/array/array/Array.html#ivy.array.array.Array.dynamic_backend">[2]</a>
+
+      <ul>
+        <li><a href="data_classes/container/base.html#ivy.container.base.ContainerBase.dynamic_backend">(ivy.container.base.ContainerBase property)</a>, <a href="data_classes/container/base/ContainerBase.html#ivy.container.base.ContainerBase.dynamic_backend">[1]</a>
+</li>
+      </ul></li>
   </ul></td>
 </tr></table>
 
@@ -6466,6 +6474,10 @@
         <li><a href="stateful/optimizers.html#ivy.stateful.optimizers.SGD.state">(ivy.stateful.optimizers.SGD property)</a>, <a href="stateful/optimizers/SGD.html#ivy.stateful.optimizers.SGD.state">[1]</a>
 </li>
       </ul></li>
+      <li><a href="backend_handler.html#ivy.backend_handler.stateful_backend_conversion">stateful_backend_conversion() (in module ivy.backend_handler)</a>, <a href="backend_handler/stateful_backend_conversion.html#ivy.backend_handler.stateful_backend_conversion">[1]</a>
+</li>
+      <li><a href="backend_handler.html#ivy.backend_handler.stateful_to_numpy">stateful_to_numpy() (in module ivy.backend_handler)</a>, <a href="backend_handler/stateful_to_numpy.html#ivy.backend_handler.stateful_to_numpy">[1]</a>
+</li>
       <li><a href="functional/ivy/elementwise/abs.html#ivy.container.container_methods.static_abs">static_abs() (in module ivy.container.container_methods)</a>, <a href="functional/ivy/elementwise/abs/static_abs_container.html#ivy.container.container_methods.static_abs">[1]</a>
 
       <ul>
@@ -7268,10 +7280,10 @@
 </li>
       <li><a href="data_classes/container.html#ivy.container.container.Container.static_get_exception_trace_mode">static_get_exception_trace_mode() (ivy.container.container.Container method)</a>, <a href="data_classes/container/container.html#ivy.container.container.Container.static_get_exception_trace_mode">[1]</a>, <a href="data_classes/container/container/Container.html#ivy.container.container.Container.static_get_exception_trace_mode">[2]</a>
 </li>
-      <li><a href="data_classes/container.html#ivy.container.container.Container.static_get_item">static_get_item() (ivy.container.container.Container method)</a>, <a href="data_classes/container/container.html#ivy.container.container.Container.static_get_item">[1]</a>, <a href="data_classes/container/container/Container.html#ivy.container.container.Container.static_get_item">[2]</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="data_classes/container.html#ivy.container.container.Container.static_get_item">static_get_item() (ivy.container.container.Container method)</a>, <a href="data_classes/container/container.html#ivy.container.container.Container.static_get_item">[1]</a>, <a href="data_classes/container/container/Container.html#ivy.container.container.Container.static_get_item">[2]</a>
+</li>
       <li><a href="data_classes/container.html#ivy.container.container.Container.static_get_min_base">static_get_min_base() (ivy.container.container.Container method)</a>, <a href="data_classes/container/container.html#ivy.container.container.Container.static_get_min_base">[1]</a>, <a href="data_classes/container/container/Container.html#ivy.container.container.Container.static_get_min_base">[2]</a>
 </li>
       <li><a href="data_classes/container.html#ivy.container.container.Container.static_get_min_denominator">static_get_min_denominator() (ivy.container.container.Container method)</a>, <a href="data_classes/container/container.html#ivy.container.container.Container.static_get_min_denominator">[1]</a>, <a href="data_classes/container/container/Container.html#ivy.container.container.Container.static_get_min_denominator">[2]</a>
