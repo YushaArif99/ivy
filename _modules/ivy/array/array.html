@@ -82,15 +82,15 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Framework Classes</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../stateful/optimizers.html">Optimizers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../stateful/activations.html">Activations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../stateful/layers.html">Layers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../stateful/module.html">Module</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../stateful/initializers.html">Initializers</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../stateful/helpers.html">Helpers</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../stateful/activations.html">Activations</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../stateful/optimizers.html">Optimizers</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../stateful/sequential.html">Sequential</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../stateful/layers.html">Layers</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../stateful/norms.html">Norms</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../stateful/converters.html">Converters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../stateful/sequential.html">Sequential</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../stateful/helpers.html">Helpers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../stateful/norms.html">Norms</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Nested array</span></p>
 <ul>
@@ -285,6 +285,29 @@
 
     <span class="nd">@dynamic_backend</span><span class="o">.</span><span class="n">setter</span>
     <span class="k">def</span> <span class="nf">dynamic_backend</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="kn">from</span> <span class="nn">ivy.functional.ivy.gradients</span> <span class="kn">import</span> <span class="n">_variable</span>
+        <span class="kn">from</span> <span class="nn">ivy.backend_handler</span> <span class="kn">import</span> <span class="n">_determine_backend_from_args</span>
+
+        <span class="k">if</span> <span class="n">value</span> <span class="o">==</span> <span class="kc">False</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_backend</span> <span class="o">=</span> <span class="n">_determine_backend_from_args</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">with</span> <span class="n">ivy</span><span class="o">.</span><span class="n">dynamic_backend_as</span><span class="p">(</span><span class="kc">True</span><span class="p">):</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_backend</span><span class="o">.</span><span class="n">is_variable</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_backend</span><span class="p">)</span><span class="o">.</span><span class="fm">__contains__</span><span class="p">(</span><span class="s2">&quot;jax&quot;</span><span class="p">))</span> <span class="p">:</span>
+                    <span class="n">native_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_backend</span><span class="o">.</span><span class="n">variable_data</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+                    <span class="n">np_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_backend</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">(</span><span class="n">native_data</span><span class="p">)</span>
+                    <span class="n">new_arr</span> <span class="o">=</span> <span class="n">ivy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">np_data</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_data</span> <span class="o">=</span> <span class="n">_variable</span><span class="p">(</span><span class="n">new_arr</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+
+                    <span class="k">del</span> <span class="n">native_data</span>
+                    <span class="k">del</span> <span class="n">np_data</span>
+                    <span class="k">del</span> <span class="n">new_arr</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">np_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_backend</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_data</span> <span class="o">=</span> <span class="n">ivy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">np_data</span><span class="p">)</span><span class="o">.</span><span class="n">data</span>
+
+                    <span class="k">del</span> <span class="n">np_data</span>
+
+
         <span class="bp">self</span><span class="o">.</span><span class="n">_dynamic_backend</span> <span class="o">=</span> <span class="n">value</span>
 
     <span class="nd">@property</span>
@@ -1165,7 +1188,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2020-2022, Ivy Team.</p>
+    <p>&#169; Copyright 2020-2023, Ivy Team.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
