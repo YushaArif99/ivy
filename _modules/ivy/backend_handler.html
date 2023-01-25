@@ -396,7 +396,7 @@
     <span class="kn">from</span> <span class="nn">ivy.functional.ivy.gradients</span> <span class="kn">import</span> <span class="n">_variable</span><span class="p">,</span> <span class="n">_is_variable</span><span class="p">,</span> <span class="n">_variable_data</span>
 
     <span class="n">variable_ids</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>  <span class="c1"># create an empty set to store variable object ids</span>
-    <span class="n">intermediate_objs</span> <span class="o">=</span> <span class="p">[]</span> <span class="c1"># create an empty list to store intermediate objects created during conversion</span>
+    <span class="n">numpy_objs</span> <span class="o">=</span> <span class="p">[]</span> <span class="c1"># create an empty list to store numpy objects created during 1st conversion step</span>
     <span class="k">def</span> <span class="nf">_is_var</span><span class="p">(</span><span class="n">obj</span><span class="p">):</span>
 
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">ivy</span><span class="o">.</span><span class="n">Container</span><span class="p">):</span>
@@ -416,14 +416,30 @@
                 <span class="k">return</span> <span class="kc">False</span>
             <span class="k">return</span> <span class="n">_is_variable</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
 
-    <span class="c1"># first convert all ivy.Array and ivy.Container instances to numpy using the current backend</span>
-    <span class="n">objs</span> <span class="o">=</span> <span class="p">[</span><span class="n">obj</span> <span class="k">for</span> <span class="n">obj</span> <span class="ow">in</span> <span class="n">gc</span><span class="o">.</span><span class="n">get_objects</span><span class="p">()</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="p">(</span><span class="n">ivy</span><span class="o">.</span><span class="n">Array</span><span class="p">,</span> <span class="n">ivy</span><span class="o">.</span><span class="n">Container</span><span class="p">))]</span>
+    <span class="k">def</span> <span class="nf">_remove_intermediate_arrays</span><span class="p">(</span><span class="n">arr_list</span><span class="p">,</span> <span class="n">cont_list</span><span class="p">):</span>
+        <span class="n">cont_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">cont</span><span class="o">.</span><span class="n">cont_to_flat_list</span><span class="p">()</span> <span class="k">for</span> <span class="n">cont</span> <span class="ow">in</span> <span class="n">cont_list</span><span class="p">]</span>
 
-    <span class="k">for</span> <span class="n">obj</span> <span class="ow">in</span> <span class="n">objs</span><span class="p">:</span>
+        <span class="n">cont_ids</span> <span class="o">=</span> <span class="p">[</span><span class="nb">id</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">data</span><span class="p">)</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">ivy</span><span class="o">.</span><span class="n">Array</span><span class="p">)</span> <span class="k">else</span> <span class="nb">id</span><span class="p">(</span><span class="n">item</span><span class="p">)</span> <span class="k">for</span> <span class="n">cont</span> <span class="ow">in</span> <span class="n">cont_list</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">cont</span><span class="p">]</span>
+        <span class="n">arr_ids</span> <span class="o">=</span> <span class="p">[</span><span class="nb">id</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">data</span><span class="p">)</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">ivy</span><span class="o">.</span><span class="n">Array</span><span class="p">)</span> <span class="k">else</span> <span class="nb">id</span><span class="p">(</span><span class="n">item</span><span class="p">)</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">arr_list</span><span class="p">]</span>
+
+        <span class="n">new_objs</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span><span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span><span class="n">v</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">arr_ids</span><span class="p">,</span> <span class="n">arr_list</span><span class="p">)</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">cont_ids</span><span class="p">}</span>
+
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">new_objs</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+    
+    <span class="c1"># get all ivy array and container instances in the project scope </span>
+    <span class="n">array_list</span><span class="p">,</span> <span class="n">container_list</span> <span class="o">=</span> <span class="p">[[</span><span class="n">obj</span> <span class="k">for</span> <span class="n">obj</span> <span class="ow">in</span> <span class="n">gc</span><span class="o">.</span><span class="n">get_objects</span><span class="p">()</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">obj_type</span><span class="p">)]</span> <span class="k">for</span> <span class="n">obj_type</span> <span class="ow">in</span>
+                                  <span class="p">(</span><span class="n">ivy</span><span class="o">.</span><span class="n">Array</span><span class="p">,</span> <span class="n">ivy</span><span class="o">.</span><span class="n">Container</span><span class="p">)]</span>
+    
+    <span class="c1"># remove numpy intermediate objects</span>
+    <span class="n">new_objs</span> <span class="o">=</span> <span class="n">_remove_intermediate_arrays</span><span class="p">(</span><span class="n">array_list</span><span class="p">,</span><span class="n">container_list</span><span class="p">)</span>
+    <span class="n">new_objs</span> <span class="o">+=</span> <span class="n">container_list</span>
+
+    <span class="c1"># now convert all ivy.Array and ivy.Container instances to numpy using the current backend</span>
+    <span class="k">for</span> <span class="n">obj</span> <span class="ow">in</span> <span class="n">new_objs</span><span class="p">:</span>
 
         <span class="k">if</span> <span class="n">obj</span><span class="o">.</span><span class="n">dynamic_backend</span><span class="p">:</span>
 
-            <span class="n">intermediate_objs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+            <span class="n">numpy_objs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">_is_var</span><span class="p">(</span><span class="n">obj</span><span class="p">):</span>
                 <span class="c1"># add variable object id to set</span>
                 <span class="n">variable_ids</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="nb">id</span><span class="p">(</span><span class="n">obj</span><span class="p">))</span>
@@ -470,7 +486,7 @@
 
     <span class="c1"># now convert all ivy.Array and ivy.Container instances from numpy</span>
     <span class="c1"># to native arrays using the newly set backend</span>
-    <span class="k">for</span> <span class="n">obj</span> <span class="ow">in</span> <span class="n">intermediate_objs</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">obj</span> <span class="ow">in</span> <span class="n">numpy_objs</span><span class="p">:</span>
 
         <span class="c1"># check if object was originally a variable</span>
         <span class="k">if</span> <span class="nb">id</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span> <span class="ow">in</span> <span class="n">variable_ids</span><span class="p">:</span>
