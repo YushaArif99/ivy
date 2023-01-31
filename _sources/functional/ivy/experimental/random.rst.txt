@@ -17,5 +17,4 @@ Random
    random/beta.rst
    random/gamma.rst
    random/poisson.rst
-   random/bernoulli.rst
 
