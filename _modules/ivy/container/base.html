@@ -183,6 +183,8 @@
         <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 
 <span class="c1"># noinspection PyMissingConstructor</span>
+
+
 <div class="viewcode-block" id="ContainerBase"><a class="viewcode-back" href="../../../data_classes/container/base/ContainerBase.html#ivy.container.base.ContainerBase">[docs]</a><span class="k">class</span> <span class="nc">ContainerBase</span><span class="p">(</span><span class="nb">dict</span><span class="p">,</span> <span class="n">abc</span><span class="o">.</span><span class="n">ABC</span><span class="p">):</span>
 <div class="viewcode-block" id="ContainerBase.__init__"><a class="viewcode-back" href="../../../data_classes/container/base/ContainerBase.html#ivy.container.base.ContainerBase.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
@@ -1713,7 +1715,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_config</span> <span class="o">=</span> <span class="n">new_config</span></div>
 
 <div class="viewcode-block" id="ContainerBase.cont_inplace_update"><a class="viewcode-back" href="../../../data_classes/container/base/ContainerBase.html#ivy.container.base.ContainerBase.cont_inplace_update">[docs]</a>    <span class="k">def</span> <span class="nf">cont_inplace_update</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> <span class="n">dict_in</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">ivy</span><span class="o">.</span><span class="n">Container</span><span class="p">,</span> <span class="nb">dict</span><span class="p">],</span><span class="o">**</span><span class="n">config</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">dict_in</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">ivy</span><span class="o">.</span><span class="n">Container</span><span class="p">,</span> <span class="nb">dict</span><span class="p">],</span> <span class="o">**</span><span class="n">config</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ivy</span><span class="o">.</span><span class="n">Container</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Update the contents of this container inplace, using either a new dict or</span>
 <span class="sd">        container.</span>
@@ -4165,7 +4167,7 @@
 
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="k">def</span> <span class="nf">_map_fn</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span><span class="n">x</span><span class="p">):</span>
+        <span class="k">def</span> <span class="nf">_map_fn</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
             <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">data</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">ivy</span><span class="o">.</span><span class="n">Array</span><span class="p">)</span> <span class="k">else</span> <span class="n">x</span>
             <span class="k">return</span> <span class="n">fn</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 
@@ -4177,7 +4179,7 @@
             <span class="kn">from</span> <span class="nn">ivy.functional.ivy.gradients</span> <span class="kn">import</span> <span class="n">_variable</span>
             <span class="kn">from</span> <span class="nn">ivy.backend_handler</span> <span class="kn">import</span> <span class="n">_determine_backend_from_args</span>
 
-            <span class="k">if</span> <span class="n">val</span> <span class="o">==</span> <span class="kc">False</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">val</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_backend</span> <span class="o">=</span> <span class="n">_determine_backend_from_args</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">is_variable</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_backend</span><span class="o">.</span><span class="n">is_variable</span>
@@ -4188,11 +4190,11 @@
                     <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">data</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">ivy</span><span class="o">.</span><span class="n">Array</span><span class="p">)</span> <span class="k">else</span> <span class="n">x</span>
                     <span class="k">return</span> <span class="n">is_variable</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 
-                <span class="n">is_var</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cont_map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span><span class="n">kc</span><span class="p">:</span> <span class="n">_is_var</span><span class="p">(</span><span class="n">x</span><span class="p">))</span><span class="o">.</span><span class="n">cont_all_true</span><span class="p">()</span>
-                <span class="k">if</span> <span class="n">is_var</span> <span class="ow">and</span> \
-                        <span class="ow">not</span> <span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_backend</span><span class="p">)</span><span class="o">.</span><span class="fm">__contains__</span><span class="p">(</span><span class="s2">&quot;jax&quot;</span><span class="p">)</span> <span class="ow">or</span>
-                             <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_backend</span><span class="p">)</span><span class="o">.</span><span class="fm">__contains__</span><span class="p">(</span><span class="s2">&quot;numpy&quot;</span><span class="p">)</span>
-                        <span class="p">):</span>
+                <span class="n">is_var</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cont_map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">kc</span><span class="p">:</span> <span class="n">_is_var</span><span class="p">(</span><span class="n">x</span><span class="p">))</span><span class="o">.</span><span class="n">cont_all_true</span><span class="p">()</span>
+                <span class="k">if</span> <span class="n">is_var</span> <span class="ow">and</span> <span class="ow">not</span> <span class="p">(</span>
+                        <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_backend</span><span class="p">)</span><span class="o">.</span><span class="fm">__contains__</span><span class="p">(</span><span class="s2">&quot;jax&quot;</span><span class="p">)</span>
+                        <span class="ow">or</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_backend</span><span class="p">)</span><span class="o">.</span><span class="fm">__contains__</span><span class="p">(</span><span class="s2">&quot;numpy&quot;</span><span class="p">)</span>
+                <span class="p">):</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">cont_map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">kc</span><span class="p">:</span> <span class="n">_map_fn</span><span class="p">(</span><span class="n">variable_data</span><span class="p">,</span> <span class="n">x</span><span class="p">),</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">cont_map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">kc</span><span class="p">:</span> <span class="n">_map_fn</span><span class="p">(</span><span class="n">to_numpy</span><span class="p">,</span> <span class="n">x</span><span class="p">),</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">cont_map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">kc</span><span class="p">:</span> <span class="n">_map_fn</span><span class="p">(</span><span class="n">ivy</span><span class="o">.</span><span class="n">array</span><span class="p">,</span> <span class="n">x</span><span class="p">),</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -4331,7 +4333,6 @@
     <span class="nd">@dynamic_backend</span><span class="o">.</span><span class="n">setter</span>
     <span class="k">def</span> <span class="nf">dynamic_backend</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_dynamic_backend</span> <span class="o">=</span> <span class="n">value</span></div>
-
 </pre></div>
 
            </div>
