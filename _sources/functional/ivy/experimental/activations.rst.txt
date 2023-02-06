@@ -14,6 +14,4 @@ Activations
    :caption: Activations
 
    activations/logit.rst
-   activations/prelu.rst
-   activations/thresholded_relu.rst
 
