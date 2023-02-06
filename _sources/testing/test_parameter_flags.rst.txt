@@ -14,12 +14,10 @@ Test parameter flags
 
 	test_parameter_flags/build_flag.rst
 	test_parameter_flags/frontend_function_flags.rst
+	test_parameter_flags/frontend_method_flags.rst
 	test_parameter_flags/function_flags.rst
-	test_parameter_flags/AsVariableFlags.rst
-	test_parameter_flags/ContainerFlags.rst
+	test_parameter_flags/method_flags.rst
 	test_parameter_flags/FrontendFunctionTestFlags.rst
+	test_parameter_flags/FrontendMethodTestFlags.rst
 	test_parameter_flags/FunctionTestFlags.rst
-	test_parameter_flags/NativeArrayFlags.rst
-	test_parameter_flags/NumPositionalArg.rst
-	test_parameter_flags/NumPositionalArgFn.rst
-	test_parameter_flags/NumPositionalArgMethod.rst
+	test_parameter_flags/MethodTestFlags.rst

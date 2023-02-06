@@ -146,13 +146,20 @@
              
   <h1>Source code for ivy_tests.test_ivy.helpers.function_testing</h1><div class="highlight"><pre>
 <span></span><span class="c1"># global</span>
+<span class="c1"># flake8: noqa</span>
 <span class="kn">import</span> <span class="nn">copy</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Union</span><span class="p">,</span> <span class="n">List</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">types</span>
 <span class="kn">import</span> <span class="nn">importlib</span>
 <span class="kn">import</span> <span class="nn">inspect</span>
-<span class="kn">from</span> <span class="nn">...</span> <span class="kn">import</span> <span class="n">config</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">jsonpickle</span>
+<span class="k">except</span><span class="p">:</span>
+    <span class="k">pass</span>
+<span class="kn">import</span> <span class="nn">subprocess</span>
+
 
 <span class="k">try</span><span class="p">:</span>
     <span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
@@ -761,6 +768,7 @@
     <span class="k">if</span> <span class="s2">&quot;/&quot;</span> <span class="ow">in</span> <span class="n">frontend</span><span class="p">:</span>
         <span class="c1"># multiversion zone, changes made in non-multiversion zone should</span>
         <span class="c1"># be applied here too</span>
+
         <span class="k">if</span> <span class="p">(</span>
             <span class="n">frontend</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
             <span class="o">!=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">import_module</span><span class="p">(</span><span class="n">frontend</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span><span class="o">.</span><span class="n">__version__</span>
@@ -806,21 +814,58 @@
                 <span class="c1"># compute the return via the frontend framework</span>
                 <span class="n">module_name</span> <span class="o">=</span> <span class="n">fn_tree</span><span class="p">[</span><span class="mi">25</span> <span class="p">:</span> <span class="n">fn_tree</span><span class="o">.</span><span class="n">rfind</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)]</span>
                 <span class="c1"># frontend_fw = importlib.import_module(module_name)</span>
-                <span class="n">globally_done</span> <span class="o">=</span> <span class="p">(</span>
-                    <span class="n">frontend</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
-                    <span class="o">+</span> <span class="s2">&quot;/&quot;</span>
-                    <span class="o">+</span> <span class="n">importlib</span><span class="o">.</span><span class="n">import_module</span><span class="p">(</span><span class="n">frontend</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span><span class="o">.</span><span class="n">__version__</span>
+
+                <span class="c1"># temp=dict()</span>
+                <span class="c1"># if frontend.split(&quot;/&quot;)[0]==&#39;jax&#39;:</span>
+                <span class="c1">#     # we prepare for jaxlib</span>
+                <span class="c1">#     pass</span>
+
+                <span class="n">pickle_dict</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;a&quot;</span><span class="p">:</span> <span class="n">args_np</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="p">:</span> <span class="n">kwargs_np</span><span class="p">}</span>
+
+                <span class="n">frontend_ret</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span>
+                    <span class="p">[</span>
+                        <span class="s2">&quot;/opt/miniconda/envs/multienv/bin/python&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;test.py&quot;</span><span class="p">,</span>
+                        <span class="n">jsonpickle</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">pickle_dict</span><span class="p">),</span>
+                        <span class="n">fn_name</span><span class="p">,</span>
+                        <span class="n">module_name</span><span class="p">,</span>
+                        <span class="s2">&quot;numpy&quot;</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">__version__</span><span class="p">,</span>
+                        <span class="n">frontend</span><span class="p">,</span>
+                    <span class="p">],</span>
+                    <span class="n">capture_output</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                    <span class="n">text</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
                 <span class="p">)</span>
-                <span class="n">frontend_fw</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">custom_import</span><span class="p">(</span>
-                    <span class="n">frontend</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="n">frontend</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)[</span><span class="mi">1</span><span class="p">],</span>
-                    <span class="n">globally_done</span><span class="o">=</span><span class="n">globally_done</span><span class="p">,</span>
-                <span class="p">)</span>
-                <span class="n">frontend_ret</span> <span class="o">=</span> <span class="n">frontend_fw</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">[</span><span class="n">fn_name</span><span class="p">](</span>
-                    <span class="o">*</span><span class="n">args_frontend</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs_frontend</span>
-                <span class="p">)</span>
-                <span class="n">frontend_ret</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span>
-                    <span class="n">frontend_ret</span>
-                <span class="p">)</span>  <span class="c1"># we do this because frontend_ret comes from a module in another file</span>
+
+                <span class="k">if</span> <span class="n">frontend_ret</span><span class="o">.</span><span class="n">stdout</span><span class="p">:</span>
+                    <span class="n">frontend_ret</span> <span class="o">=</span> <span class="n">jsonpickle</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">frontend_ret</span><span class="o">.</span><span class="n">stdout</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="n">frontend_ret</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span>
+                    <span class="k">raise</span> <span class="ne">Exception</span>
+                <span class="n">ivy</span><span class="o">.</span><span class="n">set_backend</span><span class="p">(</span><span class="s2">&quot;numpy&quot;</span><span class="p">)</span>
+                <span class="n">frontend_ret</span> <span class="o">=</span> <span class="n">ivy</span><span class="o">.</span><span class="n">to_native</span><span class="p">(</span><span class="n">frontend_ret</span><span class="p">)</span>
+
+                <span class="c1"># globally_done = (</span>
+                <span class="c1">#     frontend.split(&quot;/&quot;)[0]</span>
+                <span class="c1">#     + &quot;/&quot;</span>
+                <span class="c1">#     + importlib.import_module(frontend.split(&quot;/&quot;)[0]).__version__</span>
+                <span class="c1"># )</span>
+                <span class="c1"># try:</span>
+                <span class="c1">#     frontend_fw = config.custom_import(</span>
+                <span class="c1">#         frontend.split(&quot;/&quot;)[0] + &quot;/&quot; + frontend.split(&quot;/&quot;)[1],</span>
+                <span class="c1">#         module_name,</span>
+                <span class="c1">#         globally_done=globally_done,</span>
+                <span class="c1">#     )</span>
+                <span class="c1"># except Exception as e:</span>
+                <span class="c1">#     raise e</span>
+                <span class="c1">#</span>
+                <span class="c1"># print(frontend_fw.__version__)</span>
+                <span class="c1"># frontend_ret = frontend_fw.__dict__[fn_name](</span>
+                <span class="c1">#     *args_frontend, **kwargs_frontend</span>
+                <span class="c1"># )</span>
+                <span class="c1"># frontend_ret = np.asarray(</span>
+                <span class="c1">#     frontend_ret</span>
+                <span class="c1"># )  # we do this because frontend_ret comes from a module in another file</span>
+
                 <span class="k">if</span> <span class="n">ivy</span><span class="o">.</span><span class="n">isscalar</span><span class="p">(</span><span class="n">frontend_ret</span><span class="p">):</span>
                     <span class="n">frontend_ret_np_flat</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">frontend_ret</span><span class="p">)]</span>
                 <span class="k">else</span><span class="p">:</span>
@@ -893,7 +938,7 @@
                     <span class="n">frontend_ret_idxs</span> <span class="o">=</span> <span class="n">ivy</span><span class="o">.</span><span class="n">nested_argwhere</span><span class="p">(</span>
                         <span class="n">frontend_ret</span><span class="p">,</span> <span class="n">ivy</span><span class="o">.</span><span class="n">is_native_array</span>
                     <span class="p">)</span>
-                    <span class="nb">print</span><span class="p">(</span><span class="n">frontend_ret_idxs</span><span class="p">,</span> <span class="n">frontend_ret</span><span class="p">)</span>
+
                     <span class="n">frontend_ret_flat</span> <span class="o">=</span> <span class="n">ivy</span><span class="o">.</span><span class="n">multi_index_nest</span><span class="p">(</span>
                         <span class="n">frontend_ret</span><span class="p">,</span> <span class="n">frontend_ret_idxs</span>
                     <span class="p">)</span>
@@ -903,8 +948,10 @@
                 <span class="k">raise</span> <span class="n">e</span>
 
     <span class="k">else</span><span class="p">:</span>
+
         <span class="c1"># non-multiversion zone, changes made here should be</span>
         <span class="c1"># applied to multiversion zone too</span>
+
         <span class="k">try</span><span class="p">:</span>
             <span class="c1"># create frontend framework args</span>
             <span class="n">args_frontend</span> <span class="o">=</span> <span class="n">ivy</span><span class="o">.</span><span class="n">nested_map</span><span class="p">(</span>
@@ -1088,17 +1135,12 @@
 
 <div class="viewcode-block" id="test_method"><a class="viewcode-back" href="../../../../testing/function_testing/test_method.html#ivy_tests.test_ivy.helpers.function_testing.test_method">[docs]</a><span class="k">def</span> <span class="nf">test_method</span><span class="p">(</span>
     <span class="o">*</span><span class="p">,</span>
-    <span class="n">init_input_dtypes</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">ivy</span><span class="o">.</span><span class="n">Dtype</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">ivy</span><span class="o">.</span><span class="n">Dtype</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">init_as_variable_flags</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">bool</span><span class="p">],</span> <span class="n">pf</span><span class="o">.</span><span class="n">AsVariableFlags</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">init_num_positional_args</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">pf</span><span class="o">.</span><span class="n">NumPositionalArg</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
-    <span class="n">init_native_array_flags</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">bool</span><span class="p">],</span> <span class="n">pf</span><span class="o">.</span><span class="n">NativeArrayFlags</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">init_input_dtypes</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">ivy</span><span class="o">.</span><span class="n">Dtype</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">method_input_dtypes</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">ivy</span><span class="o">.</span><span class="n">Dtype</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">init_all_as_kwargs_np</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">method_input_dtypes</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">ivy</span><span class="o">.</span><span class="n">Dtype</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">ivy</span><span class="o">.</span><span class="n">Dtype</span><span class="p">]],</span>
-    <span class="n">method_as_variable_flags</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">bool</span><span class="p">],</span> <span class="n">pf</span><span class="o">.</span><span class="n">AsVariableFlags</span><span class="p">],</span>
-    <span class="n">method_num_positional_args</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">pf</span><span class="o">.</span><span class="n">NumPositionalArg</span><span class="p">],</span>
-    <span class="n">method_native_array_flags</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">bool</span><span class="p">],</span> <span class="n">pf</span><span class="o">.</span><span class="n">NativeArrayFlags</span><span class="p">],</span>
-    <span class="n">method_container_flags</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">bool</span><span class="p">],</span> <span class="n">pf</span><span class="o">.</span><span class="n">ContainerFlags</span><span class="p">],</span>
-    <span class="n">method_all_as_kwargs_np</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span>
+    <span class="n">method_all_as_kwargs_np</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">init_flags</span><span class="p">:</span> <span class="n">pf</span><span class="o">.</span><span class="n">MethodTestFlags</span><span class="p">,</span>
+    <span class="n">method_flags</span><span class="p">:</span> <span class="n">pf</span><span class="o">.</span><span class="n">MethodTestFlags</span><span class="p">,</span>
     <span class="n">class_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="n">method_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;__call__&quot;</span><span class="p">,</span>
     <span class="n">init_with_v</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
@@ -1188,31 +1230,14 @@
 <span class="sd">        optional, return value from the Ground Truth function</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">_assert_dtypes_are_valid</span><span class="p">(</span><span class="n">method_input_dtypes</span><span class="p">)</span>
-    <span class="c1"># split the arguments into their positional and keyword components</span>
+
+    <span class="n">init_input_dtypes</span> <span class="o">=</span> <span class="n">ivy</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="n">init_input_dtypes</span><span class="p">,</span> <span class="p">[])</span>
 
     <span class="c1"># Constructor arguments #</span>
-    <span class="p">(</span><span class="n">init_input_dtypes</span><span class="p">,</span> <span class="n">init_as_variable_flags</span><span class="p">,</span> <span class="n">init_native_array_flags</span><span class="p">,)</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="n">ivy</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="n">init_input_dtypes</span><span class="p">,</span> <span class="p">[]),</span>
-        <span class="n">ivy</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="n">init_as_variable_flags</span><span class="p">,</span> <span class="p">[]),</span>
-        <span class="n">ivy</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="n">init_native_array_flags</span><span class="p">,</span> <span class="p">[]),</span>
-    <span class="p">)</span>
-    <span class="n">_assert_dtypes_are_valid</span><span class="p">(</span><span class="n">init_input_dtypes</span><span class="p">)</span>
-
     <span class="n">init_all_as_kwargs_np</span> <span class="o">=</span> <span class="n">ivy</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="n">init_all_as_kwargs_np</span><span class="p">,</span> <span class="nb">dict</span><span class="p">())</span>
-    <span class="p">(</span>
-        <span class="n">method_input_dtypes</span><span class="p">,</span>
-        <span class="n">method_as_variable_flags</span><span class="p">,</span>
-        <span class="n">method_native_array_flags</span><span class="p">,</span>
-        <span class="n">method_container_flags</span><span class="p">,</span>
-    <span class="p">)</span> <span class="o">=</span> <span class="n">as_lists</span><span class="p">(</span>
-        <span class="n">method_input_dtypes</span><span class="p">,</span>
-        <span class="n">method_as_variable_flags</span><span class="p">,</span>
-        <span class="n">method_native_array_flags</span><span class="p">,</span>
-        <span class="n">method_container_flags</span><span class="p">,</span>
-    <span class="p">)</span>
-
+    <span class="c1"># split the arguments into their positional and keyword components</span>
     <span class="n">args_np_constructor</span><span class="p">,</span> <span class="n">kwargs_np_constructor</span> <span class="o">=</span> <span class="n">kwargs_to_args_n_kwargs</span><span class="p">(</span>
-        <span class="n">num_positional_args</span><span class="o">=</span><span class="n">init_num_positional_args</span><span class="p">,</span>
+        <span class="n">num_positional_args</span><span class="o">=</span><span class="n">init_flags</span><span class="o">.</span><span class="n">num_positional_args</span><span class="p">,</span>
         <span class="n">kwargs</span><span class="o">=</span><span class="n">init_all_as_kwargs_np</span><span class="p">,</span>
     <span class="p">)</span>
 
@@ -1230,19 +1255,19 @@
         <span class="n">init_input_dtypes</span> <span class="o">=</span> <span class="p">[</span>
             <span class="n">init_input_dtypes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_arrays_constructor</span><span class="p">)</span>
         <span class="p">]</span>
-    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">init_as_variable_flags</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">num_arrays_constructor</span><span class="p">:</span>
-        <span class="n">init_as_variable_flags</span> <span class="o">=</span> <span class="p">[</span>
-            <span class="n">init_as_variable_flags</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_arrays_constructor</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">init_flags</span><span class="o">.</span><span class="n">as_variable</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">num_arrays_constructor</span><span class="p">:</span>
+        <span class="n">init_flags</span><span class="o">.</span><span class="n">as_variable</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">init_flags</span><span class="o">.</span><span class="n">as_variable</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_arrays_constructor</span><span class="p">)</span>
         <span class="p">]</span>
-    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">init_native_array_flags</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">num_arrays_constructor</span><span class="p">:</span>
-        <span class="n">init_native_array_flags</span> <span class="o">=</span> <span class="p">[</span>
-            <span class="n">init_native_array_flags</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_arrays_constructor</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">init_flags</span><span class="o">.</span><span class="n">native_arrays</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">num_arrays_constructor</span><span class="p">:</span>
+        <span class="n">init_flags</span><span class="o">.</span><span class="n">native_arrays</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">init_flags</span><span class="o">.</span><span class="n">native_arrays</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_arrays_constructor</span><span class="p">)</span>
         <span class="p">]</span>
 
     <span class="c1"># update variable flags to be compatible with float dtype</span>
-    <span class="n">init_as_variable_flags</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">init_flags</span><span class="o">.</span><span class="n">as_variable</span> <span class="o">=</span> <span class="p">[</span>
         <span class="n">v</span> <span class="k">if</span> <span class="n">ivy</span><span class="o">.</span><span class="n">is_float_dtype</span><span class="p">(</span><span class="n">d</span><span class="p">)</span> <span class="k">else</span> <span class="kc">False</span>
-        <span class="k">for</span> <span class="n">v</span><span class="p">,</span> <span class="n">d</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">init_as_variable_flags</span><span class="p">,</span> <span class="n">init_input_dtypes</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">v</span><span class="p">,</span> <span class="n">d</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">init_flags</span><span class="o">.</span><span class="n">as_variable</span><span class="p">,</span> <span class="n">init_input_dtypes</span><span class="p">)</span>
     <span class="p">]</span>
 
     <span class="c1"># Create Args</span>
@@ -1254,14 +1279,16 @@
         <span class="n">kwarg_np_vals</span><span class="o">=</span><span class="n">con_kwarg_np_vals</span><span class="p">,</span>
         <span class="n">kwargs_idxs</span><span class="o">=</span><span class="n">con_kwargs_idxs</span><span class="p">,</span>
         <span class="n">input_dtypes</span><span class="o">=</span><span class="n">init_input_dtypes</span><span class="p">,</span>
-        <span class="n">as_variable_flags</span><span class="o">=</span><span class="n">init_as_variable_flags</span><span class="p">,</span>
-        <span class="n">native_array_flags</span><span class="o">=</span><span class="n">init_native_array_flags</span><span class="p">,</span>
+        <span class="n">as_variable_flags</span><span class="o">=</span><span class="n">init_flags</span><span class="o">.</span><span class="n">as_variable</span><span class="p">,</span>
+        <span class="n">native_array_flags</span><span class="o">=</span><span class="n">init_flags</span><span class="o">.</span><span class="n">native_arrays</span><span class="p">,</span>
     <span class="p">)</span>
-    <span class="c1"># End constructor #</span>
+    <span class="c1"># end constructor #</span>
 
-    <span class="c1"># Method arguments #</span>
+    <span class="c1"># method arguments #</span>
+    <span class="n">method_input_dtypes</span> <span class="o">=</span> <span class="n">ivy</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="n">method_input_dtypes</span><span class="p">,</span> <span class="p">[])</span>
     <span class="n">args_np_method</span><span class="p">,</span> <span class="n">kwargs_np_method</span> <span class="o">=</span> <span class="n">kwargs_to_args_n_kwargs</span><span class="p">(</span>
-        <span class="n">num_positional_args</span><span class="o">=</span><span class="n">method_num_positional_args</span><span class="p">,</span> <span class="n">kwargs</span><span class="o">=</span><span class="n">method_all_as_kwargs_np</span>
+        <span class="n">num_positional_args</span><span class="o">=</span><span class="n">method_flags</span><span class="o">.</span><span class="n">num_positional_args</span><span class="p">,</span>
+        <span class="n">kwargs</span><span class="o">=</span><span class="n">method_all_as_kwargs_np</span><span class="p">,</span>
     <span class="p">)</span>
 
     <span class="c1"># extract all arrays from the arguments and keyword arguments</span>
@@ -1276,22 +1303,22 @@
     <span class="n">num_arrays_method</span> <span class="o">=</span> <span class="n">met_c_arg_vals</span> <span class="o">+</span> <span class="n">met_c_kwarg_vals</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">method_input_dtypes</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">num_arrays_method</span><span class="p">:</span>
         <span class="n">method_input_dtypes</span> <span class="o">=</span> <span class="p">[</span><span class="n">method_input_dtypes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_arrays_method</span><span class="p">)]</span>
-    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">method_as_variable_flags</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">num_arrays_method</span><span class="p">:</span>
-        <span class="n">method_as_variable_flags</span> <span class="o">=</span> <span class="p">[</span>
-            <span class="n">method_as_variable_flags</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_arrays_method</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">method_flags</span><span class="o">.</span><span class="n">as_variable</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">num_arrays_method</span><span class="p">:</span>
+        <span class="n">method_flags</span><span class="o">.</span><span class="n">as_variable</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">method_flags</span><span class="o">.</span><span class="n">as_variable</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_arrays_method</span><span class="p">)</span>
         <span class="p">]</span>
-    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">method_native_array_flags</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">num_arrays_method</span><span class="p">:</span>
-        <span class="n">method_native_array_flags</span> <span class="o">=</span> <span class="p">[</span>
-            <span class="n">method_native_array_flags</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_arrays_method</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">method_flags</span><span class="o">.</span><span class="n">native_arrays</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">num_arrays_method</span><span class="p">:</span>
+        <span class="n">method_flags</span><span class="o">.</span><span class="n">native_arrays</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">method_flags</span><span class="o">.</span><span class="n">native_arrays</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_arrays_method</span><span class="p">)</span>
         <span class="p">]</span>
-    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">method_container_flags</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">num_arrays_method</span><span class="p">:</span>
-        <span class="n">method_container_flags</span> <span class="o">=</span> <span class="p">[</span>
-            <span class="n">method_container_flags</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_arrays_method</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">method_flags</span><span class="o">.</span><span class="n">container_flags</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">num_arrays_method</span><span class="p">:</span>
+        <span class="n">method_flags</span><span class="o">.</span><span class="n">container_flags</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">method_flags</span><span class="o">.</span><span class="n">container_flags</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_arrays_method</span><span class="p">)</span>
         <span class="p">]</span>
 
-    <span class="n">method_as_variable_flags</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">method_flags</span><span class="o">.</span><span class="n">as_variable</span> <span class="o">=</span> <span class="p">[</span>
         <span class="n">v</span> <span class="k">if</span> <span class="n">ivy</span><span class="o">.</span><span class="n">is_float_dtype</span><span class="p">(</span><span class="n">d</span><span class="p">)</span> <span class="k">else</span> <span class="kc">False</span>
-        <span class="k">for</span> <span class="n">v</span><span class="p">,</span> <span class="n">d</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">method_as_variable_flags</span><span class="p">,</span> <span class="n">method_input_dtypes</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">v</span><span class="p">,</span> <span class="n">d</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">method_flags</span><span class="o">.</span><span class="n">as_variable</span><span class="p">,</span> <span class="n">method_input_dtypes</span><span class="p">)</span>
     <span class="p">]</span>
 
     <span class="c1"># Create Args</span>
@@ -1303,14 +1330,20 @@
         <span class="n">kwarg_np_vals</span><span class="o">=</span><span class="n">met_kwarg_np_vals</span><span class="p">,</span>
         <span class="n">kwargs_idxs</span><span class="o">=</span><span class="n">met_kwargs_idxs</span><span class="p">,</span>
         <span class="n">input_dtypes</span><span class="o">=</span><span class="n">method_input_dtypes</span><span class="p">,</span>
-        <span class="n">as_variable_flags</span><span class="o">=</span><span class="n">method_as_variable_flags</span><span class="p">,</span>
-        <span class="n">native_array_flags</span><span class="o">=</span><span class="n">method_native_array_flags</span><span class="p">,</span>
-        <span class="n">container_flags</span><span class="o">=</span><span class="n">method_container_flags</span><span class="p">,</span>
+        <span class="n">as_variable_flags</span><span class="o">=</span><span class="n">method_flags</span><span class="o">.</span><span class="n">as_variable</span><span class="p">,</span>
+        <span class="n">native_array_flags</span><span class="o">=</span><span class="n">method_flags</span><span class="o">.</span><span class="n">native_arrays</span><span class="p">,</span>
+        <span class="n">container_flags</span><span class="o">=</span><span class="n">method_flags</span><span class="o">.</span><span class="n">container_flags</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="c1"># End Method #</span>
 
     <span class="c1"># Run testing</span>
     <span class="n">ins</span> <span class="o">=</span> <span class="n">ivy</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">[</span><span class="n">class_name</span><span class="p">](</span><span class="o">*</span><span class="n">args_constructor</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs_constructor</span><span class="p">)</span>
+    <span class="c1"># ToDo : remove this when the handle_method can properly compute unsupported dtypes</span>
+    <span class="k">if</span> <span class="nb">any</span><span class="p">(</span>
+        <span class="n">dtype</span> <span class="ow">in</span> <span class="n">ivy</span><span class="o">.</span><span class="n">function_unsupported_dtypes</span><span class="p">(</span><span class="n">ins</span><span class="o">.</span><span class="fm">__getattribute__</span><span class="p">(</span><span class="n">method_name</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">dtype</span> <span class="ow">in</span> <span class="n">method_input_dtypes</span>
+    <span class="p">):</span>
+        <span class="k">return</span>
     <span class="n">v_np</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ins</span><span class="p">,</span> <span class="n">ivy</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">init_with_v</span><span class="p">:</span>
@@ -1336,8 +1369,8 @@
         <span class="n">kwarg_np_vals</span><span class="o">=</span><span class="n">con_kwarg_np_vals</span><span class="p">,</span>
         <span class="n">kwargs_idxs</span><span class="o">=</span><span class="n">con_kwargs_idxs</span><span class="p">,</span>
         <span class="n">input_dtypes</span><span class="o">=</span><span class="n">init_input_dtypes</span><span class="p">,</span>
-        <span class="n">as_variable_flags</span><span class="o">=</span><span class="n">init_as_variable_flags</span><span class="p">,</span>
-        <span class="n">native_array_flags</span><span class="o">=</span><span class="n">init_native_array_flags</span><span class="p">,</span>
+        <span class="n">as_variable_flags</span><span class="o">=</span><span class="n">init_flags</span><span class="o">.</span><span class="n">as_variable</span><span class="p">,</span>
+        <span class="n">native_array_flags</span><span class="o">=</span><span class="n">init_flags</span><span class="o">.</span><span class="n">native_arrays</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="n">args_gt_method</span><span class="p">,</span> <span class="n">kwargs_gt_method</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">create_args_kwargs</span><span class="p">(</span>
         <span class="n">args_np</span><span class="o">=</span><span class="n">args_np_method</span><span class="p">,</span>
@@ -1347,11 +1380,17 @@
         <span class="n">kwarg_np_vals</span><span class="o">=</span><span class="n">met_kwarg_np_vals</span><span class="p">,</span>
         <span class="n">kwargs_idxs</span><span class="o">=</span><span class="n">met_kwargs_idxs</span><span class="p">,</span>
         <span class="n">input_dtypes</span><span class="o">=</span><span class="n">method_input_dtypes</span><span class="p">,</span>
-        <span class="n">as_variable_flags</span><span class="o">=</span><span class="n">method_as_variable_flags</span><span class="p">,</span>
-        <span class="n">native_array_flags</span><span class="o">=</span><span class="n">method_native_array_flags</span><span class="p">,</span>
-        <span class="n">container_flags</span><span class="o">=</span><span class="n">method_container_flags</span><span class="p">,</span>
+        <span class="n">as_variable_flags</span><span class="o">=</span><span class="n">method_flags</span><span class="o">.</span><span class="n">as_variable</span><span class="p">,</span>
+        <span class="n">native_array_flags</span><span class="o">=</span><span class="n">method_flags</span><span class="o">.</span><span class="n">native_arrays</span><span class="p">,</span>
+        <span class="n">container_flags</span><span class="o">=</span><span class="n">method_flags</span><span class="o">.</span><span class="n">container_flags</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="n">ins_gt</span> <span class="o">=</span> <span class="n">ivy</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">[</span><span class="n">class_name</span><span class="p">](</span><span class="o">*</span><span class="n">args_gt_constructor</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs_gt_constructor</span><span class="p">)</span>
+    <span class="c1"># ToDo : remove this when the handle_method can properly compute unsupported dtypes</span>
+    <span class="k">if</span> <span class="nb">any</span><span class="p">(</span>
+        <span class="n">dtype</span> <span class="ow">in</span> <span class="n">ivy</span><span class="o">.</span><span class="n">function_unsupported_dtypes</span><span class="p">(</span><span class="n">ins_gt</span><span class="o">.</span><span class="fm">__getattribute__</span><span class="p">(</span><span class="n">method_name</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">dtype</span> <span class="ow">in</span> <span class="n">method_input_dtypes</span>
+    <span class="p">):</span>
+        <span class="k">return</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ins_gt</span><span class="p">,</span> <span class="n">ivy</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
         <span class="n">v_gt</span> <span class="o">=</span> <span class="n">v_np</span><span class="o">.</span><span class="n">cont_map</span><span class="p">(</span>
             <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">kc</span><span class="p">:</span> <span class="n">ivy</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="k">else</span> <span class="n">x</span>
@@ -1392,9 +1431,9 @@
                     <span class="n">args_np</span><span class="o">=</span><span class="n">args_np_method</span><span class="p">,</span>
                     <span class="n">kwargs_np</span><span class="o">=</span><span class="n">kwargs_np_method</span><span class="p">,</span>
                     <span class="n">input_dtypes</span><span class="o">=</span><span class="n">method_input_dtypes</span><span class="p">,</span>
-                    <span class="n">as_variable_flags</span><span class="o">=</span><span class="n">method_as_variable_flags</span><span class="p">,</span>
-                    <span class="n">native_array_flags</span><span class="o">=</span><span class="n">method_native_array_flags</span><span class="p">,</span>
-                    <span class="n">container_flags</span><span class="o">=</span><span class="n">method_container_flags</span><span class="p">,</span>
+                    <span class="n">as_variable_flags</span><span class="o">=</span><span class="n">method_flags</span><span class="o">.</span><span class="n">as_variable</span><span class="p">,</span>
+                    <span class="n">native_array_flags</span><span class="o">=</span><span class="n">method_flags</span><span class="o">.</span><span class="n">native_arrays</span><span class="p">,</span>
+                    <span class="n">container_flags</span><span class="o">=</span><span class="n">method_flags</span><span class="o">.</span><span class="n">container_flags</span><span class="p">,</span>
                     <span class="n">rtol_</span><span class="o">=</span><span class="n">rtol_</span><span class="p">,</span>
                     <span class="n">atol_</span><span class="o">=</span><span class="n">atol_</span><span class="p">,</span>
                     <span class="n">xs_grad_idxs</span><span class="o">=</span><span class="n">xs_grad_idxs</span><span class="p">,</span>
@@ -1412,9 +1451,9 @@
                 <span class="n">args_np</span><span class="o">=</span><span class="n">args_np_method</span><span class="p">,</span>
                 <span class="n">kwargs_np</span><span class="o">=</span><span class="n">kwargs_np_method</span><span class="p">,</span>
                 <span class="n">input_dtypes</span><span class="o">=</span><span class="n">method_input_dtypes</span><span class="p">,</span>
-                <span class="n">as_variable_flags</span><span class="o">=</span><span class="n">method_as_variable_flags</span><span class="p">,</span>
-                <span class="n">native_array_flags</span><span class="o">=</span><span class="n">method_native_array_flags</span><span class="p">,</span>
-                <span class="n">container_flags</span><span class="o">=</span><span class="n">method_container_flags</span><span class="p">,</span>
+                <span class="n">as_variable_flags</span><span class="o">=</span><span class="n">method_flags</span><span class="o">.</span><span class="n">as_variable</span><span class="p">,</span>
+                <span class="n">native_array_flags</span><span class="o">=</span><span class="n">method_flags</span><span class="o">.</span><span class="n">native_arrays</span><span class="p">,</span>
+                <span class="n">container_flags</span><span class="o">=</span><span class="n">method_flags</span><span class="o">.</span><span class="n">container_flags</span><span class="p">,</span>
                 <span class="n">rtol_</span><span class="o">=</span><span class="n">rtol_</span><span class="p">,</span>
                 <span class="n">atol_</span><span class="o">=</span><span class="n">atol_</span><span class="p">,</span>
                 <span class="n">xs_grad_idxs</span><span class="o">=</span><span class="n">xs_grad_idxs</span><span class="p">,</span>
@@ -1445,14 +1484,10 @@
 <div class="viewcode-block" id="test_frontend_method"><a class="viewcode-back" href="../../../../testing/function_testing/test_frontend_method.html#ivy_tests.test_ivy.helpers.function_testing.test_frontend_method">[docs]</a><span class="k">def</span> <span class="nf">test_frontend_method</span><span class="p">(</span>
     <span class="o">*</span><span class="p">,</span>
     <span class="n">init_input_dtypes</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">ivy</span><span class="o">.</span><span class="n">Dtype</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">ivy</span><span class="o">.</span><span class="n">Dtype</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">init_as_variable_flags</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">bool</span><span class="p">],</span> <span class="n">pf</span><span class="o">.</span><span class="n">AsVariableFlags</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">init_num_positional_args</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">pf</span><span class="o">.</span><span class="n">NumPositionalArgFn</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
-    <span class="n">init_native_array_flags</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">bool</span><span class="p">],</span> <span class="n">pf</span><span class="o">.</span><span class="n">NativeArrayFlags</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">init_all_as_kwargs_np</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">method_input_dtypes</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">ivy</span><span class="o">.</span><span class="n">Dtype</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">ivy</span><span class="o">.</span><span class="n">Dtype</span><span class="p">]],</span>
-    <span class="n">method_as_variable_flags</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">bool</span><span class="p">],</span> <span class="n">pf</span><span class="o">.</span><span class="n">AsVariableFlags</span><span class="p">],</span>
-    <span class="n">method_num_positional_args</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">pf</span><span class="o">.</span><span class="n">NumPositionalArgMethod</span><span class="p">],</span>
-    <span class="n">method_native_array_flags</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">bool</span><span class="p">],</span> <span class="n">pf</span><span class="o">.</span><span class="n">NativeArrayFlags</span><span class="p">],</span>
+    <span class="n">init_flags</span><span class="p">,</span>
+    <span class="n">method_flags</span><span class="p">,</span>
+    <span class="n">init_all_as_kwargs_np</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">method_all_as_kwargs_np</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span>
     <span class="n">frontend</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="n">frontend_method_data</span><span class="p">:</span> <span class="n">FrontendMethodData</span><span class="p">,</span>
@@ -1480,15 +1515,6 @@
 <span class="sd">        input arguments to the constructor as keyword arguments.</span>
 <span class="sd">    method_input_dtypes</span>
 <span class="sd">        data types of the input arguments to the method in order.</span>
-<span class="sd">    method_as_variable_flags</span>
-<span class="sd">        dictates whether the corresponding input argument passed to the method should</span>
-<span class="sd">        be treated as a variable.</span>
-<span class="sd">    method_num_positional_args</span>
-<span class="sd">        number of input arguments that must be passed as positional arguments to the</span>
-<span class="sd">        method.</span>
-<span class="sd">    method_native_array_flags</span>
-<span class="sd">        dictates whether the corresponding input argument passed to the method should</span>
-<span class="sd">        be treated as a native array.</span>
 <span class="sd">    method_all_as_kwargs_np:</span>
 <span class="sd">        input arguments to the method as keyword arguments.</span>
 <span class="sd">    frontend</span>
@@ -1514,25 +1540,9 @@
     <span class="c1"># split the arguments into their positional and keyword components</span>
 
     <span class="c1"># Constructor arguments #</span>
-    <span class="c1"># convert single values to length 1 lists</span>
-    <span class="p">(</span><span class="n">init_input_dtypes</span><span class="p">,</span> <span class="n">init_as_variable_flags</span><span class="p">,</span> <span class="n">init_native_array_flags</span><span class="p">,)</span> <span class="o">=</span> <span class="n">as_lists</span><span class="p">(</span>
-        <span class="n">ivy</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="n">init_input_dtypes</span><span class="p">,</span> <span class="p">[]),</span>
-        <span class="n">ivy</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="n">init_as_variable_flags</span><span class="p">,</span> <span class="p">[]),</span>
-        <span class="n">ivy</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="n">init_native_array_flags</span><span class="p">,</span> <span class="p">[]),</span>
-    <span class="p">)</span>
-    <span class="n">init_all_as_kwargs_np</span> <span class="o">=</span> <span class="n">ivy</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="n">init_all_as_kwargs_np</span><span class="p">,</span> <span class="nb">dict</span><span class="p">())</span>
-    <span class="p">(</span>
-        <span class="n">method_input_dtypes</span><span class="p">,</span>
-        <span class="n">method_as_variable_flags</span><span class="p">,</span>
-        <span class="n">method_native_array_flags</span><span class="p">,</span>
-    <span class="p">)</span> <span class="o">=</span> <span class="n">as_lists</span><span class="p">(</span>
-        <span class="n">method_input_dtypes</span><span class="p">,</span>
-        <span class="n">method_as_variable_flags</span><span class="p">,</span>
-        <span class="n">method_native_array_flags</span><span class="p">,</span>
-    <span class="p">)</span>
 
     <span class="n">args_np_constructor</span><span class="p">,</span> <span class="n">kwargs_np_constructor</span> <span class="o">=</span> <span class="n">kwargs_to_args_n_kwargs</span><span class="p">(</span>
-        <span class="n">num_positional_args</span><span class="o">=</span><span class="n">init_num_positional_args</span><span class="p">,</span>
+        <span class="n">num_positional_args</span><span class="o">=</span><span class="n">init_flags</span><span class="o">.</span><span class="n">num_positional_args</span><span class="p">,</span>
         <span class="n">kwargs</span><span class="o">=</span><span class="n">init_all_as_kwargs_np</span><span class="p">,</span>
     <span class="p">)</span>
 
@@ -1550,19 +1560,19 @@
         <span class="n">init_input_dtypes</span> <span class="o">=</span> <span class="p">[</span>
             <span class="n">init_input_dtypes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_arrays_constructor</span><span class="p">)</span>
         <span class="p">]</span>
-    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">init_as_variable_flags</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">num_arrays_constructor</span><span class="p">:</span>
-        <span class="n">init_as_variable_flags</span> <span class="o">=</span> <span class="p">[</span>
-            <span class="n">init_as_variable_flags</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_arrays_constructor</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">init_flags</span><span class="o">.</span><span class="n">as_variable</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">num_arrays_constructor</span><span class="p">:</span>
+        <span class="n">init_flags</span><span class="o">.</span><span class="n">as_variable</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">init_flags</span><span class="o">.</span><span class="n">as_variable</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_arrays_constructor</span><span class="p">)</span>
         <span class="p">]</span>
-    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">init_native_array_flags</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">num_arrays_constructor</span><span class="p">:</span>
-        <span class="n">init_native_array_flags</span> <span class="o">=</span> <span class="p">[</span>
-            <span class="n">init_native_array_flags</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_arrays_constructor</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">init_flags</span><span class="o">.</span><span class="n">native_arrays</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">num_arrays_constructor</span><span class="p">:</span>
+        <span class="n">init_flags</span><span class="o">.</span><span class="n">native_arrays</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">init_flags</span><span class="o">.</span><span class="n">native_arrays</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_arrays_constructor</span><span class="p">)</span>
         <span class="p">]</span>
 
     <span class="c1"># update variable flags to be compatible with float dtype</span>
-    <span class="n">init_as_variable_flags</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">init_flags</span><span class="o">.</span><span class="n">as_variable</span> <span class="o">=</span> <span class="p">[</span>
         <span class="n">v</span> <span class="k">if</span> <span class="n">ivy</span><span class="o">.</span><span class="n">is_float_dtype</span><span class="p">(</span><span class="n">d</span><span class="p">)</span> <span class="k">else</span> <span class="kc">False</span>
-        <span class="k">for</span> <span class="n">v</span><span class="p">,</span> <span class="n">d</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">init_as_variable_flags</span><span class="p">,</span> <span class="n">init_input_dtypes</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">v</span><span class="p">,</span> <span class="n">d</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">init_flags</span><span class="o">.</span><span class="n">as_variable</span><span class="p">,</span> <span class="n">init_input_dtypes</span><span class="p">)</span>
     <span class="p">]</span>
 
     <span class="c1"># Create Args</span>
@@ -1574,14 +1584,15 @@
         <span class="n">kwarg_np_vals</span><span class="o">=</span><span class="n">con_kwarg_np_vals</span><span class="p">,</span>
         <span class="n">kwargs_idxs</span><span class="o">=</span><span class="n">con_kwargs_idxs</span><span class="p">,</span>
         <span class="n">input_dtypes</span><span class="o">=</span><span class="n">init_input_dtypes</span><span class="p">,</span>
-        <span class="n">as_variable_flags</span><span class="o">=</span><span class="n">init_as_variable_flags</span><span class="p">,</span>
-        <span class="n">native_array_flags</span><span class="o">=</span><span class="n">init_native_array_flags</span><span class="p">,</span>
+        <span class="n">as_variable_flags</span><span class="o">=</span><span class="n">init_flags</span><span class="o">.</span><span class="n">as_variable</span><span class="p">,</span>
+        <span class="n">native_array_flags</span><span class="o">=</span><span class="n">init_flags</span><span class="o">.</span><span class="n">native_arrays</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="c1"># End constructor #</span>
 
     <span class="c1"># Method arguments #</span>
     <span class="n">args_np_method</span><span class="p">,</span> <span class="n">kwargs_np_method</span> <span class="o">=</span> <span class="n">kwargs_to_args_n_kwargs</span><span class="p">(</span>
-        <span class="n">num_positional_args</span><span class="o">=</span><span class="n">method_num_positional_args</span><span class="p">,</span> <span class="n">kwargs</span><span class="o">=</span><span class="n">method_all_as_kwargs_np</span>
+        <span class="n">num_positional_args</span><span class="o">=</span><span class="n">method_flags</span><span class="o">.</span><span class="n">num_positional_args</span><span class="p">,</span>
+        <span class="n">kwargs</span><span class="o">=</span><span class="n">method_all_as_kwargs_np</span><span class="p">,</span>
     <span class="p">)</span>
 
     <span class="c1"># extract all arrays from the arguments and keyword arguments</span>
@@ -1596,18 +1607,18 @@
     <span class="n">num_arrays_method</span> <span class="o">=</span> <span class="n">met_c_arg_vals</span> <span class="o">+</span> <span class="n">met_c_kwarg_vals</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">method_input_dtypes</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">num_arrays_method</span><span class="p">:</span>
         <span class="n">method_input_dtypes</span> <span class="o">=</span> <span class="p">[</span><span class="n">method_input_dtypes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_arrays_method</span><span class="p">)]</span>
-    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">method_as_variable_flags</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">num_arrays_method</span><span class="p">:</span>
-        <span class="n">method_as_variable_flags</span> <span class="o">=</span> <span class="p">[</span>
-            <span class="n">method_as_variable_flags</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_arrays_method</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">method_flags</span><span class="o">.</span><span class="n">as_variable</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">num_arrays_method</span><span class="p">:</span>
+        <span class="n">method_flags</span><span class="o">.</span><span class="n">as_variable</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">method_flags</span><span class="o">.</span><span class="n">as_variable</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_arrays_method</span><span class="p">)</span>
         <span class="p">]</span>
-    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">method_native_array_flags</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">num_arrays_method</span><span class="p">:</span>
-        <span class="n">method_native_array_flags</span> <span class="o">=</span> <span class="p">[</span>
-            <span class="n">method_native_array_flags</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_arrays_method</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">method_flags</span><span class="o">.</span><span class="n">native_arrays</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">num_arrays_method</span><span class="p">:</span>
+        <span class="n">method_flags</span><span class="o">.</span><span class="n">native_arrays</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">method_flags</span><span class="o">.</span><span class="n">native_arrays</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_arrays_method</span><span class="p">)</span>
         <span class="p">]</span>
 
-    <span class="n">method_as_variable_flags</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">method_flags</span><span class="o">.</span><span class="n">as_variable</span> <span class="o">=</span> <span class="p">[</span>
         <span class="n">v</span> <span class="k">if</span> <span class="n">ivy</span><span class="o">.</span><span class="n">is_float_dtype</span><span class="p">(</span><span class="n">d</span><span class="p">)</span> <span class="k">else</span> <span class="kc">False</span>
-        <span class="k">for</span> <span class="n">v</span><span class="p">,</span> <span class="n">d</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">method_as_variable_flags</span><span class="p">,</span> <span class="n">method_input_dtypes</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">v</span><span class="p">,</span> <span class="n">d</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">method_flags</span><span class="o">.</span><span class="n">as_variable</span><span class="p">,</span> <span class="n">method_input_dtypes</span><span class="p">)</span>
     <span class="p">]</span>
 
     <span class="c1"># Create Args</span>
@@ -1619,8 +1630,8 @@
         <span class="n">kwarg_np_vals</span><span class="o">=</span><span class="n">met_kwarg_np_vals</span><span class="p">,</span>
         <span class="n">kwargs_idxs</span><span class="o">=</span><span class="n">met_kwargs_idxs</span><span class="p">,</span>
         <span class="n">input_dtypes</span><span class="o">=</span><span class="n">method_input_dtypes</span><span class="p">,</span>
-        <span class="n">as_variable_flags</span><span class="o">=</span><span class="n">method_as_variable_flags</span><span class="p">,</span>
-        <span class="n">native_array_flags</span><span class="o">=</span><span class="n">method_native_array_flags</span><span class="p">,</span>
+        <span class="n">as_variable_flags</span><span class="o">=</span><span class="n">method_flags</span><span class="o">.</span><span class="n">as_variable</span><span class="p">,</span>
+        <span class="n">native_array_flags</span><span class="o">=</span><span class="n">method_flags</span><span class="o">.</span><span class="n">native_arrays</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="c1"># End Method #</span>
 
