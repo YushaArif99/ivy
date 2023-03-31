@@ -1,16 +1,6 @@
 Sorting
 =======
 
-.. autosummary::
-   :toctree: sorting
-   :template: functional_module.rst
-   :hide-table:
-   :recursive:
-
-   ivy.functional.ivy.sorting.argsort
-   ivy.functional.ivy.sorting.searchsorted
-   ivy.functional.ivy.sorting.sort
-
 
 
 .. automodule:: ivy.functional.ivy.sorting
