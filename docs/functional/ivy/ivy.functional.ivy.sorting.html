@@ -46,8 +46,8 @@
     <link rel="icon" href="https://github.com/unifyai/unifyai.github.io/blob/master/img/externally_linked/ivy_logo_only.png?raw=true"/>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
-    <link rel="next" title="Statistical" href="ivy.functional.ivy.statistical.html" />
-    <link rel="prev" title="Set" href="ivy.functional.ivy.set.html" />
+    <link rel="next" title="argsort" href="sorting/ivy.functional.ivy.sorting.argsort.html" />
+    <link rel="prev" title="unique_values" href="set/ivy.functional.ivy.set.unique_values.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -310,6 +310,9 @@ document.write(`
 <li class="toctree-l1"><a class="reference internal" href="ivy.functional.ivy.searching.html">Searching</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ivy.functional.ivy.set.html">Set</a></li>
 <li class="toctree-l1 current active has-children"><a class="current reference internal" href="#">Sorting</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="sorting/ivy.functional.ivy.sorting.argsort.html">argsort</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sorting/ivy.functional.ivy.sorting.searchsorted.html">searchsorted</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sorting/ivy.functional.ivy.sorting.sort.html">sort</a></li>
 
 
 
@@ -320,8 +323,8 @@ document.write(`
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Data classes</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../../data_classes/ivy.data_classes.array.html">ivy.data_classes.array</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../data_classes/ivy.data_classes.container.html">ivy.data_classes.container</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../data_classes/ivy.data_classes.array.html">Array</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../data_classes/ivy.data_classes.container.html">Container</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Framework classes</span></p>
 <ul class="nav bd-sidenav">
@@ -469,16 +472,16 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <section id="module-ivy.functional.ivy.sorting">
-<span id="sorting"></span><h1>Sorting<a class="headerlink" href="#module-ivy.functional.ivy.sorting" title="Permalink to this heading">#</a></h1>
-<dl class="py function">
+  <section id="sorting">
+<h1>Sorting<a class="headerlink" href="#sorting" title="Permalink to this heading">#</a></h1>
+<span class="target" id="module-ivy.functional.ivy.sorting"></span><dl class="py function">
 <dt class="sig sig-object py" id="ivy.functional.ivy.sorting.argsort">
 <span class="sig-prename descclassname"><span class="pre">ivy.</span></span><span class="sig-name descname"><span class="pre">argsort</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axis</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">descending</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stable</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/ivy/functional/ivy/sorting.html#argsort"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ivy.functional.ivy.sorting.argsort" title="Permalink to this definition">#</a></dt>
 <dd><p>Returns the indices that sort an array <code class="docutils literal notranslate"><span class="pre">x</span></code> along a specified axis.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>x</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Array</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">NativeArray</span></code>]) – input array.</p></li>
+<li><p><strong>x</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<a class="reference internal" href="../../data_classes/ivy.data_classes.array.html#ivy.data_classes.array.array.Array" title="ivy.data_classes.array.array.Array"><code class="xref py py-class docutils literal notranslate"><span class="pre">Array</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">NativeArray</span></code>]) – input array.</p></li>
 <li><p><strong>axis</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>) – axis along which to sort. If set to <code class="docutils literal notranslate"><span class="pre">-1</span></code>, the function must sort along the (default: <code class="docutils literal notranslate"><span class="pre">-1</span></code>)
 last axis. Default: <code class="docutils literal notranslate"><span class="pre">-1</span></code>.</p></li>
 <li><p><strong>descending</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code>) – sort order. If <code class="docutils literal notranslate"><span class="pre">True</span></code>, the returned indices sort <code class="docutils literal notranslate"><span class="pre">x</span></code> in descending order (default: <code class="docutils literal notranslate"><span class="pre">False</span></code>)
@@ -489,12 +492,12 @@ order of <code class="docutils literal notranslate"><span class="pre">x</span></
 may or may not maintain the relative order of <code class="docutils literal notranslate"><span class="pre">x</span></code> values which compare as
 equal (i.e., the relative order of <code class="docutils literal notranslate"><span class="pre">x</span></code> values which compare as equal is
 implementation-dependent). Default: <code class="docutils literal notranslate"><span class="pre">True</span></code>.</p></li>
-<li><p><strong>out</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Array</span></code>]) – optional output array, for writing the result to. It must have the same shape (default: <code class="docutils literal notranslate"><span class="pre">None</span></code>)
+<li><p><strong>out</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<a class="reference internal" href="../../data_classes/ivy.data_classes.array.html#ivy.data_classes.array.array.Array" title="ivy.data_classes.array.array.Array"><code class="xref py py-class docutils literal notranslate"><span class="pre">Array</span></code></a>]) – optional output array, for writing the result to. It must have the same shape (default: <code class="docutils literal notranslate"><span class="pre">None</span></code>)
 as <code class="docutils literal notranslate"><span class="pre">x</span></code>.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Array</span></code></p>
+<dd class="field-even"><p><a class="reference internal" href="../../data_classes/ivy.data_classes.array.html#ivy.data_classes.array.array.Array" title="ivy.data_classes.array.array.Array"><code class="xref py py-class docutils literal notranslate"><span class="pre">Array</span></code></a></p>
 </dd>
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p><em>ret</em> – an array of indices. The returned array must have the same shape as <code class="docutils literal notranslate"><span class="pre">x</span></code>. The
@@ -578,22 +581,22 @@ instances in place of any of the arguments</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>x</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Array</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">NativeArray</span></code>]) – Input array. If <cite>sorter</cite> is None, then it must be sorted in ascending order,
+<li><p><strong>x</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<a class="reference internal" href="../../data_classes/ivy.data_classes.array.html#ivy.data_classes.array.array.Array" title="ivy.data_classes.array.array.Array"><code class="xref py py-class docutils literal notranslate"><span class="pre">Array</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">NativeArray</span></code>]) – Input array. If <cite>sorter</cite> is None, then it must be sorted in ascending order,
 otherwise <cite>sorter</cite> must be an array of indices that sort it.</p></li>
-<li><p><strong>v</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Array</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">NativeArray</span></code>]) – specific elements to insert in array x1</p></li>
+<li><p><strong>v</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<a class="reference internal" href="../../data_classes/ivy.data_classes.array.html#ivy.data_classes.array.array.Array" title="ivy.data_classes.array.array.Array"><code class="xref py py-class docutils literal notranslate"><span class="pre">Array</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">NativeArray</span></code>]) – specific elements to insert in array x1</p></li>
 <li><p><strong>side</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Literal</span></code>[‘left’, ‘right’]) – The specific elements’ index is at the ‘left’ side or (default: <code class="docutils literal notranslate"><span class="pre">'left'</span></code>)
 ‘right’ side in the sorted array x1. If the side is ‘left’, the
 index of the first suitable location located is given. If
 ‘right’, return the last such index.</p></li>
 <li><p><strong>ret_dtype</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Dtype</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">NativeDtype</span></code>]) – the data type for the return value, Default: ivy.int64, (default: <code class="docutils literal notranslate"><span class="pre">'int64'</span></code>)
 only integer data types is allowed.</p></li>
-<li><p><strong>sorter</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Array</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">NativeArray</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>]]]) – optional array of integer indices that sort array x into ascending order, (default: <code class="docutils literal notranslate"><span class="pre">None</span></code>)
+<li><p><strong>sorter</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<a class="reference internal" href="../../data_classes/ivy.data_classes.array.html#ivy.data_classes.array.array.Array" title="ivy.data_classes.array.array.Array"><code class="xref py py-class docutils literal notranslate"><span class="pre">Array</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">NativeArray</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>]]]) – optional array of integer indices that sort array x into ascending order, (default: <code class="docutils literal notranslate"><span class="pre">None</span></code>)
 typically the result of argsort.</p></li>
-<li><p><strong>out</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Array</span></code>]) – optional output array, for writing the result to. (default: <code class="docutils literal notranslate"><span class="pre">None</span></code>)</p></li>
+<li><p><strong>out</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<a class="reference internal" href="../../data_classes/ivy.data_classes.array.html#ivy.data_classes.array.array.Array" title="ivy.data_classes.array.array.Array"><code class="xref py py-class docutils literal notranslate"><span class="pre">Array</span></code></a>]) – optional output array, for writing the result to. (default: <code class="docutils literal notranslate"><span class="pre">None</span></code>)</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Array</span></code></p>
+<dd class="field-even"><p><a class="reference internal" href="../../data_classes/ivy.data_classes.array.html#ivy.data_classes.array.array.Array" title="ivy.data_classes.array.array.Array"><code class="xref py py-class docutils literal notranslate"><span class="pre">Array</span></code></a></p>
 </dd>
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p><em>ret</em> – An array of insertion points.</p>
@@ -633,7 +636,7 @@ typically the result of argsort.</p></li>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>x</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Array</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">NativeArray</span></code>]) – input array</p></li>
+<li><p><strong>x</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<a class="reference internal" href="../../data_classes/ivy.data_classes.array.html#ivy.data_classes.array.array.Array" title="ivy.data_classes.array.array.Array"><code class="xref py py-class docutils literal notranslate"><span class="pre">Array</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">NativeArray</span></code>]) – input array</p></li>
 <li><p><strong>axis</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>) – axis along which to sort. If set to <code class="docutils literal notranslate"><span class="pre">-1</span></code>, the function must sort along the (default: <code class="docutils literal notranslate"><span class="pre">-1</span></code>)
 last axis. Default: <code class="docutils literal notranslate"><span class="pre">-1</span></code>.</p></li>
 <li><p><strong>descending</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code>) – direction  The direction in which to sort the values (default: <code class="docutils literal notranslate"><span class="pre">False</span></code>)</p></li>
@@ -643,12 +646,12 @@ compare as equal. If <code class="docutils literal notranslate"><span class="pre
 relative order of <code class="docutils literal notranslate"><span class="pre">x</span></code> values which compare as equal (i.e., the relative order
 of <code class="docutils literal notranslate"><span class="pre">x</span></code> values which compare as equal is implementation-dependent).
 Default: <code class="docutils literal notranslate"><span class="pre">True</span></code>.</p></li>
-<li><p><strong>out</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Array</span></code>]) – optional output array, for writing the result to. It must have the same shape (default: <code class="docutils literal notranslate"><span class="pre">None</span></code>)
+<li><p><strong>out</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<a class="reference internal" href="../../data_classes/ivy.data_classes.array.html#ivy.data_classes.array.array.Array" title="ivy.data_classes.array.array.Array"><code class="xref py py-class docutils literal notranslate"><span class="pre">Array</span></code></a>]) – optional output array, for writing the result to. It must have the same shape (default: <code class="docutils literal notranslate"><span class="pre">None</span></code>)
 as <code class="docutils literal notranslate"><span class="pre">x</span></code>.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Array</span></code></p>
+<dd class="field-even"><p><a class="reference internal" href="../../data_classes/ivy.data_classes.array.html#ivy.data_classes.array.array.Array" title="ivy.data_classes.array.array.Array"><code class="xref py py-class docutils literal notranslate"><span class="pre">Array</span></code></a></p>
 </dd>
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p><em>ret</em> – An array with the same dtype and shape as <code class="docutils literal notranslate"><span class="pre">x</span></code>, with the elements sorted
@@ -722,20 +725,20 @@ instances in place of any of the arguments</p>
                   <!-- Previous / next buttons -->
 <div class="prev-next-area">
     <a class="left-prev"
-       href="ivy.functional.ivy.set.html"
+       href="set/ivy.functional.ivy.set.unique_values.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Set</p>
+        <p class="prev-next-title">unique_values</p>
       </div>
     </a>
     <a class="right-next"
-       href="ivy.functional.ivy.statistical.html"
+       href="sorting/ivy.functional.ivy.sorting.argsort.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Statistical</p>
+        <p class="prev-next-title">argsort</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>

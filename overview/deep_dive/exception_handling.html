@@ -314,6 +314,8 @@ document.write(`
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="continuous_integration.html">Continuous Integration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gradients.html">Gradients</a></li>
+<li class="toctree-l3"><a class="reference internal" href="building_the_docs_pipline.html">Building the Docs Pipeline</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../contributing/open_tasks.html">Open Tasks</a></li>
@@ -349,6 +351,8 @@ document.write(`
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="continuous_integration.html">Continuous Integration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gradients.html">Gradients</a></li>
+<li class="toctree-l2"><a class="reference internal" href="building_the_docs_pipline.html">Building the Docs Pipeline</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../faq.html">FAQ</a></li>
@@ -382,8 +386,8 @@ document.write(`
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Data classes</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../../docs/data_classes/ivy.data_classes.array.html">ivy.data_classes.array</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../docs/data_classes/ivy.data_classes.container.html">ivy.data_classes.container</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../docs/data_classes/ivy.data_classes.array.html">Array</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../docs/data_classes/ivy.data_classes.container.html">Container</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Framework classes</span></p>
 <ul class="nav bd-sidenav">
@@ -586,13 +590,13 @@ This is to reduce repetition and the creation of similar exception classes.</p>
 </section>
 <section id="configurable-mode-for-stack-trace">
 <h2>Configurable Mode for Stack Trace<a class="headerlink" href="#configurable-mode-for-stack-trace" title="Permalink to this heading">#</a></h2>
-<p>Due to the transpilation nature of Ivy, user can code in the frontend framework
-which they are familiar with, then run their code with another backend
-framework. For instance, someone who is familiar with NumPy can run their code
-with a JAX backend via Ivy’s NumPy frontend. Given their total lack of
-familiarity of certain backend frameworks (which is JAX in the above scenario),
-they might not want to see stack traces which go right down through Ivy
-functions and through JAX functions.</p>
+<p>Ivy’s transpilation nature allows users to write code in their preferred frontend
+framework and then execute it with a different backend framework. For example, a
+user who is comfortable with NumPy can use Ivy’s NumPy frontend to run their code
+with a JAX backend. However, since they may have no prior experience with JAX or
+other backend frameworks, they may not want to encounter stack traces that traverse
+Ivy and JAX functions. In such cases, it may be preferable for the user to avoid
+encountering stack traces that extend through Ivy and JAX functions.</p>
 <p>Therefore, options are made available for the stack traces to either truncate
 at the frontend or ivy level, or in other cases, no truncation at all.</p>
 <p>Let’s look at the 3 different modes with example of <code class="code docutils literal notranslate"><span class="pre">ivy.all</span></code> below!</p>
@@ -847,7 +851,7 @@ IvyError: jax: all: axis 2 is out of bounds for array of dimension 1
 </pre></div>
 </div>
 <p>The decorator is then added to each function for wrapping.
-Let’s look at an example of <code class="xref py py-func docutils literal notranslate"><span class="pre">ivy.all()</span></code>.</p>
+Let’s look at an example of <a class="reference internal" href="../../docs/functional/ivy/utility/ivy.functional.ivy.utility.all.html#ivy.all" title="ivy.all"><code class="xref py py-func docutils literal notranslate"><span class="pre">ivy.all()</span></code></a>.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># in ivy/functional/ivy/utility.py</span>
 <span class="nd">@handle_exceptions</span>
 <span class="k">def</span> <span class="nf">all</span><span class="p">(</span>
